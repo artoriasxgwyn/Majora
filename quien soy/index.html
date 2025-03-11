@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .boxbanner {
+            position: fixed;
+            width: 100%;
+            height: 7%;
+            background-color: rgb(54, 57, 65);
+            display: flex;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .minibanner {
+            width: 90%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+        }
+
+        .contenidomin {
+            display: flex;
+            gap: 7px;
+        }
+
+        .Bigcontainer {
+            display: grid;
+            grid-template-rows: 1fr 1fr 1fr;
+            height: 0px;
+
+        }
+
+        .Container1 {
+            display: flex;
+            justify-content: center;
+            align-items: end;
+            padding-bottom: 3%;
+            padding-top: 5%;
+
+        }
+
+        .container1 {
+            width: 90%;
+            display: flex;
+            flex-flow: row wrap;
+            gap: 40px;
+        }
+
+        .content {
+            display: flex;
+            flex-flow: column wrap;
+            width: 59.6%;
+            min-width: 400px;
+            justify-content: center;
+            padding-bottom: 4.5%;
+        }
+
+        .content h1 {
+            color: orangered;
+        }
+
+        .content button {
+            background-color: orangered;
+            color: white;
+            width: 15%;
+            border-radius: 10px;
+            padding: 10px 5px 10px 5px;
+            width: 100px;
+        }
+
+        .contentimg {
+            width: 35%;
+            width: 300px;
+        }
+
+        img {
+            width: 100%;
+            min-width: 200px;
+        }
+
+        .Container2 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: orangered;
+            padding: 5%;
+        }
+
+        .Container3 {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+
+        }
+
+        .container3 {
+            display: flex;
+            justify-content: center;
+        }
+
+        .subcontainer3 {
+            width: 90%;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .columna {
+            border-radius: 5px;
+            display: flex;
+            flex-flow: column wrap;
+            align-items: center;
+            border: 1px solid;
+
+        }
+        .columna button{
+            background-color: orangered;
+            color: white;
+            width: 15%;
+            border-radius: 10px;
+            padding: 10px 5px 10px 5px;
+            width: 100px;
+            margin-bottom: 5px;
+        }
+    </style>
+
+    <div class="Bigcontainer">
+        <div class="boxbanner">
+            <div class="minibanner">
+                <div>
+                    <p><b>Tomas</b>Mendez</p>
+                </div>
+                <div class="contenidomin">
+                    <p>Inicio</p>
+                    <p>Quien soy?</p>
+                    <p>Proyectos</p>
+                </div>
+            </div>
+        </div>
+        <div class="Container1">
+            <div class="container1">
+                <div class="contentimg">
+                    <img src="images/791d554b-e0ef-4c7d-8947-5fd054535984.jpg" alt="rat">
+                </div>
+                <div class="content">
+                    <h1 style="font-size: 44px;">¿Quien soy?</h1>
+                    <p style="font-size:18PX;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora culpa
+                        delectus aliquid maiores
+                        magni
+                        eveniet laboriosam? Dolor, commodi in, ad quam quia aperiam facere quidem dicta ab aliquid
+                        possimus
+                        vero.</p>
+                    <button>Leer mas</button>
+                </div>
+            </div>
+        </div>
+        <div class="Container2">
+            <div style="width: 250px;">
+                <img src="images/791d554b-e0ef-4c7d-8947-5fd054535984.jpg" alt="rat" style="border-radius: 50%;">
+            </div>
+            <p style="font-size: 32px; color: white;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi
+                assumenda saepe minus! Dicta amet
+                ratione, autem unde iusto quasi a nostrum pariatur, eaque dolores odio. Unde nisi facilis exercitationem
+                ipsa.
+            </p>
+            <p style="color: white; font-size: 20px;">-El tawdry</p>
+        </div>
+        <div class="Container3"> 
+            <h1>Mis proyectos</h1>
+            <div class="container3">
+                <div class="subcontainer3">
+                    <div class="columna">
+                        <img src="images/La inteligencia Artificial (IA) en la moda »【Blogdemoda_es】.jpg" alt="rat"
+                            style="min-width: 50px; height: 150px;">
+                        </h3>Proyecto 1</h3>
+                        <div style="width: 85%;">
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda excepturi cupiditate
+                                et
+                                fugiat
+                                exercitationem cumque rerum. Provident ut id amet obcaecati magni aspernatur
+                                consectetur,
+                                ipsam
+                                ullam repellendus dolorum nostrum veniam.</p>
+                        </div>
+                        <button>Ver proyecto</button>
+                    </div>
+                    <div class="columna">
+                        <img src="images/_Alan Turing_ Poster for Sale by coolmathposters.jpg" alt="rat"
+                            style="min-width: 50px; height: 150px;">
+                        </h3>Proyecto 1</h3>
+                        <div style="width: 85%;">
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda excepturi cupiditate
+                                et
+                                fugiat
+                                exercitationem cumque rerum. Provident ut id amet obcaecati magni aspernatur
+                                consectetur,
+                                ipsam
+                                ullam repellendus dolorum nostrum veniam.</p>
+                        </div>
+                        <button>Ver proyecto</button>
+                    </div>
+                    <div class="columna">
+                        <img src="images/AutoCAD-logо.jpg" alt="rat" style="min-width: 50px;height: 150px;">
+                        </h3>Proyecto 1</h3>
+                        <div style="width: 85%;">
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda excepturi cupiditate
+                                et
+                                fugiat
+                                exercitationem cumque rerum. Provident ut id amet obcaecati magni aspernatur
+                                consectetur,
+                                ipsam
+                                ullam repellendus dolorum nostrum veniam.</p>
+                        </div>
+                        <button>Ver proyecto</button>
+                    </div>
+                    <div class="columna">
+                        <img src="images/Tinder.jpg" alt="rat" style="min-width: 50px; height: 150px;">
+                        </h3>Proyecto 1</h3>
+                        <div style="width: 85%;">
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda excepturi cupiditate
+                                et
+                                fugiat
+                                exercitationem cumque rerum. Provident ut id amet obcaecati magni aspernatur
+                                consectetur,
+                                ipsam
+                                ullam repellendus dolorum nostrum veniam.</p>
+                        </div>
+                        <button>Ver proyecto</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
