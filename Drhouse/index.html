@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgb(234, 226, 231);
+            font-size: 80%;
+            padding-top: 5%;
+            padding-bottom: 5%;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .c2 {
+            background-color: rgb(38, 20, 18);
+            color: white;
+            padding: 0;
+            text-align: center;
+        }
+
+        .c2 h2,
+        .c2 h3 {
+            margin-top: 10px;
+            color: white;
+        }
+
+        .c2 p {
+            color: white;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        .redond {
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+        }
+
+        .c1 {
+            padding: 30px;
+            background-color: rgb(230, 214, 231);
+        }
+
+        .cajaI {
+            margin-bottom: 57px;
+        }
+
+        .sectionII {
+            padding: 0%;
+        }
+
+        .c1 h2 {
+            color: rgb(38, 20, 18);
+            padding-bottom: 5px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .c1 h4 {
+            color: rgb(27, 15, 18);
+        }
+
+        .separacion {
+            display: flex;
+            color: rgb(27, 15, 18);
+            justify-content: space-between;
+        }
+
+        h3 {
+            color: #333;
+            margin: 0%;
+        }
+
+        .obs p {
+            color: #bdbdbd;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        p {
+            color: #555;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        .info {
+            padding: 25px;
+            text-align: left;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info p {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 10px 0;
+        }
+
+        .info i,
+        .c1 h2 i {
+            color: #3a8ea5;
+        }
+
+        .c2 .info i {
+            color: white;
+        }
+
+        .obs {
+            background-color: rgb(27, 15, 18);
+            padding: 15px;
+        }
+
+        .educ {
+            text-align: left;
+            padding: 25px;
+        }
+
+        .educ p {
+            color: #bec1c2;
+            font-size: 85%;
+        }
+
+        @media (max-width: 590px) {
+            .container {
+                display: flex;
+                flex-direction: column-reverse;
+                margin-left: 20px;
+                margin-right: 20px;
+            }
+            .info {
+                padding: 20%;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .educ {
+                padding: 20%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="c1">
+            <div class="sectionI">
+                <h2><i style="color: rgb(38, 20, 18)" class="fas fa-user"></i> CAREER PROFILE</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta, doloribus? Voluptatum impedit dolor
+                    debitis, corporis minima aliquid natus enim. Dolor soluta ratione quis laborum doloribus neque
+                    voluptate necessitatibus possimus perspiciatis. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                    voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+            </div>
+            <div class="sectionII">
+                <h2><i style="color: rgb(38, 20, 18)"class="fas fa-briefcase"></i> EXPERIENCES</h2>
+                <h3>Lead Developer</h3>
+                <div class="separacion">
+                    <h4>Startup Hubs, San Francisco </h4>
+                    <h4>(2015 - Present)</h4>
+                </div>
+                <p>Describe your role here Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. <br> <br> Sed ut
+                    perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
+                    aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
+                    explicabo.</p>
+                <h3>Senior Software Engineer</h3>
+                <div class="separacion">
+                    <h4>Google, London </h4>
+                    <h4> (2014 - 2015)</h4>
+                </div>
+                <p>Describe your role here Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>
+
+                <h3>UI Developer</h3>
+                <div class="separacion">
+                    <h4>Amazon, London </h4>
+                    <h4> (2012 - 2014)</h4>
+                </div>
+                <p>Describe your role here Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>
+            </div>
+
+        </div>
+        <div class="c2">
+            <div class="obs">
+                <img src="https://i.pinimg.com/736x/c6/35/be/c635be41ddf4cb54b8cf82bb074f30be.jpg"
+                    alt="foto de perfil" class="redond">
+                <h2>Dr. House</h2>
+                <p>Full Stack Developer</p>
+            </div>
+            <div class="info">
+                <p><i class="fas fa-envelope"></i> alan.doe@website.com</p>
+                <p><i class="fas fa-phone"></i> 0123 456 789</p>
+                <p><i class="fas fa-globe"></i> portfoliosite.com</p>
+                <p><i class="fab fa-linkedin"></i> linkedin.com/in/alandoe</p>
+                <p><i class="fab fa-github"></i> github.com/username</p>
+                <p><i class="fab fa-twitter"></i> @twittername</p>
+            </div>
+
+            <div class="educ">
+
+                <h2> EDUCATION</h2>
+                <h4>MSc in Computer Science </h4>
+                <p>University of London (2011 - 2012)</p>
+                <h4>BSc in Applied Mathematics</h4>
+                <p>Bristol University (2007 - 2011)</p>
+
+                <h2> LANGUAGES</h2>
+                <p>English - Fluent</p>
+                <p>Spanish - Intermediate</p>
+                <p>French - Basic</p>
+
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>
