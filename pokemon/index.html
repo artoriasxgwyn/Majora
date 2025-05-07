@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0px;
+        padding: 0x;
+    }
+    body{
+        background-color: black;
+    }
+    .CUERPO {
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .CARTAS {
+        border-radius: 10px;
+        margin: 10px;
+        width: 90%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        text-align: center;
+        background-color: brown;
+        gap: 5px;
+        border: solid;
+        padding: 2%;
+        
+    }
+</style>
+
+<body>
+    <div class="CUERPO">
+        <div id="CARTAS" class="CARTAS">
+            <div id="CARDS"></div>
+            <div id="STATS"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+           let numeros = 0;
+    let pokemons = [];
+    let cartasTCG = [];
+
+    function suma() {
+        if (numeros < 2) {
+            return (numeros = numeros + 1);
+        }
+    }
+
+    function Primeraenmayuscula(texto) {
+        return texto.charAt(0).toUpperCase() + texto.slice(1);
+    }
+
+    async function numelos() {
+        for (let o = 1; o < 10; o++) {
+            const respuesta = await axios.get(`https://pokeapi.co/api/v2/pokemon/${o}`);
+            const Info = respuesta.data;
+            pokemons.push(respuesta.data);
+            console.log(Info);
+        }
+    }
+
+    async function getcards() {
+        for (let n = 0; n < pokemons.length; n++) {
+            const nombre = Primeraenmayuscula(pokemons[n].name);
+            const res = await axios.get(`https://api.pokemontcg.io/v2/cards?q=name:"${nombre}"&pageSize=1`);
+            const data = res.data;
+
+            console.log(data);
+
+            if (data.data.length > 0) {
+                cartasTCG.push(data.data[0]);
+            } else {
+                cartasTCG.push(null);
+            }
+        }
+    }
+
+    function paintTable() {
+        const card = document.getElementById("CARTAS");
+
+        pokemons.forEach((pokemon, i) => {
+            const carta = cartasTCG[i];
+
+            const imagenPokemon = document.createElement("img");
+            imagenPokemon.src = pokemon.sprites.front_default;
+            imagenPokemon.style.width = "160px";
+
+            const stats = document.createElement("div");
+            const caja1 = document.createElement("div");
+            const caja2 = document.createElement("div");
+
+            stats.style.backgroundColor = "Yellow";
+            stats.style.width = "70%";
+            stats.style.borderRadius = "10px";
+            stats.style.display = "Flex";
+            stats.style.flexDirection = "column";
+
+            caja1.style.backgroundColor = "White";
+            caja1.style.borderRadius = "10px";
+
+            for (let j = 0; j < 6; j++) {
+                const stat = document.createElement("p");
+                stat.textContent = `${pokemon.stats[j].stat.name}: ${pokemon.stats[j].base_stat}`;
+                stat.style.border = "solid";
+                stat.style.margin = "2%";
+                stat.style.borderRadius = "10px";
+                caja1.appendChild(stat);
+            }
+
+            stats.appendChild(caja1);
+            stats.appendChild(imagenPokemon);
+
+            if (carta) {
+                const imagenCarta = document.createElement("img");
+                imagenCarta.src = carta.images.small;
+                imagenCarta.style.width = "300px";
+                caja2.appendChild(imagenCarta);
+                card.appendChild(caja2);
+            }
+
+            card.appendChild(stats);
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+        await numelos();
+        await getcards();
+        paintTable();
+    });
+    </script>
+</body>
+
+</html>
