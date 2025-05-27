@@ -2,143 +2,233 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cartas Pokémon + Stats</title>
+  <style>
     * {
-        box-sizing: border-box;
-        margin: 0px;
-        padding: 0x;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    body{
-        background-color: black;
-    }
-    .CUERPO {
 
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    body {
+      background-color: black;
+    }
+
+    .CUERPO {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .CARTAS {
-        border-radius: 10px;
-        margin: 10px;
-        width: 90%;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        text-align: center;
-        background-color: brown;
-        gap: 5px;
-        border: solid;
-        padding: 2%;
-        
+      border-radius: 10px;
+      width: 90%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background-color: brown;
+      border: solid;
+      align-items: center;
+      padding: 2%;
     }
-</style>
+
+    #box2 {
+      position: fixed;
+      top: 10vh;
+      right: 20vh;
+      width: 50%;
+      height: 80vh;
+      background-color: blanchedalmond;
+      border-radius: 10px;
+      overflow-y: auto;
+      display: grid;
+      min-height: 100dvd;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    button {
+      margin-top: 10px;
+      width: 300px;
+    }
+
+    img {
+      margin-bottom: 10px;
+    }
+
+    .estadisticas {
+      display: grid;
+      min-width: 100dvd;
+      grid-template-columns: auto 1fr auto;
+      place-content: center;
+    }
+
+    #estadisticas {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .header {
+      background-color: black;
+    }
+
+    .footer {
+      background-color: black;
+
+    }
+
+    #color {
+      width: 20px;
+      background-color: green;
+    }
+  </style>
+</head>
 
 <body>
-    <div class="CUERPO">
-        <div id="CARTAS" class="CARTAS">
-            <div id="CARDS"></div>
-            <div id="STATS"></div>
+  <div class="CUERPO">
+    <div id="CARTAS" class="CARTAS">
+      <div id="box1"></div>
+      <div id="box2">
+        <div class="header">
+          <h2>card</h2>
         </div>
-    </div>
+        <div class="estadisticas">
+          <div id="color1"></div>
+          <div id="estadisticas"></div>
+          <div id="color2"></div>
+        </div>
+        <div class="footer">
+          <h2>estadisticas</h2>
+        </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
-           let numeros = 0;
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const colores = {
+      fire: '#ff4422',
+      water: '#3399ff',
+      grass: '#77cc55',
+      ground: '#ddbb55',
+      electric: '#ffd800',
+      normal: '#aaaa99',
+      fighting: '#bb5544',
+      poison: '#aa5599',
+      flying: '#8899ff',
+      psychic: '#ff5599',
+      bug: '#aabb22',
+      rock: '#bbaa66',
+      ghost: '#6666bb',
+      ice: '#66ccff',
+      dragon: '#7766ee',
+      dark: '#775544',
+      steel: '#aaaabb',
+      fairy: '#ee99ee'
+    };
     let pokemons = [];
     let cartasTCG = [];
+    const contenedor = document.getElementById("CARTAS");
+    const caja1 = document.getElementById("box1");
+    const estadisticasBox = document.getElementById("estadisticas");
 
-    function suma() {
-        if (numeros < 2) {
-            return (numeros = numeros + 1);
+
+    function PrimeraEnMayuscula(texto) {
+      return texto.charAt(0).toUpperCase() + texto.slice(1);
+    }
+
+    async function obtenerPokemons() {
+      const res = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=2&offset=0");
+      pokemons = (res.data.results);
+      console.log(pokemons)
+    }
+
+    async function obtenerCartas() {
+      for (let i = 0; i < pokemons.length; i++) {
+        const nombre = PrimeraEnMayuscula(pokemons[i].name);
+        const res = await axios.get(`https://api.pokemontcg.io/v2/cards?q=name:"${nombre}"&pageSize=1`);
+        cartasTCG.push(res.data.data[0] || null);
+      }
+    }
+
+    async function mostrarEstadisticas(pokemonData) {
+      const res = await axios.get(pokemonData.url);
+      const datos = res.data;
+
+      estadisticasBox.innerHTML = "";
+      let color11 = document.getElementById("color1")
+      let color22 = document.getElementById("color2")
+      const tipos = datos.types.map(t => t.type.name);
+
+      if (tipos.length === 1) {
+        color11.style.height = "71.6vh"
+        color22.style.height = "71.6vh"
+        color11.textContent = "hola"
+        color22.textContent = "hola"
+        color11.style.background = colores[tipos[0]] || "#ccc";
+        color22.style.background = colores[tipos[0]] || "#ccc";
+      } else {
+        const color1 = colores[tipos[0]] || "#ccc";
+        const color2 = colores[tipos[1]] || "#ccc";
+        color11.style.height = "71.6vh"
+        color22.style.height = "71.6vh"
+        color11.textContent = "hola"
+        color22.textContent = "hola"
+        color11.style.background = `linear-gradient(90deg, ${color1}, ${color2})`;
+        color22.style.background = `linear-gradient(90deg, ${color1}, ${color2})`;
+      }
+
+
+      const sprite = document.createElement("img");
+      sprite.src = datos.sprites.front_default;
+      sprite.style.width = "150px";
+      estadisticasBox.appendChild(sprite);
+
+
+      const nombre = document.createElement("h3");
+      nombre.textContent = datos.name.toUpperCase();
+      estadisticasBox.appendChild(nombre);
+
+      datos.stats.forEach(stat => {
+        const linea = document.createElement("p");
+        linea.textContent = `${stat.stat.name.toUpperCase()}: ${stat.base_stat}`;
+        estadisticasBox.appendChild(linea);
+      });
+    }
+
+    async function mostrarCartas() {
+      caja1.style.display = "flex";
+      caja1.style.flexDirection = "column";
+
+      for (let i = 0; i < pokemons.length; i++) {
+        const carta = cartasTCG[i];
+        const pokemon = pokemons[i];
+
+        if (carta) {
+          const imagenCarta = document.createElement("img");
+          imagenCarta.src = carta.images.small;
+          imagenCarta.style.width = "300px";
+
+          const boton = document.createElement("button");
+          boton.textContent = "datos";
+          boton.onclick = () => mostrarEstadisticas(pokemon);
+
+          caja1.appendChild(boton);
+          caja1.appendChild(imagenCarta);
         }
-    }
-
-    function Primeraenmayuscula(texto) {
-        return texto.charAt(0).toUpperCase() + texto.slice(1);
-    }
-
-    async function numelos() {
-        for (let o = 1; o < 10; o++) {
-            const respuesta = await axios.get(`https://pokeapi.co/api/v2/pokemon/${o}`);
-            const Info = respuesta.data;
-            pokemons.push(respuesta.data);
-            console.log(Info);
-        }
-    }
-
-    async function getcards() {
-        for (let n = 0; n < pokemons.length; n++) {
-            const nombre = Primeraenmayuscula(pokemons[n].name);
-            const res = await axios.get(`https://api.pokemontcg.io/v2/cards?q=name:"${nombre}"&pageSize=1`);
-            const data = res.data;
-
-            console.log(data);
-
-            if (data.data.length > 0) {
-                cartasTCG.push(data.data[0]);
-            } else {
-                cartasTCG.push(null);
-            }
-        }
-    }
-
-    function paintTable() {
-        const card = document.getElementById("CARTAS");
-
-        pokemons.forEach((pokemon, i) => {
-            const carta = cartasTCG[i];
-
-            const imagenPokemon = document.createElement("img");
-            imagenPokemon.src = pokemon.sprites.front_default;
-            imagenPokemon.style.width = "160px";
-
-            const stats = document.createElement("div");
-            const caja1 = document.createElement("div");
-            const caja2 = document.createElement("div");
-
-            stats.style.backgroundColor = "Yellow";
-            stats.style.width = "70%";
-            stats.style.borderRadius = "10px";
-            stats.style.display = "Flex";
-            stats.style.flexDirection = "column";
-
-            caja1.style.backgroundColor = "White";
-            caja1.style.borderRadius = "10px";
-
-            for (let j = 0; j < 6; j++) {
-                const stat = document.createElement("p");
-                stat.textContent = `${pokemon.stats[j].stat.name}: ${pokemon.stats[j].base_stat}`;
-                stat.style.border = "solid";
-                stat.style.margin = "2%";
-                stat.style.borderRadius = "10px";
-                caja1.appendChild(stat);
-            }
-
-            stats.appendChild(caja1);
-            stats.appendChild(imagenPokemon);
-
-            if (carta) {
-                const imagenCarta = document.createElement("img");
-                imagenCarta.src = carta.images.small;
-                imagenCarta.style.width = "300px";
-                caja2.appendChild(imagenCarta);
-                card.appendChild(caja2);
-            }
-
-            card.appendChild(stats);
-        });
+      }
     }
 
     document.addEventListener("DOMContentLoaded", async () => {
-        await numelos();
-        await getcards();
-        paintTable();
+      await obtenerPokemons();
+      await obtenerCartas();
+      await mostrarCartas();
     });
-    </script>
+
+
+  </script>
 </body>
 
 </html>

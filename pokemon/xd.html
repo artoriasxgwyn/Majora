@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Pokémon Random</title>
+    <style>
+        body {
+            font-family: cursive;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            transition: background-color 1s;
+            padding-top: 30%;
+        }
+        
+        .pokemon-card {
+            width: 20%; 
+            height: 70%; 
+            border-radius: 10px;
+            padding: 0px 30px; 
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            perspective: 1000px;
+            box-shadow: 0 10px 30px rgba(12, 12, 12, 0.3); 
+        }
+        
+        
+        .card-front {
+            border: 20px solid transparent;
+            border-image: url('card-margin.jpeg') 30 round;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            background-color: white;
+            box-shadow: 0 10px 30px rgba(12, 12, 12, 0.3); 
+            backface-visibility: hidden;
+            transition: transform 0.6s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0px 5px; 
+            box-sizing: border-box;
+
+        }
+        
+        .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            background-color: #f0f0f0; 
+            border: 20px solid transparent;
+            border-image: url('card-margin.jpeg') 30 round;;
+            box-shadow: 0 5px 30px rgba(12, 12, 12, 0.514); 
+            border-radius: 10px; 
+            transform: rotateY(180deg);
+            backface-visibility: hidden;
+            transition: transform 0.6s;
+            padding-right: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .pokemon-card:hover .card-front {
+            transform: rotateY(180deg);
+        }
+        
+        .pokemon-card:hover .card-back {
+            transform: rotateY(0deg);
+        }
+        
+        .pokemon-name {
+            text-transform: capitalize;
+            font-size: 28px;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+        
+        .pokemon-number {
+            font-size: 20px;
+            margin: 5px 0;
+            font-weight: bold;
+        }
+        
+        .pokemon-image {
+            width: 70%;
+            height: 50%;
+            margin: 10px 0;
+        }
+        
+        .pokemon-types {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 5px 0;
+        }
+        
+        .type-badge {
+            padding: 5px 15px; 
+            border-radius: 20px; 
+            font-size: 14px; 
+            text-transform: uppercase;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            color: white;
+            font-weight: bold;
+        }
+        
+        .pokemon-info {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin: 10px 0;
+        }
+        
+        .pokemon-stats {
+            text-align: left;
+            padding: 0 10px;
+            margin-top: 10px;
+            width: 100%;
+        }
+        
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 8px 0;
+            font-size: 14px;
+        }
+        
+        .stat-bar-container {
+            flex-grow: 1;
+            height: 15px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin: 0 10px;
+            overflow: hidden;
+        }
+        
+        .stat-bar {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s, background-color 0.5s;
+        }
+        
+        .weakness-title {
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 20px;
+            text-align: center;
+        }
+        
+        .weaknesses {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        #logo{
+        position: fixed;
+        top: 0px;
+        left: 50%;
+        transform:translateX(-50%);
+        size: 2px;
+        }
+        
+        #loading-text {
+            position: fixed;
+            top: 5%;
+            left: 5%;
+            background-color: yellow;
+            padding: 5px 10px;
+            border: 1px solid black;
+            z-index: 100;
+        }
+        
+        .flip-instruction {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            left: 0;
+        }
+        
+        .stats-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 20px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="logo"> <img src="logo.jpeg" alt="logo-pokemon"></div>
+    <div id="loading-text">Cargando Pokémon...</div>
+    
+    <div class="pokemon-card">
+        <div class="card-front">
+            <h2 class="pokemon-name" id="pokemon-name">...</h2>
+            <h3 class="pokemon-number" id="pokemon-number">#</h3>
+            <img src="" alt="Pokemon" class="pokemon-image" id="pokemon-image">
+            <div class="pokemon-types" id="pokemon-types"></div>
+            <div class="pokemon-info" id="pokemon-info">
+                <p id="pokemon-height">Altura: ...</p>
+                <p id="pokemon-weight">Peso: ...</p>
+            </div>
+        </div>
+        <div class="card-back">
+            <h3 class="stats-title">Estadísticas</h3>
+            <div class="pokemon-stats" id="pokemon-stats"></div>
+            <h3 class="weakness-title">Debilidades:</h3>
+            <div class="weaknesses" id="pokemon-weaknesses"></div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        const colores = {
+            fire: '#ff4422',
+            water: '#3399ff',
+            grass: '#77cc55',
+            ground: '#ddbb55',
+            electric: '#ffd800',
+            normal: '#aaaa99',
+            fighting: '#bb5544',
+            poison: '#aa5599',
+            flying: '#8899ff',
+            psychic: '#ff5599',
+            bug: '#aabb22',
+            rock: '#bbaa66',
+            ghost: '#6666bb',
+            ice: '#66ccff',
+            dragon: '#7766ee',
+            dark: '#775544',
+            steel: '#aaaabb',
+            fairy: '#ee99ee'
+        };
+        
+        function numeroAleatorio() {
+            return Math.floor(Math.random() * 400)+ 1;
+        }
+        
+        window.onload = async function() {
+            try {
+                const pokemonId = numeroAleatorio();
+                const respuesta = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
+                const pokemon = respuesta.data;
+                
+                const pokemonName = document.getElementById('pokemon-name');
+                pokemonName.textContent = pokemon.name;
+                document.getElementById('pokemon-number').textContent =` #${pokemon.id.toString().padStart(3, '0')}`;
+                document.getElementById('pokemon-image').src = pokemon.sprites.other['official-artwork'].front_default || pokemon.sprites.front_default;
+                document.getElementById('pokemon-height').textContent =` Altura: ${(pokemon.height / 10).toFixed(1)}m`;
+                document.getElementById('pokemon-weight').textContent = `Peso: ${(pokemon.weight / 10).toFixed(1)}kg`;
+                const tiposDiv = document.getElementById('pokemon-types');
+                tiposDiv.innerHTML = '';
+                
+                const tipos = [];
+                pokemon.types.forEach(tipo => {
+                    const tipoNombre = tipo.type.name;
+                    tipos.push(tipoNombre);
+                    
+                    const tipoBadge = document.createElement('span');
+                    tipoBadge.className = 'type-badge';
+                    tipoBadge.textContent = tipoNombre;
+                    tipoBadge.style.backgroundColor = colores[tipoNombre] || '#999999';
+                    tiposDiv.appendChild(tipoBadge);
+                });
+                
+                if (tipos.length === 1) {
+                    pokemonName.style.color = colores[tipos[0]];
+                } else if (tipos.length >= 2) {
+                    pokemonName.style.background = linear-gradient(`to right, ${colores[tipos[0]]}, ${colores[tipos[1]]}`);
+                    pokemonName.style.webkitBackgroundClip = 'text';
+                    pokemonName.style.webkitTextFillColor = 'transparent';
+                }
+                
+                cambiarFondo(tipos);
+                
+                const statsDiv = document.getElementById('pokemon-stats');
+                statsDiv.innerHTML = '';
+                
+                pokemon.stats.forEach(stat => {
+                    const statItem = document.createElement('div');
+                    statItem.className = 'stat-item';
+                    
+                    const statName = document.createElement('span');
+                    statName.textContent = traducirStat(stat.stat.name);
+                    statName.style.width = '140px';
+                    
+                    const statValue = document.createElement('span');
+                    statValue.textContent = `${stat.base_stat}/255`;
+                    statValue.style.width = '70px';
+                    statValue.style.textAlign = 'right';
+                    
+                    const statBarContainer = document.createElement('div');
+                    statBarContainer.className = 'stat-bar-container';
+                    
+                    const statBar = document.createElement('div');
+                    statBar.className = 'stat-bar';
+                    statBar.style.width = `${(stat.base_stat / 255) * 100}%`;
+                    
+                    if (tipos.length === 1) {
+                        statBar.style.backgroundColor = colores[tipos[0]];
+                    } else if (tipos.length >= 2) {
+                        statBar.style.background = linear-gradient(`to right, ${colores[tipos[0]]}, ${colores[tipos[1]]}`);
+                    }
+                    
+                    statBarContainer.appendChild(statBar);
+                    
+                    statItem.appendChild(statName);
+                    statItem.appendChild(statBarContainer);
+                    statItem.appendChild(statValue);
+                    statsDiv.appendChild(statItem);
+                });
+                
+                await cargarDebilidades(pokemon.types);
+                
+                document.getElementById('loading-text').style.display = 'none';
+                
+            } catch (error) {
+                console.error( error);
+            }
+        };
+        
+        function cambiarFondo(tipos) {
+            if (tipos.length === 1) {
+                document.body.style.backgroundColor = colores[tipos[0]] || '#f5f5f5';
+            } else if (tipos.length >= 2) {
+                document.body.style.background = linear-gradient(`to right, ${colores[tipos[0]]}, ${colores[tipos[1]]}`);            }
+        }
+        
+        function traducirStat(statName) {
+            switch (statName) {
+                case 'hp': return 'HP';
+                case 'attack': return 'Ataque';
+                case 'defense': return 'Defensa';
+                case 'special-attack': return 'Ataque Especial';
+                case 'special-defense': return 'Defensa Especial';
+                case 'speed': return 'Velocidad';
+                default: return statName;
+            }
+        }
+        
+        async function cargarDebilidades(types) {
+            const weaknessesDiv = document.getElementById('pokemon-weaknesses');
+            weaknessesDiv.innerHTML = '';
+            
+            try {
+                const debilidades = new Set();
+                
+                for (const typeInfo of types) {
+                    const typeResponse = await axios.get(typeInfo.type.url);
+                    const damageRelations = typeResponse.data.damage_relations;
+                    
+                    damageRelations.double_damage_from.forEach(type => {
+                        debilidades.add(type.name);
+                    });
+                }
+                
+                if (debilidades.size === 0) {
+                    weaknessesDiv.textContent = "No tiene debilidades";
+                } else {
+                    debilidades.forEach(debilidad => {
+                        const debBadge = document.createElement('span');
+                        debBadge.className = 'type-badge';
+                        debBadge.textContent = debilidad;
+                        debBadge.style.backgroundColor = colores[debilidad] || '#999999';
+                        weaknessesDiv.appendChild(debBadge);
+                    });
+                }
+            } catch (error) {
+                console.error("Error al cargar debilidades:", error);
+                weaknessesDiv.textContent = "Error al cargar debilidades";
+            }
+        }
+    </script>
+</body>
+</html>
