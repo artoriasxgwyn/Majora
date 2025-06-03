@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="contenedor">
+        <div class="box">
+            <div style="display: flex; flex-direction: column; gap: 20px; width: 50%;">
+                <input type="text" id="buscarmesa" placeholder="buscar mesa">
+                <input type="text" name="" id="nro" placeholder="nro">
+                <input type="text" name="" id="descripcion" placeholder="descripcion">
+                <input type="text" name="" id="personas" placeholder="personas">
+                <input type="text" name="" id="estado" placeholder="estado" value="libre">
+                <button id="registrar">Guardar Mesa</button>
+            </div>
+            <div class="mesas">
+                <div id="mesas">
+                </div>
+            </div>
+
+        </div>
+        <div class="modal" id="modal">
+
+        </div>
+    </div>
+
+
+
+    <script>
+        /* https://img.freepik.com/vector-premium/dibujos-animados-mesa_119631-412.jpg */
+        let datosMesa = []
+        let mesaencontrada = {}
+        let modo = 0
+        let numMesa = 0
+        let num = 0;
+        let VoF = 1;
+        let num1 = "";
+        let mesas = [];
+        let modal = document.getElementById("modal")
+        let buscar = document.getElementById("buscarmesa")
+
+        document.getElementById("registrar").addEventListener("click", () => {
+            if (modo == 0) {
+                console.log("estoy guardando...");
+                guardarMesa()
+            } else if (modo == 1) {
+                console.log("estoy editando...");
+                editarMesa()
+            }
+
+        })
+
+        function modalalertas(err) {
+            modal.textContent = err
+            modal.style.backgroundImage = "url('https://i.pinimg.com/736x/2d/84/11/2d8411cdb9438b8dd5c9e954fa4f8e9a.jpg')";
+            modal.style.backgroundPosition = "center"
+            modal.style.backgroundRepeat = "no-repeat"
+            modal.style.width = "40%"
+            modal.style.height = "70%"
+            modal.style.textAlign="center"
+            modal.style.color="white"
+            modal.stylae.fontSize="20px"
+            setTimeout(() => {
+                modala.style="hidden"
+                modala.textContent = ""
+            }, 2000)
+        }
+
+        buscar.addEventListener("input", () => {
+            console.log(datosMesa.length)
+            if (datosMesa.length > 0) {
+                datosMesa.forEach((propiedad, indice) => {
+                    num1 = document.getElementById("buscarmesa").value
+                    num = parseInt(document.getElementById("buscarmesa").value)
+                    if (propiedad.numero == num) {
+                        VoF = 0
+                        mesaencontrada = propiedad
+                        console.log(propiedad)
+                        modalalertas("mesa encontrada")
+                        pintarMesas()
+                    } else if (indice == datosMesa.length) {
+                        console.log(num)
+                        console.log(propiedad.numero)
+                        modalalertas("no hay mesas registradas con ese numero")
+                    }
+                })
+            } else {
+                modalalertas("no hay mesas registradas aun")
+                pintarMesas()
+            }
+            if (num1.length == 0) {
+                pintarMesas()
+            }
+
+        })
+
+        function validaciones(bool) {
+            let llave = 1;
+            if (modo == 0) {
+                datosMesa.forEach((propiedad) => {
+                    if ((parseInt(document.getElementById("nro").value)) == propiedad.numero) {
+                        llave = 0
+                        modalalertas("ese numero de mesa ya existe")
+                    }
+                })
+            }
+
+            if (document.getElementById("nro").value == "" || true == isNaN(parseInt(document.getElementById("nro").value))) {
+                modalalertas("Por favor digite el numero")
+            } else if (document.getElementById("descripcion").value == "") {
+                modalalertas("Por favor digite la descripcion")
+            } else if (document.getElementById("personas").value == "" || true == isNaN(parseInt(document.getElementById("personas").value))) {
+                modalalertas("Por favor digite la capcidad de la mesa")
+            } else if (document.getElementById("estado").value == "") {
+                modalalertas("Por favor digite el estado de la mesa")
+            } else if (llave == 1) {
+                mesa = {
+                    numero: document.getElementById("nro").value,
+                    descripcion: document.getElementById("descripcion").value,
+                    personas: document.getElementById("personas").value,
+                    estado: document.getElementById("estado").value,
+                }
+                bool(true)
+            }
+
+        }
+        function guardarMesa() {
+            validaciones((bool) => {
+                if (bool) {
+                    datosMesa.unshift(mesa)
+                    modalalertas("Registro exitoso")
+                    limpiar()
+                    pintarMesas()
+                }
+            })
+        }
+
+        function limpiar() {
+            document.getElementById("nro").value = ""
+            document.getElementById("descripcion").value = ""
+            document.getElementById("personas").value = ""
+            document.getElementById("estado").value = ""
+        }
+
+        function editarMesa() {
+            validaciones((bool) => {
+                if (bool) {
+                    let indice = datosMesa.findIndex(it => it.numero == numMesa)
+                    console.log(indice);
+                    datosMesa[indice].numero = document.getElementById("nro").value
+                    datosMesa[indice].descripcion = document.getElementById("descripcion").value
+                    datosMesa[indice].personas = document.getElementById("personas").value
+                    datosMesa[indice].estado = document.getElementById("estado").value
+                    pintarMesas()
+                    modo = 0
+                    document.getElementById("registrar").textContent = "Guardar Mesa"
+                    limpiar()
+                    modalalertas("Registro editado")
+                }
+            })
+
+        }
+
+        function pintarMesas() {
+            document.getElementById("mesas").textContent = ""
+            console.log(VoF)
+            if (VoF == 1) {
+                mesas = datosMesa
+            } else if (VoF == 0) {
+                mesas = []
+                mesas.push(mesaencontrada)
+            }
+            mesas.forEach((item, i) => {
+                let divCard = document.createElement("div")
+                let divImagen = document.createElement("div")
+                let imagen = document.createElement("img")
+                let divTextos = document.createElement("div")
+                let parrafoDescripcion = document.createElement("p")
+                let numeroMesa = document.createElement("span")
+                let divBotones = document.createElement("div")
+                let editar = document.createElement("button")
+                let eliminar = document.createElement("button")
+
+                divCard.id = "divCard"
+                imagen.id = "mesa"
+                numeroMesa.textContent = item.numero
+                parrafoDescripcion.textContent = item.descripcion
+                editar.textContent = "📝"
+                eliminar.textContent = "❌"
+                imagen.src = "https://i.pinimg.com/736x/00/21/25/0021259a98567d617c162e3ef7cf4238.jpg"
+
+                document.getElementById("mesas").appendChild(divCard)
+                divImagen.appendChild(imagen)
+                divCard.appendChild(divImagen)
+                divCard.appendChild(divTextos)
+                divCard.appendChild(divBotones)
+                divTextos.appendChild(parrafoDescripcion)
+                divTextos.appendChild(numeroMesa)
+                divBotones.appendChild(editar)
+                divBotones.appendChild(eliminar)
+
+                editar.addEventListener("click", () => {
+                    document.getElementById("nro").value = item.numero
+                    document.getElementById("descripcion").value = item.descripcion
+                    document.getElementById("personas").value = item.personas
+                    document.getElementById("estado").value = item.estado
+                    document.getElementById("registrar").textContent = "Editar Mesa"
+                    modo = 1
+                    numMesa = item.numero
+                    VoF = 1
+                })
+
+                eliminar.addEventListener("click", () => {
+                    //findIndex nos permite traer el indice de acuerdo a una condicion
+                    if (modo == 0) {
+                        let indice = datosMesa.findIndex(it => it.numero == item.numero)
+                        console.log(indice);
+                        datosMesa.splice(indice, 1)
+                        console.log(datosMesa);
+                        pintarMesas()
+                        modalalertas("Registro eliminado")
+                    }
+                })
+
+                if (item.estado == "reservado") {
+                    divCard.style.backgroundColor = "gray";
+                } else if (item.estado == "ocupado") {
+                    divCard.style.backgroundColor = "green";
+                } else {
+                    divCard.style.backgroundColor = "white";
+                }
+                VoF = 1
+            })
+        }
+
+    </script>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+        }
+
+        #mesa {
+            height: 100px;
+            width: 100px;
+        }
+
+        #divCard {
+            border: 1px solid gray;
+            border-radius: 10px;
+            box-shadow: 3px 3px 3px gray;
+        }
+
+        #mesas {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .mesas {
+            overflow: scroll;
+            height: 100%;
+        }
+
+        .contenedor {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100vh;
+        }
+
+        .box {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 5%;
+            padding-left: 5%;
+            width: 100vh;
+
+        }
+
+        .modal {
+            width: max-content;
+            background-color: whitesmoke;
+            position: absolute;
+            left: 50%;
+            top: 20%;
+        }
+
+        body {
+            background-image: url("https://i.pinimg.com/736x/0e/cf/bd/0ecfbd7b1f9bcbf78bb3a17fba4c614d.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            width: 100vh;
+            height: 100vh;
+        }
+    </style>
+</body>
+
+</html>
