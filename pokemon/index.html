@@ -77,11 +77,6 @@
       background-color: black;
 
     }
-
-    #color {
-      width: 20px;
-      background-color: green;
-    }
   </style>
 </head>
 
@@ -140,7 +135,7 @@
     }
 
     async function obtenerPokemons() {
-      const res = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=2&offset=0");
+      const res = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=20&offset=0");
       pokemons = (res.data.results);
       console.log(pokemons)
     }
@@ -163,25 +158,39 @@
       const tipos = datos.types.map(t => t.type.name);
       color11.style.width = "20px"
       color22.style.width = "20px"
+      let divtipos = document.createElement("div")
       let divtipe = document.createElement("div")
       let tipo = document.createElement("h3")
+      let divtipe0 = document.createElement("div")
+      let tipo0 = document.createElement("h3")
       divtipe.style.width = "15%"
       divtipe.style.textAlign = "center"
-      divtipe.style.height = "max-content"
+      divtipe.style.height = "min-content"
       divtipe.style.borderRadius = "5px"
+      divtipe0.style.width = "15%"
+      divtipe0.style.textAlign = "center"
+      divtipe0.style.height = "min-content"
+      divtipe0.style.borderRadius = "5px"
       if (tipos.length === 1) {
         divtipe.appendChild(tipo)
         estadisticasBox.appendChild(divtipe)
+        tipo.textContent = tipos[0];
+        cartas.style.background = colores[tipos[0]] || "#ccc";
+        divtipe.style.background = colores[tipos[0]] || "#ccc"
         color11.style.background = colores[tipos[0]] || "#ccc";
         color22.style.background = colores[tipos[0]] || "#ccc";
       } else {
         const color1 = colores[tipos[0]] || "#ccc";
         const color2 = colores[tipos[1]] || "#ccc";
+        divtipe0.appendChild(tipo0)
         divtipe.appendChild(tipo)
         estadisticasBox.appendChild(divtipe)
+        estadisticasBox.appendChild(divtipe0)
         tipo.textContent = tipos[0];
         divtipe.style.background = colores[tipos[0]] || "#ccc"
-        
+        tipo0.textContent = tipos[1];
+        divtipe0.style.background = colores[tipos[1]] || "#ccc"
+
         cartas.style.background = colores[tipos[0]] || "#ccc";
         color11.style.background = `linear-gradient(90deg, ${color1}, ${color2})`;
         color22.style.background = `linear-gradient(90deg, ${color1}, ${color2})`;
