@@ -2,6 +2,19 @@
 <html lang="en">
 
 <head>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <script type="importmap">
+    {
+      "imports": {
+        "@material/web/": "https://esm.run/@material/web/"
+      }
+    }
+  </script>
+  <script type="module">
+    import '@material/web/all.js';
+    import { styles as typescaleStyles } from '@material/web/typography/md-typescale-styles.js';
+    document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cartas Pokémon + Stats</title>
@@ -46,8 +59,9 @@
       grid-template-rows: auto 1fr auto;
     }
 
-    button {
+    md-filled-tonal-button {
       margin-top: 10px;
+      margin-bottom: 10px;
       width: 300px;
     }
 
@@ -77,8 +91,30 @@
       background-color: black;
 
     }
+
+    .tracking-in-expand-forward-top {
+      animation: tracking-in-expand-forward-top 0.4s linear both
+    }
+
+    @keyframes tracking-in-expand-forward-top {
+      0% {
+        letter-spacing: -.2em;
+        transform: translateZ(-700px) translateY(-100px);
+        opacity: 0
+      }
+
+      40% {
+        opacity: .6
+      }
+
+      100% {
+        transform: translateZ(0) translateY(0);
+        opacity: 1
+      }
+    }
   </style>
 </head>
+
 
 <body>
   <div class="CUERPO">
@@ -135,7 +171,7 @@
     }
 
     async function obtenerPokemons() {
-      const res = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=20&offset=0");
+      const res = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=5&offset=0");
       pokemons = (res.data.results);
       console.log(pokemons)
     }
@@ -151,7 +187,6 @@
     async function mostrarEstadisticas(pokemonData) {
       const res = await axios.get(pokemonData.url);
       const datos = res.data;
-
       estadisticasBox.innerHTML = "";
       let color11 = document.getElementById("color1")
       let color22 = document.getElementById("color2")
@@ -163,6 +198,8 @@
       let tipo = document.createElement("h3")
       let divtipe0 = document.createElement("div")
       let tipo0 = document.createElement("h3")
+      tipo0.style.fontFamily = "cursive"
+      tipo.style.fontFamily = "cursive"
       divtipe.style.width = "15%"
       divtipe.style.textAlign = "center"
       divtipe.style.height = "min-content"
@@ -171,7 +208,9 @@
       divtipe0.style.textAlign = "center"
       divtipe0.style.height = "min-content"
       divtipe0.style.borderRadius = "5px"
+      divtipos.style.display = "flex";
       if (tipos.length === 1) {
+
         divtipe.appendChild(tipo)
         estadisticasBox.appendChild(divtipe)
         tipo.textContent = tipos[0];
@@ -202,16 +241,24 @@
 
 
 
-
+      let strong = document.createElement("strong")
       const nombre = document.createElement("h3");
+      nombre.style.fontFamily = "cursive"
       nombre.textContent = datos.name.toUpperCase();
-      estadisticasBox.appendChild(nombre);
+      estadisticasBox.appendChild(strong);
+      strong.appendChild(nombre)
 
       datos.stats.forEach(stat => {
+        divtipos.appendChild(divtipe)
+        divtipos.appendChild(divtipe0)
         const linea = document.createElement("p");
-        linea.textContent = `${stat.stat.name.toUpperCase()}: ${stat.base_stat}`;
+        let nombreEstadistica = stat.stat.name.toUpperCase()
+        linea.style.color = "gray"
+        let valorEstadistica = stat.base_stat
+        linea.textContent = `${nombreEstadistica}: ${valorEstadistica}`;
         estadisticasBox.appendChild(linea);
       });
+
     }
 
     async function mostrarCartas() {
@@ -227,8 +274,11 @@
           imagenCarta.src = carta.images.small;
           imagenCarta.style.width = "300px";
 
-          const boton = document.createElement("button");
-          boton.textContent = "datos";
+
+
+          const boton = document.createElement("md-filled-tonal-button");
+          boton.textContent = "Pedir datos"
+          boton.classList = "buton";
           boton.onclick = () => mostrarEstadisticas(pokemon);
 
           caja1.appendChild(boton);
