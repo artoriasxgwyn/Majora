@@ -2,61 +2,156 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Formulario con Textarea</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .formulario {
+      padding-top: 5%;
+      padding-bottom: 5%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      row-gap: 10px;
+      height: 100%;
+    }
+
+    .formulario input,
+    .formulario select,
+    .formulario textarea {
+      padding: 5px;
+      width: 90%;
+      border-radius: 14px;
+      border: solid 2px;
+      font-family: inherit;
+    }
+
+    .formulario textarea {
+      resize: none;
+      height: 80px;
+    }
+
+    .contenedor {
+      background-color: black;
+      width: 93%;
+      height: 90vh;
+      border-radius: 27.6px;
+      padding: 1.5%;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .cajaIzquierda {
+      background-color: white;
+      width: 20%;
+      height: 100%;
+      border-radius: 20px;
+    }
+
+    .citacartas {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: space-between;
+      width: 95%;
+    }
+
+    .cajaCitas {
+      width: 99%;
+      height: 10%;
+      background-color: white;
+      border-radius: 20px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .cajaCartas {
+      background-color: white;
+      width: 99%;
+      height: 88%;
+      border-radius: 20px;
+    }
+
+    .box1 {
+      display: flex;
+      height: 50%;
+      align-items: center;
+      justify-content: center;
+      gap: 1%;
+      height: 100%;
+      margin-right: 1%;
+    }
+
+    .box1 button {
+      border-radius: 20px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      border: solid 2px;
+      height: 65%;
+      background-color: white;
+    }
+
+    select {
+      border: solid 2px;
+      border-radius: 20px;
+      height: 65%;
+      font-weight: bold;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: whitesmoke;
+    }
+  </style>
 
 <body>
-    <div class="contenedor">
-        <header class="header">
-            <div>
-                <h1 style="color: #9cd2ea;">Administrador de citas</h1>
-            </div>
-            <div class="espaciador">
-                <select name="Visualizador" id="Citas" style="margin-left: 5%;">
-                    <option value="Abierta">Abierta</option>
-                    <option value="Terminada">Terminada</option>
-                    <option value="Anulada">Anulada</option>
-                </select>
-                <button style="margin-right: 5%; padding: 0.3%;border-radius: 10px;" id="register">
-                    <p id="contentboton">ingresar cita</p>
-                </button>
-            </div>
-        </header>
-        <section class="content">
-            <div class="box" id="box">
-                <div id="Registro">
-                    <input type="text" id="buscarmesa" placeholder="buscar mesa">
-                    <input type="text" name="" id="nro" placeholder="nro">
-                    <input type="text" name="" id="descripcion" placeholder="descripcion">
-                    <input type="text" name="" id="personas" placeholder="personas">
-                    <input type="text" name="" id="estado" placeholder="estado" value="libre">
-                    <button id="registrar" style="padding: 0.3%;border-radius: 10px;">Guardar Cita</button>
-                </div>
-                <div class="mesas">
-                    <div id="mesas">
-                    </div>
-                </div>
-            </div>
-        </section>
-        <footer class="footer">
+  <div class="contenedor">
+    <section class="cajaIzquierda">
+      <div class="formulario">
+        <input type="text" placeholder="Nombre Mascota" />
+        <input type="text" placeholder="Propietario" />
+        <input type="text" placeholder="Telefono" />
+        <input type="text" placeholder="Fecha Cita" />
+        <input type="text" placeholder="Hora Cita" />
+        <select name="" id="tipoMascota">
+          <option value="">Especie Mascota</option>
+          <option value="Abierta">Abierta</option>
+          <option value="">ads</option>
+          <option value="">ads</option>
+        </select>
+        <textarea id="textarea" placeholder="Detalles adicionales..."></textarea>
+      </div>
+    </section>
 
-        </footer>
-
-
-
-
-
-        <div class="modal" id="modal">
-
+    <div class="citacartas">
+      <section class="cajaCitas">
+        <div class="box1">
+          <select name="" id="buscarFiltro">
+            <option value="">Buscar/Filtro</option>
+            <option value="Abierta">Abierta</option>
+            <option value="">ads</option>
+            <option value="">ads</option>
+          </select>
+          <button id="cita"><i class="fa-solid fa-floppy-disk"></i></button>
         </div>
+      </section>
+      <section class="cajaCartas"></section>
     </div>
-
-
-
-    <script>
-        /* https://img.freepik.com/vector-premium/dibujos-animados-mesa_119631-412.jpg */
+  </div>
+</body>
+  <script>
         let datosMesa = []
         let mesaencontrada = {}
         let modo = 0
@@ -65,13 +160,9 @@
         let VoF = 1;
         let num1 = "";
         let mesas = [];
-        let opencerrar = 1;
-        let registro = document.getElementById("Registro")
         let modal = document.getElementById("modal")
         let buscar = document.getElementById("buscarmesa")
-        let register = document.getElementById("register")
-        let box = document.getElementById("box")
-        let contenboton = document.getElementById("contentboton")
+
         document.getElementById("registrar").addEventListener("click", () => {
             if (modo == 0) {
                 console.log("estoy guardando...");
@@ -85,6 +176,7 @@
 
         function modalalertas(err) {
             modal.textContent = err
+            modal.style.backgroundImage = "url('https://i.pinimg.com/736x/2d/84/11/2d8411cdb9438b8dd5c9e954fa4f8e9a.jpg')";
             modal.style.backgroundPosition = "center"
             modal.style.backgroundRepeat = "no-repeat"
             modal.style.width = "40%"
@@ -264,121 +356,122 @@
                 VoF = 1
             })
         }
-        registro.style.display = "none";
-        register.addEventListener("click", () => {
-            if (opencerrar == 1) {
-                registro.style.display = "block";
-                registro.style.display = "flex";
-                registro.style.justifyContent = "center";
-                contenboton.textContent = "cerrar"
-                opencerrar = 0
-                console.log(opencerrar)
-
-            } else if (opencerrar == 0) {
-                registro.style.display = "none";
-                contenboton.textContent = "ingresar cita"
-                opencerrar = 1
-            }
-        })
-
 
     </script>
-    <style>
+<style>
+    * {
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+    }
 
-        * {
-            padding: 0px;
-            margin: 0px;
-            box-sizing: border-box;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        }
+    .box1 button {
+        border-radius: 20px;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        border: solid 2px;
+        height: 65%;
+        background-color: white;
+    }
 
-        .espaciador {
-            display: flex;
-            justify-content: space-between;
+    select {
+        border: solid 2px;
+        border-radius: 20px;
+        height: 65%;
+        font-weight: bold;
+    }
 
-        }
+    .formulario {
+        padding-top: 5%;
+        padding-bottom: 5%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        row-gap: 10px;
+        height: 100%;
+    }
 
-        #Registro {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            width: 20%;
-            position: absolute;
-            top: 20%;
-            right: 40%;
-            display: none;
-        }
+    #textarea {
+        flex-grow: 1;
+        width: 90%;
+        border-radius: 20px;
+        border: solid 2px;
+    }
 
-        #mesa {
-            height: 100px;
-            width: 100px;
-        }
+    .formulario select {
+        width: 90%;
+        height: min-content;
+        padding: 5px;
+        border-radius: 14px;
+    }
 
-        #divCard {
-            border: 1px solid gray;
-            border-radius: 10px;
-            box-shadow: 3px 3px 3px gray;
-        }
+    .formulario input {
+        padding: 5px;
+        width: 90%;
+        border-radius: 14px;
+        border: solid 2px;
+    }
 
-        #mesas {
-            display: grid;
-            grid-template-columns: repeat(4,1fr);
-            gap: 15px;
-        }
+    .box1 {
+        display: flex;
+        height: 50%;
+        align-items: center;
+        justify-content: center;
+        gap: 1%;
+        height: 100%;
+        margin-right: 1%;
+    }
 
+    .citacartas {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: space-between;
+        width: 95%;
+    }
 
-        .contenedor {
-            display: grid;
-            min-height: 100dvh;
-            grid-template-rows: auto 1fr auto;
-            /*
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            */
-        }
+    body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: whitesmoke
+    }
 
-        .box {
-            display: flex;
-            justify-content: center;
-            width: 100%;
-        }
+    .cajaIzquierda {
+        background-color: white;
+        width: 20%;
+        height: 100%;
+        border-radius: 20px;
+    }
 
-        .modal {
-            width: max-content;
-            background-color: whitesmoke;
-            position: absolute;
-            left: 50%;
-            top: 20%;
-        }
+    .cajaCitas {
+        width: 99%;
+        height: 10%;
+        background-color: white;
+        border-radius: 20px;
+        display: flex;
+        justify-content: flex-end;
+    }
 
-        body {
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
+    .cajaCartas {
+        background-color: white;
+        width: 99%;
+        height: 88%;
+        border-radius: 20px;
+    }
 
-        .header {
-            height: min-content;
-            text-align: center;
-            width: 100%;
-            background-color: #0c1e6e;
-        }
-
-        .content {
-            text-align: center;
-            width: 100%;
-            background-color: whitesmoke;
-            min-height: 100vhd;
-        }
-
-        .footer {
-            height: 10vh;
-            text-align: center;
-            width: 100%;
-            background-color: #0c1e6e;
-        }
-    </style>
-</body>
+    .contenedor {
+        background-color: black;
+        width: 93%;
+        height: 90vh;
+        border-radius: 27.6px;
+        padding: 1.5%;
+        display: flex;
+        justify-content: space-between;
+    }
+</style>
 
 </html>
