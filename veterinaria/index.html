@@ -6,24 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Formulario con Textarea</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
 <body>
     <div class="contenedor">
         <section id="cajaIzquierda">
             <div class="formulario">
-                <input type="text" placeholder="Nombre Mascota" />
-                <input type="text" placeholder="Propietario" />
+                <input type="search" name="busqueda" class="custom" placeholder="Nombre Mascota" autocomplete="name" />
+                <input type="text" placeholder="Propietario" autocomplete="name" />
                 <input type="text" placeholder="Telefono" />
-                <input type="text" placeholder="Fecha Cita" />
-                <input type="text" placeholder="Hora Cita" />
+                <input type="date" placeholder="Fecha Cita" />
+                <input type="time" placeholder="Hora Cita" />
                 <select name="" id="tipoMascota">
                     <option value="">Especie Mascota</option>
                     <option value="Abierta">Abierta</option>
                     <option value="">ads</option>
                     <option value="">ads</option>
                 </select>
-                <textarea id="textarea" placeholder="Detalles adicionales..."></textarea>
+                <textarea id="textarea" placeholder="Detalles adicionales..." spellcheck="true"></textarea>
+                 <button id="save" name="guardar"><i id="" class="fa-solid fa-floppy-disk" style="font-size: 17px;"></i></button>
             </div>
         </section>
 
@@ -36,8 +37,7 @@
                         <option value="">ads</option>
                         <option value="">ads</option>
                     </select>
-                    <button id="botonCita"><i id="icon" class="fa-solid fa-floppy-disk"
-                            style="font-size: 17px;"></i></button>
+                    <button id="botonCita"><i id="icon" class="fa-solid fa-plus" style="font-size: 17px;"></i></button>
                 </div>
             </section>
             <section class="cajaCartas"></section>
@@ -60,19 +60,36 @@
 
     let boton = document.getElementById("botonCita")
     boton.addEventListener("click", () => {
-
         const elemento = document.getElementById('cajaIzquierda');
-        if (n == 0) {
-            document.getElementById("icon").className = "fa-regular fa-floppy-disk"
-            elemento.style.display = "block"
-            citaCartas.style.width = "95%"
 
-            n = 1
-        } else if (n == 1) {
-            document.getElementById("icon").className = "fa-solid fa-floppy-disk"
-            elemento.style.display = "none"
-            citaCartas.style.width = "100%"
-            n = 0
+        if (n === 0) {
+            document.getElementById("icon").className = "fa-solid fa-minus";
+            elemento.style.display = "block";
+            citaCartas.style.width = "95%";
+
+            // Reiniciar animación
+            elemento.classList.remove("animate__backOutRight");
+            void elemento.offsetWidth; // Fuerza reflow
+            elemento.classList.add("animate__animated", "animate__backInRight");
+
+            n = 1;
+        } else if (n === 1) {
+            document.getElementById("icon").className = "fa-solid fa-plus";
+            citaCartas.style.width = "100%";
+
+            // Cambiar animación de salida y esperar a que termine para ocultar
+            elemento.classList.remove("animate__backInRight");
+            void elemento.offsetWidth;
+            elemento.classList.add("animate__animated", "animate__backOutRight");
+
+            // Esperar a que termine la animación antes de ocultar
+            elemento.addEventListener("animationend", function handler() {
+                elemento.style.display = "none";
+                elemento.classList.remove("animate__animated", "animate__backOutRight");
+                elemento.removeEventListener("animationend", handler); // Evitar múltiples disparos
+            });
+
+            n = 0;
         }
 
     })
@@ -279,6 +296,10 @@
         background-color: white;
     }
 
+    body::-webkit-scrollbar {
+        display: none;
+    }
+
     select {
         border: solid 2px;
         border-radius: 20px;
@@ -299,13 +320,13 @@
 
     #textarea {
         flex-grow: 1;
-        width: 90%;
+        width: 96%;
         border-radius: 20px;
         border: solid 2px;
     }
 
     .formulario select {
-        width: 90%;
+        width: 96%;
         height: min-content;
         padding: 5px;
         border-radius: 14px;
@@ -313,7 +334,7 @@
 
     .formulario input {
         padding: 5px;
-        width: 90%;
+        width: 96%;
         border-radius: 14px;
         border: solid 2px;
     }
@@ -334,6 +355,7 @@
         align-items: flex-end;
         justify-content: space-between;
         width: 100%;
+        gap: 1.3%;
     }
 
     body {
@@ -367,15 +389,22 @@
         height: 91.3%;
         border-radius: 20px;
     }
-
+   button{
+      border-radius: 20px;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        border: solid 2px;
+        background-color: white;
+   }
     .contenedor {
         background-color: black;
         width: 93%;
-        height: 90vh;
+        height: 98vh;
         border-radius: 27.6px;
-        padding: 1.5%;
+        padding: 1%;
         display: flex;
-        gap: 1.5%;
+        gap: 1%;
     }
 </style>
 
