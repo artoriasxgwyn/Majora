@@ -2,15 +2,42 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Formulario con Textarea</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulario con Textarea</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f2f2f2;
+      font-family: Arial, sans-serif;
+    }
+
+    .contenedor {
+      background-color: #dcdcdc;
+      width: 93%;
+      height: 90vh;
+      border-radius: 27.6px;
+      padding: 1.5%;
+      display: flex;
+      justify-content: center;
+    }
+
+    #cajaIzquierda {
+      display: none;
+      background-color: #f5f5f5;
+      width: 20%;
+      height: 100%;
+      border-radius: 20px;
     }
 
     .formulario {
@@ -30,8 +57,9 @@
       padding: 5px;
       width: 90%;
       border-radius: 14px;
-      border: solid 2px;
-      font-family: inherit;
+      border: 2px solid #bbb;
+      background-color: #eeeeee;
+      color: #333;
     }
 
     .formulario textarea {
@@ -39,21 +67,8 @@
       height: 80px;
     }
 
-    .contenedor {
-      background-color: black;
-      width: 93%;
-      height: 90vh;
-      border-radius: 27.6px;
-      padding: 1.5%;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .cajaIzquierda {
-      background-color: white;
-      width: 20%;
-      height: 100%;
-      border-radius: 20px;
+    .formulario select {
+      height: min-content;
     }
 
     .citacartas {
@@ -66,23 +81,23 @@
 
     .cajaCitas {
       width: 99%;
-      height: 10%;
-      background-color: white;
+      height: 8%;
+      background-color: #f5f5f5;
       border-radius: 20px;
       display: flex;
       justify-content: flex-end;
     }
 
     .cajaCartas {
-      background-color: white;
+      background-color: #f5f5f5;
       width: 99%;
-      height: 88%;
+      height: 91.3%;
       border-radius: 20px;
+      overflow-y: auto;
     }
 
     .box1 {
       display: flex;
-      height: 50%;
       align-items: center;
       justify-content: center;
       gap: 1%;
@@ -95,269 +110,307 @@
       padding: 10px;
       display: flex;
       align-items: center;
-      border: solid 2px;
-      height: 65%;
-      background-color: white;
+      border: 2px solid #bbb;
+      background-color: #e0e0e0;
+      color: #333;
+      cursor: pointer;
     }
 
     select {
-      border: solid 2px;
+      border: 2px solid #bbb;
       border-radius: 20px;
       height: 65%;
       font-weight: bold;
+      background-color: #eaeaea;
+      color: #333;
     }
 
-    body {
-      height: 100vh;
+    /* Cartas de mesa (en pintarMesas) */
+    #divCard {
+      background-color: #ffffff;
+      border-radius: 20px;
+      margin: 10px;
+      padding: 10px;
       display: flex;
-      justify-content: center;
+      flex-direction: row;
       align-items: center;
-      background-color: whitesmoke;
+      justify-content: space-between;
+      border: 1px solid #ccc;
     }
-  </style>
+
+    #mesa {
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+    }
+
+    #modal {
+      position: absolute;
+      z-index: 100;
+      padding: 20px;
+      background-color: rgba(100, 100, 100, 0.9);
+      color: white;
+      border-radius: 15px;
+      text-align: center;
+      font-size: 18px;
+      width: 300px;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: none;
+    }
+    </style>
 
 <body>
-  <div class="contenedor">
-    <section class="cajaIzquierda">
-      <div class="formulario">
-        <input type="text" placeholder="Nombre Mascota" />
-        <input type="text" placeholder="Propietario" />
-        <input type="text" placeholder="Telefono" />
-        <input type="text" placeholder="Fecha Cita" />
-        <input type="text" placeholder="Hora Cita" />
-        <select name="" id="tipoMascota">
-          <option value="">Especie Mascota</option>
-          <option value="Abierta">Abierta</option>
-          <option value="">ads</option>
-          <option value="">ads</option>
-        </select>
-        <textarea id="textarea" placeholder="Detalles adicionales..."></textarea>
-      </div>
-    </section>
+    <div class="contenedor">
+        <section id="cajaIzquierda">
+            <div class="formulario">
+                <input type="text" placeholder="Nombre Mascota" />
+                <input type="text" placeholder="Propietario" />
+                <input type="text" placeholder="Telefono" />
+                <input type="text" placeholder="Fecha Cita" />
+                <input type="text" placeholder="Hora Cita" />
+                <select name="" id="tipoMascota">
+                    <option value="">Especie Mascota</option>
+                    <option value="Abierta">Abierta</option>
+                    <option value="">ads</option>
+                    <option value="">ads</option>
+                </select>
+                <textarea id="textarea" placeholder="Detalles adicionales..."></textarea>
+            </div>
+        </section>
 
-    <div class="citacartas">
-      <section class="cajaCitas">
-        <div class="box1">
-          <select name="" id="buscarFiltro">
-            <option value="">Buscar/Filtro</option>
-            <option value="Abierta">Abierta</option>
-            <option value="">ads</option>
-            <option value="">ads</option>
-          </select>
-          <button id="cita"><i class="fa-solid fa-floppy-disk"></i></button>
+        <div class="citacartas">
+            <section class="cajaCitas">
+                <div class="box1">
+                    <select name="" id="buscarFiltro">
+                        <option value="">Buscar/Filtro</option>
+                        <option value="Abierta">Abierta</option>
+                        <option value="">ads</option>
+                        <option value="">ads</option>
+                    </select>
+                    <button id="botonCita"><i id="icon" class="fa-solid fa-floppy-disk"
+                            style="font-size: 17px;"></i></button>
+                </div>
+            </section>
+            <section class="cajaCartas"></section>
         </div>
-      </section>
-      <section class="cajaCartas"></section>
     </div>
-  </div>
 </body>
-  <script>
-        let datosMesa = []
-        let mesaencontrada = {}
-        let modo = 0
-        let numMesa = 0
-        let num = 0;
-        let VoF = 1;
-        let num1 = "";
-        let mesas = [];
-        let modal = document.getElementById("modal")
-        let buscar = document.getElementById("buscarmesa")
+<script>
+    let n = 0;
+    let datosMesa = [];
+    let mesaencontrada = {};
+    let modo = 0;
+    let numMesa = 0;
+    let num = 0;
+    let VoF = 1;
+    let num1 = "";
+    let mesas = [];
+    let modal = document.getElementById("modal")
+    let buscar = document.getElementById("buscarmesa")
 
-        document.getElementById("registrar").addEventListener("click", () => {
-            if (modo == 0) {
-                console.log("estoy guardando...");
-                guardarMesa()
-            } else if (modo == 1) {
-                console.log("estoy editando...");
-                editarMesa()
-            }
-
-        })
-
-        function modalalertas(err) {
-            modal.textContent = err
-            modal.style.backgroundImage = "url('https://i.pinimg.com/736x/2d/84/11/2d8411cdb9438b8dd5c9e954fa4f8e9a.jpg')";
-            modal.style.backgroundPosition = "center"
-            modal.style.backgroundRepeat = "no-repeat"
-            modal.style.width = "40%"
-            modal.style.height = "70%"
-            modal.style.textAlign = "center"
-            modal.style.color = "white"
-            modal.style.fontSize = "20px"
-            setTimeout(() => {
-                modal.style = "hidden"
-                modal.textContent = ""
-            }, 2000)
+    let boton = document.getElementById("botonCita")
+    boton.addEventListener("click", () => {
+        
+        const elemento = document.getElementById('cajaIzquierda');
+        if (n == 0) {
+            document.getElementById("icon").className = "fa-regular fa-floppy-disk"
+            elemento.style.display = "block"
+            n=1
+        } else if(n==1) {
+            document.getElementById("icon").className = "fa-solid fa-floppy-disk"
+            elemento.style.display = "none"
+            n=0
         }
 
-        buscar.addEventListener("input", () => {
-            console.log(datosMesa.length)
-            if (datosMesa.length > 0) {
-                datosMesa.forEach((propiedad, indice) => {
-                    num1 = document.getElementById("buscarmesa").value
-                    num = parseInt(document.getElementById("buscarmesa").value)
-                    if (propiedad.numero == num) {
-                        VoF = 0
-                        mesaencontrada = propiedad
-                        console.log(propiedad)
-                        modalalertas("mesa encontrada")
-                        pintarMesas()
-                    } else if (indice == datosMesa.length) {
-                        console.log(num)
-                        console.log(propiedad.numero)
-                        modalalertas("no hay mesas registradas con ese numero")
-                    }
-                })
-            } else {
-                modalalertas("no hay mesas registradas aun")
-                pintarMesas()
-            }
-            if (num1.length == 0) {
-                pintarMesas()
-            }
+    })
 
-        })
 
-        function validaciones(bool) {
-            let llave = 1;
-            if (modo == 0) {
-                datosMesa.forEach((propiedad) => {
-                    if ((parseInt(document.getElementById("nro").value)) == propiedad.numero) {
-                        llave = 0
-                        modalalertas("ese numero de mesa ya existe")
-                    }
-                })
-            }
+    function modalalertas(err) {
+        modal.textContent = err
+        modal.style.backgroundImage = "url('https://i.pinimg.com/736x/2d/84/11/2d8411cdb9438b8dd5c9e954fa4f8e9a.jpg')";
+        modal.style.backgroundPosition = "center"
+        modal.style.backgroundRepeat = "no-repeat"
+        modal.style.width = "40%"
+        modal.style.height = "70%"
+        modal.style.textAlign = "center"
+        modal.style.color = "white"
+        modal.style.fontSize = "20px"
+        setTimeout(() => {
+            modal.style = "hidden"
+            modal.textContent = ""
+        }, 2000)
+    }
 
-            if (document.getElementById("nro").value == "" || true == isNaN(parseInt(document.getElementById("nro").value))) {
-                modalalertas("Por favor digite el numero")
-            } else if (document.getElementById("descripcion").value == "") {
-                modalalertas("Por favor digite la descripcion")
-            } else if (document.getElementById("personas").value == "" || true == isNaN(parseInt(document.getElementById("personas").value))) {
-                modalalertas("Por favor digite la capcidad de la mesa")
-            } else if (document.getElementById("estado").value == "") {
-                modalalertas("Por favor digite el estado de la mesa")
-            } else if (llave == 1) {
-                mesa = {
-                    numero: document.getElementById("nro").value,
-                    descripcion: document.getElementById("descripcion").value,
-                    personas: document.getElementById("personas").value,
-                    estado: document.getElementById("estado").value,
-                }
-                bool(true)
-            }
-
-        }
-        function guardarMesa() {
-            validaciones((bool) => {
-                if (bool) {
-                    datosMesa.unshift(mesa)
-                    modalalertas("Registro exitoso")
-                    limpiar()
+    buscar.addEventListener("input", () => {
+        console.log(datosMesa.length)
+        if (datosMesa.length > 0) {
+            datosMesa.forEach((propiedad, indice) => {
+                num1 = document.getElementById("buscarmesa").value
+                num = parseInt(document.getElementById("buscarmesa").value)
+                if (propiedad.numero == num) {
+                    VoF = 0
+                    mesaencontrada = propiedad
+                    console.log(propiedad)
+                    modalalertas("mesa encontrada")
                     pintarMesas()
+                } else if (indice == datosMesa.length) {
+                    console.log(num)
+                    console.log(propiedad.numero)
+                    modalalertas("no hay mesas registradas con ese numero")
+                }
+            })
+        } else {
+            modalalertas("no hay mesas registradas aun")
+            pintarMesas()
+        }
+        if (num1.length == 0) {
+            pintarMesas()
+        }
+
+    })
+
+    function validaciones(bool) {
+        let llave = 1;
+        if (modo == 0) {
+            datosMesa.forEach((propiedad) => {
+                if ((parseInt(document.getElementById("nro").value)) == propiedad.numero) {
+                    llave = 0
+                    modalalertas("ese numero de mesa ya existe")
                 }
             })
         }
 
-        function limpiar() {
-            document.getElementById("nro").value = ""
-            document.getElementById("descripcion").value = ""
-            document.getElementById("personas").value = ""
-            document.getElementById("estado").value = ""
-        }
-
-        function editarMesa() {
-            validaciones((bool) => {
-                if (bool) {
-                    let indice = datosMesa.findIndex(it => it.numero == numMesa)
-                    console.log(indice);
-                    datosMesa[indice].numero = document.getElementById("nro").value
-                    datosMesa[indice].descripcion = document.getElementById("descripcion").value
-                    datosMesa[indice].personas = document.getElementById("personas").value
-                    datosMesa[indice].estado = document.getElementById("estado").value
-                    pintarMesas()
-                    modo = 0
-                    document.getElementById("registrar").textContent = "Guardar Mesa"
-                    limpiar()
-                    modalalertas("Registro editado")
-                }
-            })
-
-        }
-
-        function pintarMesas() {
-            document.getElementById("mesas").textContent = ""
-            console.log(VoF)
-            if (VoF == 1) {
-                mesas = datosMesa
-            } else if (VoF == 0) {
-                mesas = []
-                mesas.push(mesaencontrada)
+        if (document.getElementById("nro").value == "" || true == isNaN(parseInt(document.getElementById("nro").value))) {
+            modalalertas("Por favor digite el numero")
+        } else if (document.getElementById("descripcion").value == "") {
+            modalalertas("Por favor digite la descripcion")
+        } else if (document.getElementById("personas").value == "" || true == isNaN(parseInt(document.getElementById("personas").value))) {
+            modalalertas("Por favor digite la capcidad de la mesa")
+        } else if (document.getElementById("estado").value == "") {
+            modalalertas("Por favor digite el estado de la mesa")
+        } else if (llave == 1) {
+            mesa = {
+                numero: document.getElementById("nro").value,
+                descripcion: document.getElementById("descripcion").value,
+                personas: document.getElementById("personas").value,
+                estado: document.getElementById("estado").value,
             }
-            mesas.forEach((item, i) => {
-                let divCard = document.createElement("div")
-                let divImagen = document.createElement("div")
-                let imagen = document.createElement("img")
-                let divTextos = document.createElement("div")
-                let parrafoDescripcion = document.createElement("p")
-                let numeroMesa = document.createElement("span")
-                let divBotones = document.createElement("div")
-                let editar = document.createElement("button")
-                let eliminar = document.createElement("button")
+            bool(true)
+        }
 
-                divCard.id = "divCard"
-                imagen.id = "mesa"
-                numeroMesa.textContent = item.numero
-                parrafoDescripcion.textContent = item.descripcion
-                editar.textContent = "📝"
-                eliminar.textContent = "❌"
-                imagen.src = "https://i.pinimg.com/736x/00/21/25/0021259a98567d617c162e3ef7cf4238.jpg"
+    }
+    function guardarMesa() {
+        validaciones((bool) => {
+            if (bool) {
+                datosMesa.unshift(mesa)
+                modalalertas("Registro exitoso")
+                limpiar()
+                pintarMesas()
+            }
+        })
+    }
 
-                document.getElementById("mesas").appendChild(divCard)
-                divImagen.appendChild(imagen)
-                divCard.appendChild(divImagen)
-                divCard.appendChild(divTextos)
-                divCard.appendChild(divBotones)
-                divTextos.appendChild(parrafoDescripcion)
-                divTextos.appendChild(numeroMesa)
-                divBotones.appendChild(editar)
-                divBotones.appendChild(eliminar)
+    function limpiar() {
+        document.getElementById("nro").value = ""
+        document.getElementById("descripcion").value = ""
+        document.getElementById("personas").value = ""
+        document.getElementById("estado").value = ""
+    }
 
-                editar.addEventListener("click", () => {
-                    document.getElementById("nro").value = item.numero
-                    document.getElementById("descripcion").value = item.descripcion
-                    document.getElementById("personas").value = item.personas
-                    document.getElementById("estado").value = item.estado
-                    document.getElementById("registrar").textContent = "Editar Mesa"
-                    modo = 1
-                    numMesa = item.numero
-                    VoF = 1
-                })
+    function editarMesa() {
+        validaciones((bool) => {
+            if (bool) {
+                let indice = datosMesa.findIndex(it => it.numero == numMesa)
+                console.log(indice);
+                datosMesa[indice].numero = document.getElementById("nro").value
+                datosMesa[indice].descripcion = document.getElementById("descripcion").value
+                datosMesa[indice].personas = document.getElementById("personas").value
+                datosMesa[indice].estado = document.getElementById("estado").value
+                pintarMesas()
+                modo = 0
+                document.getElementById("registrar").textContent = "Guardar Mesa"
+                limpiar()
+                modalalertas("Registro editado")
+            }
+        })
 
-                eliminar.addEventListener("click", () => {
-                    //findIndex nos permite traer el indice de acuerdo a una condicion
-                    if (modo == 0) {
-                        let indice = datosMesa.findIndex(it => it.numero == item.numero)
-                        console.log(indice);
-                        datosMesa.splice(indice, 1)
-                        console.log(datosMesa);
-                        pintarMesas()
-                        modalalertas("Registro eliminado")
-                    }
-                })
+    }
 
-                if (item.estado == "reservado") {
-                    divCard.style.backgroundColor = "gray";
-                } else if (item.estado == "ocupado") {
-                    divCard.style.backgroundColor = "green";
-                } else {
-                    divCard.style.backgroundColor = "white";
-                }
+    function pintarMesas() {
+        document.getElementById("mesas").textContent = ""
+        console.log(VoF)
+        if (VoF == 1) {
+            mesas = datosMesa
+        } else if (VoF == 0) {
+            mesas = []
+            mesas.push(mesaencontrada)
+        }
+        mesas.forEach((item, i) => {
+            let divCard = document.createElement("div")
+            let divImagen = document.createElement("div")
+            let imagen = document.createElement("img")
+            let divTextos = document.createElement("div")
+            let parrafoDescripcion = document.createElement("p")
+            let numeroMesa = document.createElement("span")
+            let divBotones = document.createElement("div")
+            let editar = document.createElement("button")
+            let eliminar = document.createElement("button")
+
+            divCard.id = "divCard"
+            imagen.id = "mesa"
+            numeroMesa.textContent = item.numero
+            parrafoDescripcion.textContent = item.descripcion
+            editar.textContent = "📝"
+            eliminar.textContent = "❌"
+            imagen.src = "https://i.pinimg.com/736x/00/21/25/0021259a98567d617c162e3ef7cf4238.jpg"
+
+            document.getElementById("mesas").appendChild(divCard)
+            divImagen.appendChild(imagen)
+            divCard.appendChild(divImagen)
+            divCard.appendChild(divTextos)
+            divCard.appendChild(divBotones)
+            divTextos.appendChild(parrafoDescripcion)
+            divTextos.appendChild(numeroMesa)
+            divBotones.appendChild(editar)
+            divBotones.appendChild(eliminar)
+
+            editar.addEventListener("click", () => {
+                document.getElementById("nro").value = item.numero
+                document.getElementById("descripcion").value = item.descripcion
+                document.getElementById("personas").value = item.personas
+                document.getElementById("estado").value = item.estado
+                document.getElementById("registrar").textContent = "Editar Mesa"
+                modo = 1
+                numMesa = item.numero
                 VoF = 1
             })
-        }
 
-    </script>
+            eliminar.addEventListener("click", () => {
+                //findIndex nos permite traer el indice de acuerdo a una condicion
+                if (modo == 0) {
+                    let indice = datosMesa.findIndex(it => it.numero == item.numero)
+                    console.log(indice);
+                    datosMesa.splice(indice, 1)
+                    console.log(datosMesa);
+                    pintarMesas()
+                    modalalertas("Registro eliminado")
+                }
+            })
+
+            if (item.estado == "reservado") {
+                divCard.style.backgroundColor = "gray";
+            } else if (item.estado == "ocupado") {
+                divCard.style.backgroundColor = "green";
+            } else {
+                divCard.style.backgroundColor = "white";
+            }
+            VoF = 1
+        })
+    }
+
+</script>
 <style>
     * {
         margin: 0px;
@@ -440,7 +493,8 @@
         background-color: whitesmoke
     }
 
-    .cajaIzquierda {
+    #cajaIzquierda {
+        display: none;
         background-color: white;
         width: 20%;
         height: 100%;
@@ -449,7 +503,7 @@
 
     .cajaCitas {
         width: 99%;
-        height: 10%;
+        height: 8%;
         background-color: white;
         border-radius: 20px;
         display: flex;
@@ -459,7 +513,7 @@
     .cajaCartas {
         background-color: white;
         width: 99%;
-        height: 88%;
+        height: 91.3%;
         border-radius: 20px;
     }
 
@@ -470,7 +524,7 @@
         border-radius: 27.6px;
         padding: 1.5%;
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
     }
 </style>
 
