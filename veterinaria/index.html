@@ -6,160 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Formulario con Textarea</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
 
-    body {
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #f2f2f2;
-      font-family: Arial, sans-serif;
-    }
-
-    .contenedor {
-      background-color: #dcdcdc;
-      width: 93%;
-      height: 90vh;
-      border-radius: 27.6px;
-      padding: 1.5%;
-      display: flex;
-      justify-content: center;
-    }
-
-    #cajaIzquierda {
-      display: none;
-      background-color: #f5f5f5;
-      width: 20%;
-      height: 100%;
-      border-radius: 20px;
-    }
-
-    .formulario {
-      padding-top: 5%;
-      padding-bottom: 5%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      row-gap: 10px;
-      height: 100%;
-    }
-
-    .formulario input,
-    .formulario select,
-    .formulario textarea {
-      padding: 5px;
-      width: 90%;
-      border-radius: 14px;
-      border: 2px solid #bbb;
-      background-color: #eeeeee;
-      color: #333;
-    }
-
-    .formulario textarea {
-      resize: none;
-      height: 80px;
-    }
-
-    .formulario select {
-      height: min-content;
-    }
-
-    .citacartas {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      justify-content: space-between;
-      width: 95%;
-    }
-
-    .cajaCitas {
-      width: 99%;
-      height: 8%;
-      background-color: #f5f5f5;
-      border-radius: 20px;
-      display: flex;
-      justify-content: flex-end;
-    }
-
-    .cajaCartas {
-      background-color: #f5f5f5;
-      width: 99%;
-      height: 91.3%;
-      border-radius: 20px;
-      overflow-y: auto;
-    }
-
-    .box1 {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1%;
-      height: 100%;
-      margin-right: 1%;
-    }
-
-    .box1 button {
-      border-radius: 20px;
-      padding: 10px;
-      display: flex;
-      align-items: center;
-      border: 2px solid #bbb;
-      background-color: #e0e0e0;
-      color: #333;
-      cursor: pointer;
-    }
-
-    select {
-      border: 2px solid #bbb;
-      border-radius: 20px;
-      height: 65%;
-      font-weight: bold;
-      background-color: #eaeaea;
-      color: #333;
-    }
-
-    /* Cartas de mesa (en pintarMesas) */
-    #divCard {
-      background-color: #ffffff;
-      border-radius: 20px;
-      margin: 10px;
-      padding: 10px;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      border: 1px solid #ccc;
-    }
-
-    #mesa {
-      width: 50px;
-      height: 50px;
-      border-radius: 10px;
-    }
-
-    #modal {
-      position: absolute;
-      z-index: 100;
-      padding: 20px;
-      background-color: rgba(100, 100, 100, 0.9);
-      color: white;
-      border-radius: 15px;
-      text-align: center;
-      font-size: 18px;
-      width: 300px;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: none;
-    }
-    </style>
 
 <body>
     <div class="contenedor">
@@ -180,7 +27,7 @@
             </div>
         </section>
 
-        <div class="citacartas">
+        <div class="citacartas" id="citacartas">
             <section class="cajaCitas">
                 <div class="box1">
                     <select name="" id="buscarFiltro">
@@ -209,19 +56,23 @@
     let mesas = [];
     let modal = document.getElementById("modal")
     let buscar = document.getElementById("buscarmesa")
+    let citaCartas = document.getElementById("citacartas")
 
     let boton = document.getElementById("botonCita")
     boton.addEventListener("click", () => {
-        
+
         const elemento = document.getElementById('cajaIzquierda');
         if (n == 0) {
             document.getElementById("icon").className = "fa-regular fa-floppy-disk"
             elemento.style.display = "block"
-            n=1
-        } else if(n==1) {
+            citaCartas.style.width = "95%"
+
+            n = 1
+        } else if (n == 1) {
             document.getElementById("icon").className = "fa-solid fa-floppy-disk"
             elemento.style.display = "none"
-            n=0
+            citaCartas.style.width = "100%"
+            n = 0
         }
 
     })
@@ -472,9 +323,9 @@
         height: 50%;
         align-items: center;
         justify-content: center;
-        gap: 1%;
+        gap: 6px;
         height: 100%;
-        margin-right: 1%;
+        margin-right: 6px;
     }
 
     .citacartas {
@@ -482,7 +333,7 @@
         flex-direction: column;
         align-items: flex-end;
         justify-content: space-between;
-        width: 95%;
+        width: 100%;
     }
 
     body {
@@ -502,7 +353,7 @@
     }
 
     .cajaCitas {
-        width: 99%;
+        width: 100%;
         height: 8%;
         background-color: white;
         border-radius: 20px;
@@ -512,7 +363,7 @@
 
     .cajaCartas {
         background-color: white;
-        width: 99%;
+        width: 100%;
         height: 91.3%;
         border-radius: 20px;
     }
@@ -524,7 +375,7 @@
         border-radius: 27.6px;
         padding: 1.5%;
         display: flex;
-        justify-content: center;
+        gap: 1.5%;
     }
 </style>
 
