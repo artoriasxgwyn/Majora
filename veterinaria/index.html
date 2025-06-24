@@ -79,16 +79,18 @@
 
         })
     function validaciones() {
-
         for (let key in llaves.datoaValidar) {
+            console.log(key)
             let camposVacios = llaves.datoaValidar[key] == "" ? `Por favor inserte  ${key}` : "no problem"
             let telefono = isNaN(parseInt(llaves.datoaValidar.Telefono)) == true ? `Por favor inserte un numero en Telefono` : "no problem"
-            console.log(camposVacios)
             if (camposVacios == "no problem") {
-                if (telefono == "no problem" && camposVacios == "no problem") {
-                    arrayCitas.push(llaves.datoaValidar)
-                    modalalertas("Cita guardada con exito")
-                    insertaCards()
+                console.log(key)
+                if (telefono == "no problem") {
+                    if (key == "Sintoma") {
+                        arrayCitas.push(llaves.datoaValidar)
+                        modalalertas("Cita guardada con exito")
+                        insertaCards()
+                    }
                 } else {
                     modalalertas(telefono)
                     break
