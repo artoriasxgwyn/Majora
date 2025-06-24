@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -12,24 +11,25 @@
 <body>
     <div class="contenedor">
         <section id="cajaIzquierda">
-            <div class="formulario">
-                <input type="search" name="busqueda" class="custom" placeholder="Nombre Mascota" autocomplete="name" />
-                <input type="text" placeholder="Propietario" autocomplete="name" />
-                <input type="text" placeholder="Telefono" />
-                <input type="date" placeholder="Fecha Cita" />
-                <input type="time" placeholder="Hora Cita" />
-                <select name="" id="tipoMascota">
+            <form class="formulario">
+                <input type="search" name="Nombre de la mascota" class="custom" placeholder="Nombre Mascota"
+                    autocomplete="name" />
+                <input type="text" name="Nombre del propietario" placeholder="Propietario" autocomplete="name" />
+                <input type="text" name="Telefono" placeholder="Telefono" />
+                <input type="date" name="Fecha de la cita" placeholder="Fecha Cita" />
+                <input type="time" name="Hora de la cita" placeholder="Hora Cita" />
+                <select name="Especie de la mascota" id="tipoMascota">
                     <option value="">Especie Mascota</option>
-                    <option value="Abierta">Gato</option>
-                    <option value="">Perro</option>
-                    <option value="">Vaca</option>
-                    <option value="">Caballo</option>
-                    <option value="">Cuervo</option>
+                    <option value="Gato">Gato</option>
+                    <option value="Perro">Perro</option>
+                    <option value="Vaca">Vaca</option>
+                    <option value="Caballo">Caballo</option>
+                    <option value="Cuervo">Cuervo</option>
                 </select>
-                <textarea id="textarea" placeholder="  Sintomas del animal" spellcheck="true"></textarea>
-                <button id="save" name="guardar"><i id="" class="fa-solid fa-floppy-disk"
+                <textarea name="Sintoma" id="textarea" placeholder="  Sintomas del animal" spellcheck="true"></textarea>
+                <button id="save" name="guardar" type="submit"><i id="" class="fa-solid fa-floppy-disk"
                         style="font-size: 17px;"></i></button>
-            </div>
+            </form>
         </section>
 
         <div class="citacartas" id="citacartas">
@@ -49,234 +49,105 @@
             </section>
             <section class="cajaCartas"></section>
         </div>
+
     </div>
+    <div id="modalAlerta" style="display:none"></div>
 </body>
 <script>
-    let n = 0;
-    let datosMesa = [];
-    let mesaencontrada = {};
-    let modo = 0;
-    let numMesa = 0;
-    let num = 0;
-    let VoF = 1;
-    let num1 = "";
-    let mesas = [];
-    let modal = document.getElementById("modal")
-    let buscar = document.getElementById("buscarmesa")
+    let llaves = {
+        modalFormulario: 0,
+        acumulador: -1,
+        datoaValidar: {},
+    };
+    let arrayCitas = []
+    let modalAlerta = document.getElementById("modalAlerta")
     let citaCartas = document.getElementById("citacartas")
-
+    let modal = document.getElementById("citacartas")
+    const elemento = document.getElementById('cajaIzquierda');
     let boton = document.getElementById("botonCita")
-    boton.addEventListener("click", () => {
-        const elemento = document.getElementById('cajaIzquierda');
+    document.querySelector("form")
+        .addEventListener("submit", (datos) => {
+            datos.preventDefault()
+            const data = Object.fromEntries(
+                new FormData(datos.target)
+            )
+            numeroCita()
+            data.numeroCita = llaves.acumulador
+            //  console.log(data)
+            llaves.datoaValidar = data
+            validaciones()
 
-        if (n === 0) {
+        })
+    function validaciones() {
+        for (let key in llaves.datoaValidar) {
+            let camposVacios = llaves.datoaValidar[key] == "" ? `Por favor inserte  ${key}` : "no problem"
+            console.log(camposVacios)
+            if (camposVacios == "no problem") {
+                let telefono = isNaN(parseInt(llaves.datoaValidar.Telefono)) == true ? `Por favor inserte un numero en Telefono` : "no problem"
+                if (telefono == "no problem") {
+                    arrayCitas.push(llaves.datoaValidar)
+                } else {
+                    modalalertas(telefono)
+                    break
+                }
+            } else {
+                modalalertas(camposVacios)
+                break
+            }
+            console.log(arrayCitas)
+        }
+
+    }
+    function numeroCita() {
+        sum = (llaves.acumulador) + 1
+        llaves.acumulador = sum
+    }
+    boton.addEventListener("click", () => {
+        if (llaves.modalFormulario === 0) {
             document.getElementById("icon").className = "fa-solid fa-minus";
+            elemento.style.position = "static"
             elemento.style.display = "block";
             citaCartas.style.width = "95%";
+            citaCartas.classList.remove("scale-up-horizontal-right")
+            elemento.classList.remove("scale-down-center")
             citaCartas.classList.add("scale-up-horizontal-left")
             elemento.classList.add("scale-up-center")
-            n = 1;
-        } else if (n === 1) {
+            llaves.modalFormulario = 1;
+        } else if (llaves.modalFormulario === 1) {
+            elemento.style.position = "fixed"
             document.getElementById("icon").className = "fa-solid fa-plus";
             citaCartas.style.width = "100%";
             citaCartas.classList.remove("scale-up-horizontal-left")
             citaCartas.classList.add("scale-up-horizontal-right")
             elemento.classList.remove("scale-up-center")
             elemento.classList.add("scale-down-center")
-
             setTimeout(() => {
                 elemento.style.display = "none"
             }, 400)
-            n = 0;
+            llaves.modalFormulario = 0;
         };
     }
-
     )
-
-
     function modalalertas(err) {
-        modal.textContent = err
-        modal.style.backgroundImage = "url('https://i.pinimg.com/736x/2d/84/11/2d8411cdb9438b8dd5c9e954fa4f8e9a.jpg')";
-        modal.style.backgroundPosition = "center"
-        modal.style.backgroundRepeat = "no-repeat"
-        modal.style.width = "40%"
-        modal.style.height = "70%"
-        modal.style.textAlign = "center"
-        modal.style.color = "white"
-        modal.style.fontSize = "20px"
+        let h1 = document.querySelector("h1")
+        h1.classList.remove("blur-in")
+        h1.classList.add("blur-out")
         setTimeout(() => {
-            modal.style = "hidden"
-            modal.textContent = ""
+            h1.classList.remove("blur-out")
+            h1.classList.add("blur-in")
+            h1.textContent = err
+        }, 500)
+        setTimeout(() => {
+            h1.classList.remove("blur-in")
+            h1.classList.add("blur-out")
         }, 2000)
-    }
-
-    buscar.addEventListener("input", () => {
-        console.log(datosMesa.length)
-        if (datosMesa.length > 0) {
-            datosMesa.forEach((propiedad, indice) => {
-                num1 = document.getElementById("buscarmesa").value
-                num = parseInt(document.getElementById("buscarmesa").value)
-                if (propiedad.numero == num) {
-                    VoF = 0
-                    mesaencontrada = propiedad
-                    console.log(propiedad)
-                    modalalertas("mesa encontrada")
-                    pintarMesas()
-                } else if (indice == datosMesa.length) {
-                    console.log(num)
-                    console.log(propiedad.numero)
-                    modalalertas("no hay mesas registradas con ese numero")
-                }
-            })
-        } else {
-            modalalertas("no hay mesas registradas aun")
-            pintarMesas()
-        }
-        if (num1.length == 0) {
-            pintarMesas()
-        }
-
-    })
-
-    function validaciones(bool) {
-        let llave = 1;
-        if (modo == 0) {
-            datosMesa.forEach((propiedad) => {
-                if ((parseInt(document.getElementById("nro").value)) == propiedad.numero) {
-                    llave = 0
-                    modalalertas("ese numero de mesa ya existe")
-                }
-            })
-        }
-
-        if (document.getElementById("nro").value == "" || true == isNaN(parseInt(document.getElementById("nro").value))) {
-            modalalertas("Por favor digite el numero")
-        } else if (document.getElementById("descripcion").value == "") {
-            modalalertas("Por favor digite la descripcion")
-        } else if (document.getElementById("personas").value == "" || true == isNaN(parseInt(document.getElementById("personas").value))) {
-            modalalertas("Por favor digite la capcidad de la mesa")
-        } else if (document.getElementById("estado").value == "") {
-            modalalertas("Por favor digite el estado de la mesa")
-        } else if (llave == 1) {
-            mesa = {
-                numero: document.getElementById("nro").value,
-                descripcion: document.getElementById("descripcion").value,
-                personas: document.getElementById("personas").value,
-                estado: document.getElementById("estado").value,
-            }
-            bool(true)
-        }
+        setTimeout(() => {
+            h1.classList.remove("blur-out")
+            h1.classList.add("blur-in")
+            h1.textContent = "Administrador de Citas"
+        }, 2500)
 
     }
-    function guardarMesa() {
-        validaciones((bool) => {
-            if (bool) {
-                datosMesa.unshift(mesa)
-                modalalertas("Registro exitoso")
-                limpiar()
-                pintarMesas()
-            }
-        })
-    }
-
-    function limpiar() {
-        document.getElementById("nro").value = ""
-        document.getElementById("descripcion").value = ""
-        document.getElementById("personas").value = ""
-        document.getElementById("estado").value = ""
-    }
-
-    function editarMesa() {
-        validaciones((bool) => {
-            if (bool) {
-                let indice = datosMesa.findIndex(it => it.numero == numMesa)
-                console.log(indice);
-                datosMesa[indice].numero = document.getElementById("nro").value
-                datosMesa[indice].descripcion = document.getElementById("descripcion").value
-                datosMesa[indice].personas = document.getElementById("personas").value
-                datosMesa[indice].estado = document.getElementById("estado").value
-                pintarMesas()
-                modo = 0
-                document.getElementById("registrar").textContent = "Guardar Mesa"
-                limpiar()
-                modalalertas("Registro editado")
-            }
-        })
-
-    }
-
-    function pintarMesas() {
-        document.getElementById("mesas").textContent = ""
-        console.log(VoF)
-        if (VoF == 1) {
-            mesas = datosMesa
-        } else if (VoF == 0) {
-            mesas = []
-            mesas.push(mesaencontrada)
-        }
-        mesas.forEach((item, i) => {
-            let divCard = document.createElement("div")
-            let divImagen = document.createElement("div")
-            let imagen = document.createElement("img")
-            let divTextos = document.createElement("div")
-            let parrafoDescripcion = document.createElement("p")
-            let numeroMesa = document.createElement("span")
-            let divBotones = document.createElement("div")
-            let editar = document.createElement("button")
-            let eliminar = document.createElement("button")
-
-            divCard.id = "divCard"
-            imagen.id = "mesa"
-            numeroMesa.textContent = item.numero
-            parrafoDescripcion.textContent = item.descripcion
-            editar.textContent = "📝"
-            eliminar.textContent = "❌"
-            imagen.src = "https://i.pinimg.com/736x/00/21/25/0021259a98567d617c162e3ef7cf4238.jpg"
-
-            document.getElementById("mesas").appendChild(divCard)
-            divImagen.appendChild(imagen)
-            divCard.appendChild(divImagen)
-            divCard.appendChild(divTextos)
-            divCard.appendChild(divBotones)
-            divTextos.appendChild(parrafoDescripcion)
-            divTextos.appendChild(numeroMesa)
-            divBotones.appendChild(editar)
-            divBotones.appendChild(eliminar)
-
-            editar.addEventListener("click", () => {
-                document.getElementById("nro").value = item.numero
-                document.getElementById("descripcion").value = item.descripcion
-                document.getElementById("personas").value = item.personas
-                document.getElementById("estado").value = item.estado
-                document.getElementById("registrar").textContent = "Editar Mesa"
-                modo = 1
-                numMesa = item.numero
-                VoF = 1
-            })
-
-            eliminar.addEventListener("click", () => {
-                //findIndex nos permite traer el indice de acuerdo a una condicion
-                if (modo == 0) {
-                    let indice = datosMesa.findIndex(it => it.numero == item.numero)
-                    console.log(indice);
-                    datosMesa.splice(indice, 1)
-                    console.log(datosMesa);
-                    pintarMesas()
-                    modalalertas("Registro eliminado")
-                }
-            })
-
-            if (item.estado == "reservado") {
-                divCard.style.backgroundColor = "gray";
-            } else if (item.estado == "ocupado") {
-                divCard.style.backgroundColor = "green";
-            } else {
-                divCard.style.backgroundColor = "white";
-            }
-            VoF = 1
-        })
-    }
-
 </script>
 <style>
     * {
@@ -284,6 +155,14 @@
         padding: 0px;
         box-sizing: border-box;
         font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+
+    #modal {
+        width: max-content;
+        background-color: whitesmoke;
+        position: absolute;
+        left: 50%;
+        top: 20%;
     }
 
     h1 {
@@ -297,7 +176,7 @@
         display: flex;
         align-items: center;
         border: solid 2px #34495e;
-        height: 65%;
+        height: 80%;
         background-color: #1b2631;
         color: #ecf0f1;
     }
@@ -313,7 +192,7 @@
     select {
         border: solid 2px #34495e;
         border-radius: 20px;
-        height: 65%;
+        height: 80%;
         font-weight: bold;
         background-color: #1b2631;
         color: #ecf0f1;
@@ -512,7 +391,7 @@
 ---------------------------------------------- */
 
     .scale-up-horizontal-right {
-        animation: scale-up-horizontal-right 1.2s
+        animation: scale-up-horizontal-right 1s
     }
 
     @keyframes scale-up-horizontal-right {
@@ -527,15 +406,8 @@
         }
     }
 
-    /* ----------------------------------------------
-  Generated by AnimatiSS
-  Licensed under FreeBSD License
-  URL: https://xsgames.co/animatiss
-  Twitter: @xsgames_
----------------------------------------------- */
-
     .scale-up-horizontal-left {
-        animation: scale-up-horizontal-left 0.4s
+        animation: scale-up-horizontal-left 0.6s
     }
 
     @keyframes scale-up-horizontal-left {
@@ -549,7 +421,39 @@
             transform-origin: left center
         }
     }
-    
+
+    .blur-in {
+        animation: blur-in 0.4s linear both
+    }
+
+    @keyframes blur-in {
+        0% {
+            filter: blur(12px);
+            opacity: 0
+        }
+
+        100% {
+            filter: blur(0);
+            opacity: 1
+        }
+    }
+
+
+
+    .blur-out {
+        animation: blur-out 0.4s linear both
+    }
+
+    @keyframes blur-out {
+        0% {
+            filter: blur(.01px);
+        }
+
+        100% {
+            filter: blur(12px);
+            opacity: 0
+        }
+    }
 </style>
 
 
