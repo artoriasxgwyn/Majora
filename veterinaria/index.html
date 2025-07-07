@@ -17,7 +17,7 @@
                 <input type="text" name="Nombre_del_propietario" placeholder="Propietario" autocomplete="name" />
                 <input type="text" name="Telefono" placeholder="Telefono" />
                 <input type="date" name="Fecha_de_la_cita" placeholder="Fecha Cita" />
-                <input type="time" name="Hora_de_la_cita" placeholder="Hora Cita" />
+                <input type="time" name="Hora_de_la_cita" placeholder="Hora Cita"  min="08:00" max="20:00"/>
                 <select name="Especie_de_la_mascota" id="tipoMascota">
                     <option value="">Especie Mascota</option>
                     <option value="Gato">Gato</option>
@@ -351,8 +351,13 @@
             h1.textContent = "Administrador de Citas"
         }, 2500)
     }
+    window.addEventListener("DOMContentLoaded", () => {
+        const inputFecha = document.getElementsByName("Fecha_de_la_cita")[0];
 
-    
+        const hoy = new Date();
+        const fechaHoy = hoy.toISOString().split("T")[0];
+        inputFecha.min = fechaHoy;
+    });
 </script>
 <style>
     * {
@@ -699,8 +704,6 @@
             opacity: 1
         }
     }
-
-
 
     .blur-out {
         animation: blur-out 0.4s linear both
