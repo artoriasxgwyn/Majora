@@ -12,21 +12,26 @@
     <div class="contenedor">
         <section id="cajaIzquierda">
             <form class="formulario">
-                <input type="text" name="Nombre de la mascota" class="custom" placeholder="Nombre Mascota"
+                <input type="text" name="Nombre_de_la_mascota" class="custom" placeholder="Nombre Mascota"
                     autocomplete="name" />
-                <input type="text" name="Nombre del propietario" placeholder="Propietario" autocomplete="name" />
+                <input type="text" name="Nombre_del_propietario" placeholder="Propietario" autocomplete="name" />
                 <input type="text" name="Telefono" placeholder="Telefono" />
-                <input type="date" name="Fecha de la cita" placeholder="Fecha Cita" />
-                <input type="time" name="Hora de la cita" placeholder="Hora Cita" />
-                <select name="Especie de la mascota" id="tipoMascota">
+                <input type="date" name="Fecha_de_la_cita" placeholder="Fecha Cita" />
+                <input type="time" name="Hora_de_la_cita" placeholder="Hora Cita" />
+                <select name="Especie_de_la_mascota" id="tipoMascota">
                     <option value="">Especie Mascota</option>
                     <option value="Gato">Gato</option>
                     <option value="Perro">Perro</option>
                     <option value="Vaca">Vaca</option>
                     <option value="Caballo">Caballo</option>
                     <option value="Cuervo">Cuervo</option>
+                    <option value="Dragon">Dragon</option>
+                    <option value="Nutria">Nutria</option>
+                    <option value="Gusano">Gusano</option>
+                    <option value="Rana">Rana</option>
+                    <option value="Pez">Pez</option>
                 </select>
-                <textarea name="Sintoma" id="textarea" placeholder="  Sintomas del animal" spellcheck="true"></textarea>
+                <textarea name="Sintoma" id="textarea" placeholder="Sintomas del animal" spellcheck="true"></textarea>
                 <button id="save" name="guardar" type="submit"><i id="" class="fa-solid fa-floppy-disk"
                         style="font-size: 17px;"></i></button>
             </form>
@@ -38,16 +43,16 @@
                     <h1>Administrador de Citas</h1>
                 </div>
                 <div class="box1">
-                    <select name="" id="buscarFiltro">
-                        <option value="">Buscar/Filtro</option>
+                    <select name="buscarFiltro" id="buscarFiltro">
+                        <option value="todo">Buscar/Filtro</option>
                         <option value="Abierta">Abierta</option>
-                        <option value="">ads</option>
-                        <option value="">ads</option>
+                        <option value="Terminada">Terminada</option>
+                        <option value="Anulada">Anulada</option>
                     </select>
                     <button id="botonCita"><i id="icon" class="fa-solid fa-plus" style="font-size: 17px;"></i></button>
                 </div>
             </section>
-            <section name="cardsCitas" class="cajaCartas" id="cajaCartas"></section>
+            <article name="cardsCitas" class="cajaCartas" id="cajaCartas"></article>
         </div>
 
     </div>
@@ -58,40 +63,45 @@
         modalFormulario: 0,
         acumulador: -1,
         datoaValidar: {},
+        orden: "",
+        indice: 0,
+        guardado: true,
+        estadoCita: "Abierta",
+        filtro: "todo"
     };
     let arrayCitas = []
     let modalAlerta = document.getElementById("modalAlerta")
     let citaCartas = document.getElementById("citacartas")
     let modal = document.getElementById("citacartas")
-    const elemento = document.getElementById('cajaIzquierda');
     let boton = document.getElementById("botonCita")
+    const elemento = document.getElementById('cajaIzquierda');
+    let search = document.getElementsByName("buscarFiltro")[0]
+
+
+    search.addEventListener("change", () => {
+        llaves.filtro = search.value;
+        insertaCards()
+    })
     document.querySelector("form")
         .addEventListener("submit", (datos) => {
             datos.preventDefault()
             const data = Object.fromEntries(
                 new FormData(datos.target)
             )
-            numeroCita()
-            data.numeroCita = llaves.acumulador
-            //  console.log(data)
             llaves.datoaValidar = data
             validaciones()
-
         })
+
     function validaciones() {
         for (let key in llaves.datoaValidar) {
-            console.log(key)
-            let camposVacios = llaves.datoaValidar[key] == "" ? `Por favor inserte  ${key}` : "no problem"
-            let telefono = isNaN(parseInt(llaves.datoaValidar.Telefono)) == true ? `Por favor inserte un numero en Telefono` : "no problem"
+            llaves.orden = key;
+            let xd = llaves.datoaValidar[key].trim()
+            let camposVacios = xd == "" ? `Por favor inserte  ${key}` : "no problem";
             if (camposVacios == "no problem") {
-                console.log(key)
-                if (telefono == "no problem") {
-                    if (key == "Sintoma") {
-                        arrayCitas.push(llaves.datoaValidar)
-                        modalalertas("Cita guardada con exito")
-                        insertaCards()
-                    }
-                } else {
+                let telefono = isNaN(parseInt(llaves.datoaValidar.Telefono)) == true ? `Por favor inserte un numero en Telefono` : "no problem";
+                if ((telefono == "no problem" && key == "Sintoma")) {
+                    guardarCita()
+                } else if (telefono != "no problem" && key == "Telefono") {
                     modalalertas(telefono)
                     break
                 }
@@ -99,16 +109,16 @@
                 modalalertas(camposVacios)
                 break
             }
-            console.log(arrayCitas)
         }
-
     }
+
     function numeroCita() {
         sum = (llaves.acumulador) + 1
         llaves.acumulador = sum
     }
-    boton.addEventListener("click", () => {
-        if (llaves.modalFormulario === 0) {
+
+    function formulario() {
+        if (llaves.modalFormulario == 0) {
             document.getElementById("icon").className = "fa-solid fa-minus";
             elemento.style.position = "static"
             elemento.style.display = "block";
@@ -118,7 +128,7 @@
             citaCartas.classList.add("scale-up-horizontal-left")
             elemento.classList.add("scale-up-center")
             llaves.modalFormulario = 1;
-        } else if (llaves.modalFormulario === 1) {
+        } else if (llaves.modalFormulario == 1) {
             elemento.style.position = "fixed"
             document.getElementById("icon").className = "fa-solid fa-plus";
             citaCartas.style.width = "100%";
@@ -132,18 +142,195 @@
             llaves.modalFormulario = 0;
         };
     }
+    boton.addEventListener("click", () => {
+        formulario()
+    }
     )
     function insertaCards() {
+        let CITAS = document.getElementById("cajaCartas")
+        CITAS.textContent = ""
         arrayCitas.forEach((propiedad, item) => {
-            let CITAS = document.getElementById("cajaCartas")
-            let contenido = document.createElement("p");
-            let citaCarta = document.createElement("div");
+            if (llaves.filtro === "todo" || propiedad.estadoCita === llaves.filtro) {
+                /*datos de la mascota*/
+                let nombreAnimal = document.createElement("p");
+                let nombrePropietario = document.createElement("p");
+                let Fecha = document.createElement("p");
+                let Hora = document.createElement("p");
+                let Sintomas = document.createElement("p");
+                //Estado de la cita
+                let estadoCita = document.createElement("select")
+                let option1 = document.createElement("option")
+                let option2 = document.createElement("option")
+                let option3 = document.createElement("option")
 
-            CITAS.appendChild(citaCarta);
-            citaCarta.appendChild(contenido);
-            contenido.textContent = "pepep";
-            citaCarta.style.backgroundColor = "green";
+                let citaCarta = document.createElement("article");
+                let header = document.createElement("header");
+                let section = document.createElement("section");
+                let footer = document.createElement("footer");
+                let edit = document.createElement("button");
+                let delet = document.createElement("button");
+                let iconDelete = document.createElement("i")
+                let iconEdite = document.createElement("i")
+                let iconAnimal = document.createElement("i")
+
+                CITAS.appendChild(citaCarta);
+
+                citaCarta.appendChild(header)
+                citaCarta.appendChild(section)
+                citaCarta.appendChild(footer)
+
+                header.appendChild(iconAnimal);
+                header.appendChild(nombreAnimal);
+
+                section.appendChild(nombrePropietario)
+                section.appendChild(Fecha)
+                section.appendChild(Hora)
+                section.appendChild(Sintomas)
+
+                footer.appendChild(edit)
+                footer.appendChild(delet)
+                edit.appendChild(iconEdite)
+                delet.appendChild(iconDelete)
+
+                section.appendChild(estadoCita)
+
+                estadoCita.appendChild(option1)
+                estadoCita.appendChild(option2)
+                estadoCita.appendChild(option3)
+
+                header.classList.add("header")
+                section.classList.add("section")
+                footer.classList.add("footer")
+                edit.classList.add("button")
+                delet.classList.add("button")
+                citaCarta.style.padding = "3%"
+                iconEdite.classList.add("fa-solid", "fa-pencil")
+                iconDelete.classList.add("fa-solid", "fa-eraser")
+                citaCarta.classList.remove("scale-down-center")
+                citaCarta.classList.add("scale-up-center")
+
+                iconEdite.style.fontSize = "17px"
+                iconDelete.style.fontSize = "17px"
+                iconAnimal.style.fontSize = "25px"
+
+                citaCarta.classList.add("CARDS")
+                nombreAnimal.textContent = propiedad.Nombre_de_la_mascota;
+                nombrePropietario.textContent = `Dueño: ${propiedad.Nombre_del_propietario}`;
+                Fecha.textContent = `Fecha: ${propiedad.Fecha_de_la_cita}`;
+                Hora.textContent = `Hora: ${propiedad.Hora_de_la_cita}`;
+                Sintomas.textContent = `Sintoma: ${propiedad.Sintoma}`;
+
+                option1.textContent = "Abierta"
+                option2.textContent = "Terminada"
+                option3.textContent = "Anulada"
+
+                option1.value = "Abierta"
+                option2.value = "Terminada"
+                option3.value = "Anulada"
+
+                estadoCita.value = propiedad.estadoCita;
+
+                if (propiedad.Especie_de_la_mascota == "Gato") {
+                    iconAnimal.classList.add("fa-solid", "fa-cat")
+                } else if (propiedad.Especie_de_la_mascota == "Perro") {
+                    iconAnimal.classList.add("fa-solid", "fa-dog")
+                } else if (propiedad.Especie_de_la_mascota == "Vaca") {
+                    iconAnimal.classList.add("fa-solid", "fa-cow")
+                } else if (propiedad.Especie_de_la_mascota == "Caballo") {
+                    iconAnimal.classList.add("fa-solid", "fa-horse")
+                } else if (propiedad.Especie_de_la_mascota == "Cuervo") {
+                    iconAnimal.classList.add("fa-solid", "fa-crow")
+                } else if (propiedad.Especie_de_la_mascota == "Dragon") {
+                    iconAnimal.classList.add("fa-solid", "fa-dragon")
+                } else if (propiedad.Especie_de_la_mascota == "Nutria") {
+                    iconAnimal.classList.add("fa-solid", "fa-otter")
+                } else if (propiedad.Especie_de_la_mascota == "Gusano") {
+                    iconAnimal.classList.add("fa-solid", "fa-worm")
+                } else if (propiedad.Especie_de_la_mascota == "Rana") {
+                    iconAnimal.classList.add("fa-solid", "fa-frog")
+                } else if (propiedad.Especie_de_la_mascota == "Pez") {
+                    iconAnimal.classList.add("fa-solid", "fa-fish-fins")
+                }
+
+                edit.addEventListener("click", () => {
+                    document.getElementsByName("Nombre_de_la_mascota")[0].value = propiedad.Nombre_de_la_mascota;
+                    document.getElementsByName("Nombre_del_propietario")[0].value = propiedad.Nombre_del_propietario;
+                    document.getElementsByName("Telefono")[0].value = propiedad.Telefono;
+                    document.getElementsByName("Fecha_de_la_cita")[0].value = propiedad.Fecha_de_la_cita;
+                    document.getElementsByName("Hora_de_la_cita")[0].value = propiedad.Hora_de_la_cita;
+                    document.getElementsByName("Especie_de_la_mascota")[0].value = propiedad.Especie_de_la_mascota;
+                    document.getElementsByName("Sintoma")[0].value = propiedad.Sintoma;
+                    llaves.indice = item
+                    llaves.datoaValidar = propiedad
+                    llaves.guardado = false
+                    if (llaves.guardado != true && llaves.modalFormulario == 0) {
+                        formulario()
+                    }
+
+                })
+                delet.addEventListener("click", () => {
+                    if (llaves.guardado) {
+                        llaves.indice = item
+                        let indice = arrayCitas.findIndex(it => it.numeroCita == llaves.indice)
+                        modalalertas("Cita eliminada")
+                        citaCarta.classList.remove("scale-up-center")
+                        citaCarta.classList.add("scale-down-center")
+                        llaves.guardado = true
+                        setTimeout(() => {
+                            arrayCitas.splice(indice, 1)
+                            insertaCards()
+                        }, 400)
+                    }
+                })
+                estadoCita.addEventListener("change", () => {
+                    llaves.indice = item
+                    llaves.estadoCita = estadoCita.value
+                    editarCita()
+                    insertaCards()
+                })
+            }
+
         })
+    }
+
+    function guardarCita() {
+        if (llaves.guardado) {
+            limpiar()
+            numeroCita()
+            llaves.datoaValidar.numeroCita = llaves.acumulador
+            llaves.datoaValidar.estadoCita = llaves.estadoCita
+            arrayCitas.push(llaves.datoaValidar)
+            console.log(arrayCitas)
+            modalalertas("Cita guardada con exito")
+            insertaCards()
+        } else {
+            editarCita()
+            limpiar()
+            modalalertas("Cita editada con exito")
+            insertaCards()
+            llaves.guardado = true
+        }
+    }
+
+    function editarCita() {
+        arrayCitas[llaves.indice].Nombre_de_la_mascota = llaves.datoaValidar.Nombre_de_la_mascota
+        arrayCitas[llaves.indice].Nombre_del_propietario = llaves.datoaValidar.Nombre_del_propietario
+        arrayCitas[llaves.indice].Telefono = llaves.datoaValidar.Telefono
+        arrayCitas[llaves.indice].Fecha_de_la_cita = llaves.datoaValidar.Fecha_de_la_cita
+        arrayCitas[llaves.indice].Hora_de_la_cita = llaves.datoaValidar.Hora_de_la_cita
+        arrayCitas[llaves.indice].Especie_de_la_mascota = llaves.datoaValidar.Especie_de_la_mascota
+        arrayCitas[llaves.indice].Sintoma = llaves.datoaValidar.Sintoma
+        arrayCitas[llaves.indice].estadoCita = llaves.estadoCita
+    }
+
+    function limpiar() {
+        document.getElementsByName("Nombre_de_la_mascota")[0].value = ""
+        document.getElementsByName("Nombre_del_propietario")[0].value = ""
+        document.getElementsByName("Telefono")[0].value = ""
+        document.getElementsByName("Fecha_de_la_cita")[0].value = ""
+        document.getElementsByName("Hora_de_la_cita")[0].value = ""
+        document.getElementsByName("Especie_de_la_mascota")[0].value = ""
+        document.getElementsByName("Sintoma")[0].value = ""
     }
     function modalalertas(err) {
         let h1 = document.querySelector("h1")
@@ -163,8 +350,9 @@
             h1.classList.add("blur-in")
             h1.textContent = "Administrador de Citas"
         }, 2500)
-
     }
+
+    
 </script>
 <style>
     * {
@@ -198,8 +386,13 @@
         color: #ecf0f1;
     }
 
-    .box1 button:hover {
+
+    button:hover {
         background-color: #283747;
+    }
+
+    .button:hover {
+        background-color: #34495e;
     }
 
     body::-webkit-scrollbar {
@@ -233,6 +426,7 @@
         border: solid 2px #34495e;
         background-color: #1b2631;
         color: #ecf0f1;
+        padding: 5%;
     }
 
     .formulario select {
@@ -299,15 +493,33 @@
     }
 
     .cajaCartas {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        overflow: scroll;
         background-color: #34495e;
         width: 100%;
-        height: 91.3%;
+        height: 100vh;
         border-radius: 20px;
+        padding: 10px;
+
     }
 
     button {
         border-radius: 20px;
         padding: 10px;
+        display: flex;
+        align-items: center;
+        border: solid 2px #34495e;
+        background-color: #283747;
+        color: #ecf0f1;
+    }
+
+    .button {
+        border-radius: 20px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        padding: 3.5%;
         display: flex;
         align-items: center;
         border: solid 2px #34495e;
@@ -337,11 +549,42 @@
         gap: 1%;
     }
 
-    .cajaCartas {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 10px;
-        overflow: scroll
+    .header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: min-content;
+        width: 100%;
+        background-color: #1b2631;
+        border-radius: 6.7px;
+        padding-top: 5%;
+    }
+
+    .section {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        height: min-content;
+        width: 100%;
+    }
+
+    .footer {
+        display: flex;
+        justify-content: end;
+        height: min-content;
+        width: 100%;
+        background-color: #1b2631;
+        border-radius: 6.7px;
+        gap: 3%;
+    }
+
+    .CARDS {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background-color: #283747;
+        height: min-content;
+        border-radius: 10px;
     }
 
     .cajaCartas::-webkit-scrollbar {
@@ -474,6 +717,5 @@
         }
     }
 </style>
-
 
 </html>
