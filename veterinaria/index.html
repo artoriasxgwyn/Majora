@@ -17,7 +17,7 @@
                 <input type="text" name="Nombre_del_propietario" placeholder="Propietario" autocomplete="name" />
                 <input type="text" name="Telefono" placeholder="Telefono" />
                 <input type="date" name="Fecha_de_la_cita" placeholder="Fecha Cita" />
-                <input type="time" name="Hora_de_la_cita" placeholder="Hora Cita"  min="08:00" max="20:00"/>
+                <input type="time" name="Hora_de_la_cita" placeholder="Hora Cita" min="08:00" max="20:00" />
                 <select name="Especie_de_la_mascota" id="tipoMascota">
                     <option value="">Especie Mascota</option>
                     <option value="Gato">Gato</option>
@@ -57,6 +57,7 @@
 
     </div>
     <div id="modalAlerta" style="display:none"></div>
+    <div id="modalConfirmacion" style="display:none"></div>
 </body>
 <script>
     let llaves = {
@@ -76,6 +77,59 @@
     let boton = document.getElementById("botonCita")
     const elemento = document.getElementById('cajaIzquierda');
     let search = document.getElementsByName("buscarFiltro")[0]
+    let modalConfirmacion = document.getElementById("modalConfirmacion")
+
+    function modal_Confirmacion(callback) {
+        modalConfirmacion.textContent = ""; 
+        modalConfirmacion.style.display = "flex";
+        modalConfirmacion.style.position = "absolute";
+        modalConfirmacion.style.top = "20%";
+        modalConfirmacion.style.left = "30%";
+        modalConfirmacion.style.flexDirection = "column";
+        modalConfirmacion.style.alignItems = "center";
+        modalConfirmacion.style.justifyContent = "center";
+        modalConfirmacion.style.backgroundColor = "#283747";
+        modalConfirmacion.style.width = "40%";
+        modalConfirmacion.style.height = "30%";
+        modalConfirmacion.style.textAlign = "center";
+        modalConfirmacion.style.color = "white";
+        modalConfirmacion.style.fontSize = "20px";
+        modalConfirmacion.style.borderRadius = "15px";
+        modalConfirmacion.style.border = "2px solid #34495e";
+        modalConfirmacion.style.zIndex = "1000";
+
+        let pregunta = document.createElement("p");
+        pregunta.textContent = "¿Está seguro de borrar la cita?";
+        modalConfirmacion.appendChild(pregunta);
+
+        let botones = document.createElement("div");
+        botones.style.marginTop = "20px";
+        botones.style.display = "flex";
+        botones.style.justifyContent = "center";
+        botones.style.gap = "20px";
+
+        let btnSi = document.createElement("button");
+        btnSi.textContent = "Sí";
+        btnSi.style.padding = "10px 20px";
+
+        let btnNo = document.createElement("button");
+        btnNo.textContent = "No";
+        btnNo.style.padding = "10px 20px";
+
+        btnSi.onclick = () => {
+            modalConfirmacion.style.display = "none";
+            callback(); 
+        };
+
+        btnNo.onclick = () => {
+            modalConfirmacion.style.display = "none";
+        };
+        btnNo.classList.add("button")
+        btnSi.classList.add("button")
+        botones.appendChild(btnSi);
+        botones.appendChild(btnNo);
+        modalConfirmacion.appendChild(botones);
+    }
 
 
     search.addEventListener("change", () => {
@@ -272,14 +326,17 @@
                     if (llaves.guardado) {
                         llaves.indice = item
                         let indice = arrayCitas.findIndex(it => it.numeroCita == llaves.indice)
-                        modalalertas("Cita eliminada")
-                        citaCarta.classList.remove("scale-up-center")
-                        citaCarta.classList.add("scale-down-center")
-                        llaves.guardado = true
-                        setTimeout(() => {
-                            arrayCitas.splice(indice, 1)
-                            insertaCards()
-                        }, 400)
+                        modal_Confirmacion(() => {
+                            modalalertas("Cita eliminada");
+                            citaCarta.classList.remove("scale-up-center");
+                            citaCarta.classList.add("scale-down-center");
+                            llaves.guardado = true;
+
+                            setTimeout(() => {
+                                arrayCitas.splice(indice, 1);
+                                insertaCards();
+                            }, 400);
+                        });
                     }
                 })
                 estadoCita.addEventListener("change", () => {
