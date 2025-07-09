@@ -32,7 +32,7 @@
 
 
     <script>
-        /* https://img.freepik.com/vector-premium/dibujos-animados-mesa_119631-412.jpg */
+        /*  */
         let datosMesa = []
         let mesaencontrada = {}
         let modo = 0
@@ -56,19 +56,20 @@
         })
 
         function modalalertas(err) {
-            modal.textContent = err
-            modal.style.backgroundImage = "url('https://i.pinimg.com/736x/2d/84/11/2d8411cdb9438b8dd5c9e954fa4f8e9a.jpg')";
-            modal.style.backgroundPosition = "center"
-            modal.style.backgroundRepeat = "no-repeat"
-            modal.style.width = "40%"
-            modal.style.height = "70%"
-            modal.style.textAlign="center"
-            modal.style.color="white"
-            modal.style.fontSize="20px"
+            modal.textContent = err;
+            modal.style.backgroundImage = "";
+            modal.style.backgroundPosition = "";
+            modal.style.backgroundRepeat = "";
+            modal.style.width = "";
+            modal.style.height = "";
+            modal.style.color = "white";
+            modal.style.fontSize = "16px";
+            modal.style.display = "block";
+
             setTimeout(() => {
-                modal.style="hidden"
-                modal.textContent = ""
-            }, 2000)
+                modal.style.display = "none";
+                modal.textContent = "";
+            }, 2000);
         }
 
         buscar.addEventListener("input", () => {
@@ -192,7 +193,7 @@
                 parrafoDescripcion.textContent = item.descripcion
                 editar.textContent = "📝"
                 eliminar.textContent = "❌"
-                imagen.src = "https://i.pinimg.com/736x/00/21/25/0021259a98567d617c162e3ef7cf4238.jpg"
+                imagen.src = "https://img.freepik.com/vector-premium/dibujos-animados-mesa_119631-412.jpg"
 
                 document.getElementById("mesas").appendChild(divCard)
                 divImagen.appendChild(imagen)
@@ -244,6 +245,58 @@
             padding: 0px;
             margin: 0px;
             box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            width: 100vh;
+            height: 100vh;
+        }
+
+        .contenedor {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100vh;
+            padding: 40px;
+            gap: 30px;
+        }
+
+        .box {
+            display: flex;
+            gap: 30px;
+            width: 100%;
+        }
+
+        input[type="text"] {
+            padding: 12px;
+            border: none;
+            border-bottom: 2px solid #ccc;
+            outline: none;
+            background: transparent;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-bottom: 2px solid #1976D2;
+        }
+
+        button {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 4px;
+            background-color: #1976D2;
+            color: white;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #1565C0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
         #mesa {
@@ -252,9 +305,27 @@
         }
 
         #divCard {
-            border: 1px solid gray;
-            border-radius: 10px;
-            box-shadow: 3px 3px 3px gray;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+            padding: 10px;
+            transition: transform 0.2s ease;
+        }
+
+        #divCard:hover {
+            transform: translateY(-2px);
+        }
+
+        #divCard span {
+            font-weight: bold;
+            display: block;
+            margin-top: 4px;
+            color: #333;
+        }
+
+        #divCard p {
+            color: #666;
+            margin-bottom: 6px;
         }
 
         #mesas {
@@ -268,36 +339,31 @@
             height: 100%;
         }
 
-        .contenedor {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100vh;
+        .mesas::-webkit-scrollbar {
+            width: 6px;
         }
 
-        .box {
-            display: flex;
-            justify-content: space-between;
-            padding-top: 5%;
-            padding-left: 5%;
-            width: 100vh;
-
+        .mesas::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+            border-radius: 3px;
         }
 
         .modal {
-            width: max-content;
-            background-color: whitesmoke;
-            position: absolute;
-            left: 50%;
+            display: none;
+            position: fixed;
             top: 20%;
-        }
-
-        body {
-            background-image: url("https://i.pinimg.com/736x/0e/cf/bd/0ecfbd7b1f9bcbf78bb3a17fba4c614d.jpg");
-            background-repeat: no-repeat;
-            background-size: cover;
-            width: 100vh;
-            height: 100vh;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(33, 33, 33, 0.9);
+            color: white;
+            font-size: 16px;
+            padding: 16px 24px;
+            border-radius: 4px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            min-width: 250px;
+            max-width: 400px;
+            text-align: center;
         }
     </style>
 </body>
