@@ -80,7 +80,7 @@
     let modalConfirmacion = document.getElementById("modalConfirmacion")
 
     function modal_Confirmacion(callback) {
-        modalConfirmacion.textContent = ""; 
+        modalConfirmacion.textContent = "";
         modalConfirmacion.style.display = "flex";
         modalConfirmacion.style.position = "absolute";
         modalConfirmacion.style.top = "20%";
@@ -118,7 +118,7 @@
 
         btnSi.onclick = () => {
             modalConfirmacion.style.display = "none";
-            callback(); 
+            callback();
         };
 
         btnNo.onclick = () => {
@@ -410,7 +410,6 @@
     }
     window.addEventListener("DOMContentLoaded", () => {
         const inputFecha = document.getElementsByName("Fecha_de_la_cita")[0];
-
         const hoy = new Date();
         const fechaHoy = hoy.toISOString().split("T")[0];
         inputFecha.min = fechaHoy;
