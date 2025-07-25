@@ -1,14 +1,20 @@
 <script setup>
-import {ref} from 'vue';
-let numero= ref(0)
+import { ref } from "vue";
+import boton from "./components/button.vue";
+let numero = ref(0);
+/*
 setInterval(()=>{
 numero.value++
 },1000)
+*/
 </script>
 
 <template>
-  <h1>{{numero}}</h1>
+  <div>
+    <h1>{{numero}}</h1>
+    <boton textButton="hola"></boton>
+  </div>
 </template>
 
-<style>
+<style scoped>
 </style>
