@@ -35,7 +35,7 @@ function Math_Basics(operation) {
 }
 
 function Result() {
-  if ((!(numbersToOperate.length == 0))&&numbersToOperate.length>2) {
+  if ((!(numbersToOperate.length == 0))&&numbersToOperate.length>=2) {
     DataResult = numbersToOperate[0];
     numbersToOperate.push(parseInt(ScreenCalculator.value));
     numbersToOperate.forEach((element, index) => {
