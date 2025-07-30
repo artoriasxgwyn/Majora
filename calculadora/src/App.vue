@@ -81,12 +81,13 @@ function clean() {
         <div class="numberButtons">
           <button
             v-on:click="function(){collect(0)}"
-            style="border-radius:5px ; border:1px solid black"
+            style="border-radius:5px ; border:1px solid black; font-size:30px"
           >0</button>
           <button value="C" @:click="function(){clean()}">C</button>
           <button v-on:click="function(){Math_Basics(`S`)}">+</button>
           <button
-            style="border-radius:5px ; border:1px solid black"
+          
+            style="border-radius:5px ; border:1px solid black; font-size:30px"
             v-for="n in 9"
             :key="n"
             :value="n"
@@ -116,7 +117,6 @@ function clean() {
 .Calculator {
   display: flex;
   flex-direction: column;
-
   justify-content: space-between;
   padding: 2%;
   background: black;
@@ -125,6 +125,10 @@ function clean() {
   height: 50%;
 }
 .Screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 35px;;
   background: white;
   border-radius: 10px;
   width: 100%;
