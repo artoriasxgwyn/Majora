@@ -1,8 +1,8 @@
-import Gastronomy from "../components/Gastronomy.vue"
-import Services from "../components/Services.vue"
-import Deports from "../components/Deports.vue"
-import Rooms from "../components/Rooms.vue"
-import Presentation from "../components/Presentation.vue"
+import Gastronomy from "../views/Gastronomy.vue"
+import Services from "../views/Services.vue"
+import Deports from "../views/Deports.vue"
+import Rooms from "../views/Rooms.vue"
+import Presentation from "../views/Presentation.vue"
 //import { Component, createRouter, createWebHashHistory } from "vue-router"
 import { createRouter, createWebHashHistory } from "vue-router"
 
