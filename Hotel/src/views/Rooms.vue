@@ -30,8 +30,8 @@ import card from "../components/cardsRooms.vue";
     ></card>
     <card
       class="div6"
-      contentCard="Fairmont Palliser"
-      imageCard="https://content.r9cdn.net/rimg/himg/10/55/a5/expedia_group-440885-120502904-907181.jpg?width=335&height=268&crop=true"
+      contentCard="Hilton Niagara Falls"
+      imageCard="https://content.r9cdn.net/rimg/himg/f2/92/5e/ice-31749-ca4622-487433.jpg?width=335&height=268&crop=true"
     ></card>
   </div>
 </template>

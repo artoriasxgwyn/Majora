@@ -12,20 +12,20 @@ let props = defineProps({
 </script>
 <template>
   <div>
-    <q-card class="my-card">
-      <q-card-section horizontal>
-        <q-img class="col-5" :src='props.imageCard' />
+    <q-card style="  border: 2px solid #162a2c;" class="my-card">
+      <q-card-section horizontal style="  background-color: #f8f8f8;">
+        <q-img class="col-5 img" :src='props.imageCard' />
 
         <q-card-section>{{props.contentCard}}</q-card-section>
       </q-card-section>
 
       <q-separator />
 
-      <q-card-actions>
-        <q-btn flat round icon="event" />
-        <q-btn flat>5:30PM</q-btn>
-        <q-btn flat>7:00PM</q-btn>
-        <q-btn flat color="primary">Reserve</q-btn>
+      <q-card-actions style="background-color:#202a2c;">
+        <q-btn style="color:white" flat round icon="event" />
+        <q-btn style="color:white" flat>5:30PM</q-btn>
+        <q-btn style="color:white" flat>7:00PM</q-btn>
+        <q-btn style="color:green" flat >Reserve</q-btn>
       </q-card-actions>
     </q-card>
   </div>
@@ -34,6 +34,12 @@ let props = defineProps({
 .my-card
   width: 100%
   max-width: 350px
+</style>
+<style scoped>
+.img {
+  height: 130px;
+  aspect-ratio: 16 / 9;
+}
 </style>
 
   

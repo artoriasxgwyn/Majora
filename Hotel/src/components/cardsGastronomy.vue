@@ -12,7 +12,7 @@ let props = defineProps({
 </script>
 <template>
   <div>
-    <q-card class="my-card" flat bordered>
+    <q-card class="my-card color" flat bordered>
       <q-card-section>
         <div class="text-h6 q-mb-xs">{{props.contentCard}}</div>
         <div class="row no-wrap items-center">
@@ -21,7 +21,7 @@ let props = defineProps({
         </div>
       </q-card-section>
 
-      <img :src="props.imageCard" />
+      <img :src="props.imageCard" class="img"/>
     </q-card>
   </div>
 </template>
@@ -30,6 +30,16 @@ let props = defineProps({
 .my-card
     width: 100%
     max-width: 350px
+</style>
+<style scoped>
+.img {
+  height: 250px;
+  aspect-ratio: 16 / 9;
+}
+.color{
+  background-color: #f8f8f8;
+  border: 2px solid #162a2c;
+}
 </style>
 
  

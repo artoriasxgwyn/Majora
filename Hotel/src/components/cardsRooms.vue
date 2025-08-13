@@ -12,40 +12,51 @@ let props = defineProps({
 </script>
 
 <template>
-<div>
-<q-card class="my-card" flat bordered>
-    <q-img :src='props.imageCard'></q-img>
+  <div>
+    <q-card  style=" border: 2px solid #162a2c;" class="my-card " flat bordered >
+      <q-img :src="props.imageCard" class="img"></q-img>
 
-    <q-card-section>
-        <q-btn fab color="primary" icon="place" class="absolute" style="top: 0; right: 12px; transform: translateY(-50%);"></q-btn>
-      <div class="row no-wrap items-center">
-        <div class="col text-h6 ellipsis">{{props.contentCard}}</div>
-        <div class="col-auto text-grey text-caption q-pt-md row no-wrap items-center">
-          <q-icon name="place"></q-icon>250 ft
+      <q-card-section class="color">
+        <div class="row no-wrap items-center">
+          <div class="col text-h6 ellipsis">{{props.contentCard}}</div>
+          <div class="col-auto text-grey text-caption q-pt-md row no-wrap items-center">
+         
+          </div>
         </div>
-      </div>
 
-      <q-rating v-model="stars" :max="5" size="32px"></q-rating>
-    </q-card-section>
+        <q-rating v-model="stars" :max="5" size="32px"></q-rating>
+      </q-card-section>
 
-    <q-card-section class="q-pt-none">
-      <div class="text-subtitle1">$・Italian, Cafe</div>
-      <div class="text-caption text-grey">Small plates, salads & sandwiches in an intimate setting.</div>
-    </q-card-section>
+      <q-card-section class="q-pt-none">
+        <div class="text-subtitle1">$・Italian, Cafe</div>
+        <div
+          class="text-caption text-grey"
+        >Small plates, salads & sandwiches in an intimate setting.</div>
+      </q-card-section>
 
-    <q-separator></q-separator>
+      <q-separator></q-separator>
 
-    <q-card-actions>
-      <q-btn flat round icon="event"></q-btn>
-      <q-btn flat color="primary">Reserve</q-btn>
-    </q-card-actions>
-  </q-card>
-</div>
+      <q-card-actions style="background-color:#202a2c;">
+        <q-btn flat round style="color:white" icon="event"></q-btn>
+        <q-btn flat style="color:green">Reserve</q-btn>
+      </q-card-actions>
+    </q-card>
+  </div>
 </template>
 
 
 <style lang="sass" scoped>
 .my-card
-    width: 100%
-    max-width: 350px
+  width: 100%
+  max-width: 350px
+</style>
+<style scoped>
+.img {
+  height: 200px;
+  aspect-ratio: 16 / 9;
+}
+.color{
+  background-color: #f8f8f8;
+ 
+}
 </style>

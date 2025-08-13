@@ -1,11 +1,17 @@
 <template>
-  <q-layout view="hHh lpR fFf">
-    <q-header elevated class="bg-primary text-white qheader" height-hint="98">
-      
-      <q-toolbar class="toolbarContent">
-        <q-toolbar-title class="headerTitle">
-          <div><i class="fa-solid fa-hotel" style="font-size: 30px"></i></div>
-          <div><h1 style="font-size: 100%">Hotel California</h1></div>
+  <q-layout view="hHh lpR fFf" >
+    <q-header
+     elevated class="bg-mine text-white qheader " height-hint="98">
+      <q-toolbar class="toolbarContent" >
+        <q-toolbar-title class="headerTitle" >
+           <div>
+            <i class="fa-solid fa-volcano" style="font-size: 30px; color:red"></i>
+            </div>
+          <router-link to="/" class="link">
+            <div>
+              <h1 style="font-size: 100%">Hotel California</h1>
+            </div>
+          </router-link>
         </q-toolbar-title>
       </q-toolbar>
 
@@ -17,15 +23,15 @@
       </q-tabs>
     </q-header>
 
-    <q-page-container>
-      <main class="content">
-        <div class="large">
+    <q-page-container style="background-color: #fefcf6;">
+      <section class="content ql">
+        <div class="large" style="background-color: #f4efe6;">
           <router-view />
         </div>
-      </main>
+      </section>
     </q-page-container>
 
-    <q-footer elevated class="bg-grey-8 text-white">
+    <q-footer elevated class="bg-mine text-white footer0">
       <q-toolbar>
         <q-toolbar-title class="footer">
           <i class="fa-solid fa-circle-exclamation"></i>
@@ -61,16 +67,25 @@
   align-items: center;
   gap: 1%;
 }
-.headerTitle{
+.headerTitle {
   display: flex;
   align-items: center;
   gap: 1%;
 }
-.toolbarContent{
+.toolbarContent {
   height: 50px;
-  
 }
-.qheader{
+.qheader {
   height: min-content;
+}
+.link{
+  color:white;
+  text-decoration: none;
+}
+.footer0{
+  position: none;
+}
+.bg-mine{
+  background-color: #162a2c;
 }
 </style>
