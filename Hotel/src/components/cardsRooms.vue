@@ -19,7 +19,7 @@ let props = defineProps({
     <q-card-section>
         <q-btn fab color="primary" icon="place" class="absolute" style="top: 0; right: 12px; transform: translateY(-50%);"></q-btn>
       <div class="row no-wrap items-center">
-        <div class="col text-h6 ellipsis">{{props.imageCard}}</div>
+        <div class="col text-h6 ellipsis">{{props.contentCard}}</div>
         <div class="col-auto text-grey text-caption q-pt-md row no-wrap items-center">
           <q-icon name="place"></q-icon>250 ft
         </div>
