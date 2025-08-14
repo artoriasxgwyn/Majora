@@ -13,8 +13,8 @@ let props = defineProps({
 <template>
   <div>
     <q-card class="my-card color" flat bordered>
-      <q-card-section>
-        <div class="text-h6 q-mb-xs">{{props.contentCard}}</div>
+      <q-card-section style="background-color:#162a2c;">
+        <div style="color:white" class="text-h6 q-mb-xs">{{props.contentCard}}</div>
         <div class="row no-wrap items-center">
           <q-rating size="18px" v-model="stars" :max="5" color="primary"></q-rating>
           <span class="text-caption text-grey q-ml-sm">4.2 (551)</span>

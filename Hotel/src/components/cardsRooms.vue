@@ -36,7 +36,7 @@ let props = defineProps({
 
       <q-separator></q-separator>
 
-      <q-card-actions style="background-color:#202a2c;">
+      <q-card-actions style="background-color:#162a2c;">
         <q-btn flat round style="color:white" icon="event"></q-btn>
         <q-btn flat style="color:green">Reserve</q-btn>
       </q-card-actions>
