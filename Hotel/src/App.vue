@@ -55,9 +55,6 @@
 .large {
   width: 80%;
 }
-.large::-webkit-scrollbar {
-  display: none;
-}
 .size {
   margin: 0px;
   font-size: 15px;
