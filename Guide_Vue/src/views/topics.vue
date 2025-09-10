@@ -1,4 +1,20 @@
-<template>
+/*
+1.Que es vue
+2.Requisitos
+3.Creación de proyecto
+4.Interpolacion
+5.Directivas de vue
+6.Options Api
+7.Composition Api
+8.Ciclo de vida de vue
+9.Componentes importación
+10.Componetizacion Props
+11.Creación de un proyecto template quasar
+12.Instalar Quasar en un proyecto ya creado
+13.Vue router
+14.Pinia
+15.Pinia-plugin-presistedstate
+*/<template>
   <div class="page-container">
     <header class="header">
       <div class="header-left">
