@@ -1,3 +1,37 @@
+
+<template>
+  <div class="page-container">
+
+    <main class="main-content">
+      <div class="container">
+        <div class="hero-section">
+          <h1 class="hero-title">Vue.js Manual</h1>
+          <p class="hero-subtitle">
+            Your comprehensive guide to building amazing web applications with Vue.js.
+          </p>
+        </div>
+
+        <div class="cards-grid">
+          <a v-for="card in manualSections" :key="card.title" class="card" >
+              <div :class="['card-icon-wrapper', card.colorClass]">
+              <span class="material-symbols-outlined">{{ card.icon }}</span>
+            </div>
+            <router-link class="tolink" :to="card.tolink">
+            <div>
+              <h2 class="card-title">{{ card.title }}</h2>
+              <p class="card-description">{{ card.description }}</p>
+            </div>
+            </router-link>
+           
+          </a>
+        </div>
+      </div>
+    </main>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue';
 /*
 1.Que es vue
 2.Requisitos
@@ -14,92 +48,34 @@
 13.Vue router
 14.Pinia
 15.Pinia-plugin-presistedstate
-*/<template>
-  <div class="page-container">
-    <header class="header">
-      <div class="header-left">
-        <div class="logo-container">
-          <svg class="logo-svg" fill="none" viewBox="0 0 256 198" xmlns="http://www.w3.org/2000/svg">
-            <path d="M204.8 0H256L128 197.12L0 0H101.12L128 44.48L154.88 0H204.8Z" fill="#42b883"></path>
-            <path d="M0 0L128 197.12L256 0H204.8L128 123.2L51.2 0H0Z" fill="#35495e"></path>
-            <path d="M51.2 0L128 123.2L204.8 0H154.88L128 44.48L101.12 0H51.2Z" fill="#42b883"></path>
-          </svg>
-          <h1 class="title">Vue.js Manual</h1>
-        </div>
-        <nav class="nav-links">
-          <a class="nav-link" href="#">Guide</a>
-          <a class="nav-link" href="#">API</a>
-          <a class="nav-link" href="#">Examples</a>
-          <a class="nav-link" href="#">Ecosystem</a>
-        </nav>
-      </div>
-      <div class="header-right">
-        <div class="search-container">
-          <span class="material-symbols-outlined search-icon">search</span>
-          <input class="search-input" placeholder="Search"/>
-        </div>
-        <button class="icon-button mobile-search-button">
-          <span class="material-symbols-outlined">search</span>
-        </button>
-        <button class="icon-button">
-          <span class="material-symbols-outlined">help</span>
-        </button>
-        <button class="icon-button">
-          <span class="material-symbols-outlined">dark_mode</span>
-        </button>
-        <div class="user-avatar-container">
-          <div class="user-avatar" style='background-image: url("https://lh3.googleusercontent.com/a/ACg8ocJ_6i7a_2l3m-3E0x0v8z-3z0q-5yGg4A3d2D1J8c=s96-c");'></div>
-        </div>
-      </div>
-    </header>
-
-    <main class="main-content">
-      <div class="container">
-        <div class="hero-section">
-          <h1 class="hero-title">Vue.js Manual</h1>
-          <p class="hero-subtitle">
-            Your comprehensive guide to building amazing web applications with Vue.js.
-          </p>
-        </div>
-
-        <div class="cards-grid">
-          <a v-for="card in manualSections" :key="card.title" class="card" href="#">
-            <div :class="['card-icon-wrapper', card.colorClass]">
-              <span class="material-symbols-outlined">{{ card.icon }}</span>
-            </div>
-            <div>
-              <h2 class="card-title">{{ card.title }}</h2>
-              <p class="card-description">{{ card.description }}</p>
-            </div>
-          </a>
-        </div>
-      </div>
-    </main>
-  </div>
-</template>
-
-<script setup>
-import { ref } from 'vue';
-
+*/
 // Data for the cards, making it easy to add, remove, or change them
 const manualSections = ref([
-  { title: 'Introduction', description: 'Start your journey.', icon: 'auto_stories', colorClass: 'color-green' },
-  { title: 'Essentials', description: 'Core concepts.', icon: 'code', colorClass: 'color-blue' },
-  { title: 'Components In-Depth', description: 'Building blocks.', icon: 'layers', colorClass: 'color-purple' },
-  { title: 'Reactivity In-Depth', description: 'The magic behind Vue.', icon: 'psychology', colorClass: 'color-yellow' },
-  { title: 'Built-in Components', description: 'Out-of-the-box power.', icon: 'view_cozy', colorClass: 'color-red' },
-  { title: 'Template Syntax', description: 'Declarative rendering.', icon: 'terminal', colorClass: 'color-indigo' },
-  { title: 'API Reference', description: 'Detailed docs.', icon: 'api', colorClass: 'color-pink' },
-  { title: 'Examples', description: 'See it in action.', icon: 'integration_instructions', colorClass: 'color-gray' },
-  { title: 'Ecosystem', description: 'Tools and libraries.', icon: 'group_work', colorClass: 'color-teal' },
-  { title: 'Migration', description: 'From older versions.', icon: 'upgrade', colorClass: 'color-orange' },
-  { title: 'Best Practices', description: 'Write better code.', icon: 'thumb_up', colorClass: 'color-cyan' },
-  { title: 'Troubleshooting', description: 'Solve common issues.', icon: 'build', colorClass: 'color-lime' },
+  { title: 'Que es vue', description: 'Breve repaso de vue', icon: 'auto_stories', colorClass: 'color-green' ,tolink:"/whatIs" },
+  { title: 'Requisitos', description: 'Que necesito para usar vue', icon: 'code', colorClass: 'color-blue',tolink:"/requirements" },
+  { title: 'Creacion de Proyecto', description: 'Building blocks.', icon: 'layers', colorClass: 'color-purple',tolink:"/createProject" },
+  { title: 'Interpolacion', description: 'The magic behind Vue.', icon: 'psychology', colorClass: 'color-yellow' ,tolink:"/whatIs"},
+  { title: 'Directivas de vue', description: 'Out-of-the-box power.', icon: 'view_cozy', colorClass: 'color-red' ,tolink:"/whatIs"},
+  { title: 'Options Api', description: 'Declarative rendering.', icon: 'terminal', colorClass: 'color-indigo',tolink:"/whatIs" },
+  { title: 'Composition api', description: 'Detailed docs.', icon: 'api', colorClass: 'color-pink',tolink:"/whatIs" },
+  { title: 'Ciclo de vida de vue', description: 'See it in action.', icon: 'integration_instructions', colorClass: 'color-gray',tolink:"/whatIs" },
+  { title: 'Componentes importacion', description: 'Tools and libraries.', icon: 'group_work', colorClass: 'color-teal' ,tolink:"/whatIs"},
+  { title: 'Componetizacion Props', description: 'From older versions.', icon: 'upgrade', colorClass: 'color-orange' ,tolink:"/whatIs"},
+  { title: 'Creación de un proyecto template quasar', description: 'Write better code.', icon: 'thumb_up', colorClass: 'color-cyan' ,tolink:"/whatIs"},
+  { title: 'Instalar Quasar en un proyecto ya creado', description: 'Solve common issues.', icon: 'build', colorClass: 'color-lime' ,tolink:"/whatIs"},
+  { title: 'Vue router', description: 'Solve common issues.', icon: 'route', colorClass: 'color-red' ,tolink:"/whatIs"},
+  { title: 'Pinia', description: 'Solve common issues.', icon: 'indeterminate_check_box', colorClass: 'color-teal' ,tolink:"/whatIs"},
+  { title: 'Pinia-plugin-presistedstate', description: 'Solve common issues.', icon: 'extension', colorClass: 'color-indigo' ,tolink:"/whatIs"},
 ]);
 </script>
 
 <style scoped>
 /* ===== GENERAL STYLES & VARIABLES ===== */
+.tolink{
+ text-decoration: none;
+ color: black;
+}
+
 :root {
   --primary-color: #f9f506;
 }
@@ -113,129 +89,11 @@ const manualSections = ref([
   flex-direction: column;
 }
 
-.material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-}
-
-/* ===== HEADER STYLES ===== */
-.header {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-  white-space: nowrap;
-  border-bottom: 1px solid #e5e7eb; /* border-gray-200 */
-  background-color: rgba(255, 255, 255, 0.8); /* bg-white/80 */
-  padding: 0.75rem 2.5rem; /* py-3 px-10 */
-  backdrop-filter: blur(4px);
-}
-
-.header-left, .header-right, .logo-container {
-  display: flex;
-  align-items: center;
-  gap: 2rem; /* gap-8 */
-}
-
-.logo-container {
-  gap: 0.75rem; /* gap-3 */
-}
-
-.logo-svg {
-  height: 2rem; /* h-8 */
-  width: 2rem; /* w-8 */
-}
-
-.title {
-  font-size: 1.25rem; /* text-xl */
-  font-weight: 700; /* font-bold */
-  letter-spacing: -0.025em; /* tracking-tight */
-  color: #1f2937; /* text-gray-800 */
-}
-
-.nav-links {
-  display: none; /* hidden by default */
-  align-items: center;
-  gap: 2rem; /* gap-8 */
-}
-
-.nav-link {
-  font-size: 0.875rem; /* text-sm */
-  font-weight: 500; /* font-medium */
-  color: #4b5563; /* text-gray-600 */
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.nav-link:hover {
-  color: #111827; /* hover:text-gray-900 */
-}
-
 .header-right {
   gap: 1rem; /* gap-4 */
 }
 
-.search-container {
-  position: relative;
-  display: none; /* hidden by default */
-}
 
-.search-icon {
-  position: absolute;
-  left: 0.75rem; /* left-3 */
-  top: 50%;
-  transform: translateY(-50%);
-  color: #9ca3af; /* text-gray-400 */
-}
-
-.search-input {
-  width: 100%;
-  min-width: 10rem; /* min-w-40 */
-  max-width: 16rem; /* max-w-64 */
-  border-radius: 9999px; /* rounded-full */
-  border: 1px solid #d1d5db; /* border-gray-300 */
-  background-color: #f3f4f6; /* bg-gray-100 */
-  padding-left: 2.5rem; /* pl-10 */
-  font-size: 0.875rem; /* text-sm */
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.search-input:focus {
-  outline: none;
-  border-color: #3b82f6; /* focus:border-blue-500 */
-  box-shadow: 0 0 0 1px #3b82f6; /* focus:ring-blue-500 */
-}
-
-.icon-button {
-  padding: 0.5rem; /* p-2 */
-  border-radius: 9999px; /* rounded-full */
-  color: #6b7280; /* text-gray-500 */
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.2s, color 0.2s;
-}
-
-.icon-button:hover {
-  background-color: #f3f4f6; /* hover:bg-gray-100 */
-  color: #1f2937; /* hover:text-gray-800 */
-}
-
-.mobile-search-button {
-  display: block; /* Shown by default */
-}
-
-.user-avatar {
-  height: 2.5rem; /* h-10 */
-  width: 2.5rem; /* w-10 */
-  border-radius: 9999px; /* rounded-full */
-  background-size: cover;
-  background-position: center;
-}
 
 /* ===== MAIN CONTENT STYLES ===== */
 .main-content {

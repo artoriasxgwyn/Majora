@@ -1,6 +1,6 @@
 <template>
-  <div class="page-container">
-    <header class="header">
+ <div>
+      <header class="header">
       <div class="header-left">
         <div class="logo-container">
           <svg class="logo-svg" fill="none" viewBox="0 0 256 198" xmlns="http://www.w3.org/2000/svg">
@@ -32,76 +32,29 @@
           <span class="material-symbols-outlined">dark_mode</span>
         </button>
         <div class="user-avatar-container">
-          <div class="user-avatar" style='background-image: url("https://lh3.googleusercontent.com/a/ACg8ocJ_6i7a_2l3m-3E0x0v8z-3z0q-5yGg4A3d2D1J8c=s96-c");'></div>
+          <div class="user-avatar" style='background-image: url("https://lh3.googleusercontent.com/a/ACg8ocJ_6i7a_2l3m-3E0x0v8z-3z0q-5yGg4A3d2D1J8c=s96-c");'
+          ></div>
         </div>
       </div>
     </header>
 
-    <main class="main-content">
-      <div class="container">
-        <div class="hero-section">
-          <h1 class="hero-title">Vue.js Manual</h1>
-          <p class="hero-subtitle">
-            Your comprehensive guide to building amazing web applications with Vue.js.
-          </p>
-        </div>
-
-        <div class="cards-grid">
-          <a v-for="card in manualSections" :key="card.title" class="card" href="#">
-            <div :class="['card-icon-wrapper', card.colorClass]">
-              <span class="material-symbols-outlined">{{ card.icon }}</span>
-            </div>
-            <div>
-              <h2 class="card-title">{{ card.title }}</h2>
-              <p class="card-description">{{ card.description }}</p>
-            </div>
-          </a>
-        </div>
-      </div>
-    </main>
-  </div>
+  <router-view></router-view>
+ </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 
-// Data for the cards, making it easy to add, remove, or change them
-const manualSections = ref([
-  { title: 'Introduction', description: 'Start your journey.', icon: 'auto_stories', colorClass: 'color-green' },
-  { title: 'Essentials', description: 'Core concepts.', icon: 'code', colorClass: 'color-blue' },
-  { title: 'Components In-Depth', description: 'Building blocks.', icon: 'layers', colorClass: 'color-purple' },
-  { title: 'Reactivity In-Depth', description: 'The magic behind Vue.', icon: 'psychology', colorClass: 'color-yellow' },
-  { title: 'Built-in Components', description: 'Out-of-the-box power.', icon: 'view_cozy', colorClass: 'color-red' },
-  { title: 'Template Syntax', description: 'Declarative rendering.', icon: 'terminal', colorClass: 'color-indigo' },
-  { title: 'API Reference', description: 'Detailed docs.', icon: 'api', colorClass: 'color-pink' },
-  { title: 'Examples', description: 'See it in action.', icon: 'integration_instructions', colorClass: 'color-gray' },
-  { title: 'Ecosystem', description: 'Tools and libraries.', icon: 'group_work', colorClass: 'color-teal' },
-  { title: 'Migration', description: 'From older versions.', icon: 'upgrade', colorClass: 'color-orange' },
-  { title: 'Best Practices', description: 'Write better code.', icon: 'thumb_up', colorClass: 'color-cyan' },
-  { title: 'Troubleshooting', description: 'Solve common issues.', icon: 'build', colorClass: 'color-lime' },
-]);
 </script>
 
 <style scoped>
-/* ===== GENERAL STYLES & VARIABLES ===== */
-:root {
-  --primary-color: #f9f506;
+.title {
+  font-size: 1.45rem; 
+  font-weight: 700; 
+  letter-spacing: -0.025em; 
+  color: #1f2937; 
 }
 
-.page-container {
-  min-height: 100vh;
-  background-color: #f9fafb; /* bg-gray-50 */
-  color: #111827; /* text-gray-900 */
-  font-family: "Spline Sans", "Noto Sans", sans-serif;
-  display: flex;
-  flex-direction: column;
-}
-
-.material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-}
-
-/* ===== HEADER STYLES ===== */
 .header {
   position: sticky;
   top: 0;
@@ -113,7 +66,7 @@ const manualSections = ref([
   white-space: nowrap;
   border-bottom: 1px solid #e5e7eb; /* border-gray-200 */
   background-color: rgba(255, 255, 255, 0.8); /* bg-white/80 */
-  padding: 0.75rem 2.5rem; /* py-3 px-10 */
+  padding:0px 0px 0px 2% ;
   backdrop-filter: blur(4px);
 }
 
@@ -132,13 +85,6 @@ const manualSections = ref([
   width: 2rem; /* w-8 */
 }
 
-.title {
-  font-size: 1.25rem; /* text-xl */
-  font-weight: 700; /* font-bold */
-  letter-spacing: -0.025em; /* tracking-tight */
-  color: #1f2937; /* text-gray-800 */
-}
-
 .nav-links {
   display: none; /* hidden by default */
   align-items: center;
@@ -146,7 +92,7 @@ const manualSections = ref([
 }
 
 .nav-link {
-  font-size: 0.875rem; /* text-sm */
+  font-size: 1rem; /* text-sm */
   font-weight: 500; /* font-medium */
   color: #4b5563; /* text-gray-600 */
   text-decoration: none;
@@ -157,13 +103,37 @@ const manualSections = ref([
   color: #111827; /* hover:text-gray-900 */
 }
 
-.header-right {
-  gap: 1rem; /* gap-4 */
+.user-avatar {
+  height: 2.5rem; /* h-10 */
+  width: 2.5rem; /* w-10 */
+  border-radius: 9999px; /* rounded-full */
+  background-size: cover;
+  background-position: center;
+}
+
+.icon-button {
+  font-size: 1.5rem;
+  padding: 0.5rem; /* p-2 */
+  border-radius: 9999px; /* rounded-full */
+  color: #6b7280; /* text-gray-500 */
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.icon-button:hover {
+  font-size: 2rem;
+  background-color: #f3f4f6; /* hover:bg-gray-100 */
+  color: #1f2937; /* hover:text-gray-800 */
+}
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
 .search-container {
   position: relative;
-  display: none; /* hidden by default */
+ /* hidden by default */
 }
 
 .search-icon {
@@ -194,156 +164,9 @@ const manualSections = ref([
   box-shadow: 0 0 0 1px #3b82f6; /* focus:ring-blue-500 */
 }
 
-.icon-button {
-  padding: 0.5rem; /* p-2 */
-  border-radius: 9999px; /* rounded-full */
-  color: #6b7280; /* text-gray-500 */
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.2s, color 0.2s;
-}
-
-.icon-button:hover {
-  background-color: #f3f4f6; /* hover:bg-gray-100 */
-  color: #1f2937; /* hover:text-gray-800 */
-}
 
 .mobile-search-button {
   display: block; /* Shown by default */
 }
 
-.user-avatar {
-  height: 2.5rem; /* h-10 */
-  width: 2.5rem; /* w-10 */
-  border-radius: 9999px; /* rounded-full */
-  background-size: cover;
-  background-position: center;
-}
-
-/* ===== MAIN CONTENT STYLES ===== */
-.main-content {
-  flex-grow: 1;
-}
-
-.container {
-  max-width: 80rem; /* Corresponds to Tailwind's container */
-  margin-left: auto;
-  margin-right: auto;
-  padding: 3rem 1rem; /* py-12 px-4 */
-}
-
-.hero-section {
-  max-width: 56rem; /* max-w-4xl */
-  margin: 0 auto 3rem auto; /* mb-12 */
-  text-align: center;
-}
-
-.hero-title {
-  font-size: 3rem; /* text-5xl */
-  font-weight: 800; /* font-extrabold */
-  letter-spacing: -0.05em; /* tracking-tighter */
-  color: #111827; /* text-gray-900 */
-}
-
-.hero-subtitle {
-  margin-top: 1rem; /* mt-4 */
-  font-size: 1.125rem; /* text-lg */
-  color: #4b5563; /* text-gray-600 */
-}
-
-/* ===== CARDS GRID STYLES ===== */
-.cards-grid {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr); /* grid-cols-1 */
-  gap: 1.5rem; /* gap-6 */
-}
-
-.card {
-  display: flex;
-  align-items: center;
-  gap: 1rem; /* gap-4 */
-  border-radius: 0.75rem; /* rounded-xl */
-  border: 1px solid #e5e7eb; /* border-gray-200 */
-  background-color: #ffffff; /* bg-white */
-  padding: 1.25rem; /* p-5 */
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); /* shadow-sm */
-  transition: transform 0.3s, box-shadow 0.3s;
-  text-decoration: none;
-  color: inherit;
-}
-
-.card:hover {
-  transform: translateY(-0.25rem); /* hover:-translate-y-1 */
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); /* hover:shadow-lg */
-}
-
-.card-icon-wrapper {
-  display: flex;
-  height: 3rem; /* h-12 */
-  width: 3rem; /* w-12 */
-  align-items: center;
-  justify-content: center;
-  border-radius: 9999px; /* rounded-full */
-}
-
-.card-title {
-  font-size: 1.125rem; /* text-lg */
-  font-weight: 700; /* font-bold */
-}
-
-.card-description {
-  font-size: 0.875rem; /* text-sm */
-  color: #6b7280; /* text-gray-500 */
-}
-
-/* Color utility classes for cards */
-.color-green { background-color: #d1fae5; color: #059669; }
-.color-blue { background-color: #dbeafe; color: #2563eb; }
-.color-purple { background-color: #ede9fe; color: #7c3aed; }
-.color-yellow { background-color: #fef3c7; color: #ca8a04; }
-.color-red { background-color: #fee2e2; color: #dc2626; }
-.color-indigo { background-color: #e0e7ff; color: #4f46e5; }
-.color-pink { background-color: #fce7f3; color: #db2777; }
-.color-gray { background-color: #f3f4f6; color: #4b5563; }
-.color-teal { background-color: #ccfbf1; color: #0d9488; }
-.color-orange { background-color: #ffedd5; color: #ea580c; }
-.color-cyan { background-color: #cffafe; color: #0891b2; }
-.color-lime { background-color: #ecfccb; color: #65a30d; }
-
-/* ===== RESPONSIVE DESIGN (Media Queries) ===== */
-@media (min-width: 640px) { /* sm breakpoint */
-  .container {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-  .hero-title {
-    font-size: 3.75rem; /* sm:text-6xl */
-  }
-  .cards-grid {
-    grid-template-columns: repeat(2, 1fr); /* sm:grid-cols-2 */
-  }
-}
-
-@media (min-width: 768px) { /* md breakpoint */
-  .nav-links {
-    display: flex; /* md:flex */
-  }
-}
-
-@media (min-width: 1024px) { /* lg breakpoint */
-  .container {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-  .search-container {
-    display: block; /* lg:block */
-  }
-  .mobile-search-button {
-    display: none; /* lg:hidden */
-  }
-  .cards-grid {
-    grid-template-columns: repeat(3, 1fr); /* lg:grid-cols-3 */
-  }
-}
 </style>
