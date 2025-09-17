@@ -5,7 +5,7 @@
       <p class="p">
         La interpolación es la forma más sencilla y común de mostrar datos
         dinámicos en la interfaz de usuario de Vue. Usamos la sintaxis de
-        <strong>doble bigote</strong> (<code>{{ }}</code>) para incrustar valores
+        <strong>doble bigote</strong> (<code>&lbrace;&lbrace; &rbrace;&rbrace;</code>) para incrustar valores
         directamente en la plantilla HTML.
       </p>
 
@@ -24,14 +24,14 @@
 
       <h2 class="subtitle">Ejemplo Práctico</h2>
       <p class="p">
-        A continuación, te mostramos cómo la variable `saludo` se inserta
+        A continuación, te mostramos cómo la variable `mensaje` se inserta
         directamente en la plantilla.
       </p>
 
       <div class="example">
         <h3 class="example-title">Resultado</h3>
         <p class="p">
-          Mensaje: <strong>{{ saludo }}</strong>
+          Mensaje: <strong>{{ mensaje }}</strong>
         </p>
       </div>
 
@@ -43,12 +43,12 @@
         <article class="code">
           <div>
             <p class="p-code">&lt;template&gt;</p>
-            <p class="p-code pl-4">&lt;p&gt;Mensaje: &lt;strong&gt;{{ saludo }}&lt;/strong&gt;&lt;/p&gt;</p>
+            <p class="p-code pl-4">&lt;p&gt;Mensaje: &lt;strong&gt;{{ mensaje }}&lt;/strong&gt;&lt;/p&gt;</p>
             <p class="p-code">&lt;/template&gt;</p>
             <p class="p-code"></p>
             <p class="p-code">&lt;script setup&gt;</p>
             <p class="p-code pl-4">import { ref } from 'vue';</p>
-            <p class="p-code pl-4">const saludo = ref('Hola, soy un valor interpolado!');</p>
+            <p class="p-code pl-4">const mensaje = ref('Hola, soy un valor interpolado!');</p>
             <p class="p-code">&lt;/script&gt;</p>
           </div>
         </article>
@@ -59,7 +59,7 @@
 
 <script setup>
 import { ref } from 'vue';
-const saludo = ref('Hola, soy un valor interpolado!');
+const mensaje = ref('Hola, soy un valor interpolado!');
 </script>
 
 <style scoped>

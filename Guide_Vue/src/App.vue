@@ -1,15 +1,31 @@
 <template>
- <div>
-      <header class="header">
+  <div>
+    <header class="header">
       <div class="header-left">
-        <div class="logo-container">
-          <svg class="logo-svg" fill="none" viewBox="0 0 256 198" xmlns="http://www.w3.org/2000/svg">
-            <path d="M204.8 0H256L128 197.12L0 0H101.12L128 44.48L154.88 0H204.8Z" fill="#42b883"></path>
-            <path d="M0 0L128 197.12L256 0H204.8L128 123.2L51.2 0H0Z" fill="#35495e"></path>
-            <path d="M51.2 0L128 123.2L204.8 0H154.88L128 44.48L101.12 0H51.2Z" fill="#42b883"></path>
-          </svg>
-          <h1 class="title">Vue.js Manual</h1>
-        </div>
+        <router-link to="/" class="tolink">
+          <div class="logo-container">
+            <svg
+              class="logo-svg"
+              fill="none"
+              viewBox="0 0 256 198"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M204.8 0H256L128 197.12L0 0H101.12L128 44.48L154.88 0H204.8Z"
+                fill="#42b883"
+              ></path>
+              <path
+                d="M0 0L128 197.12L256 0H204.8L128 123.2L51.2 0H0Z"
+                fill="#35495e"
+              ></path>
+              <path
+                d="M51.2 0L128 123.2L204.8 0H154.88L128 44.48L101.12 0H51.2Z"
+                fill="#42b883"
+              ></path>
+            </svg>
+            <h1 class="title">Vue.js Manual</h1>
+          </div></router-link
+        >
         <nav class="nav-links">
           <a class="nav-link" href="#">Guide</a>
           <a class="nav-link" href="#">API</a>
@@ -20,7 +36,7 @@
       <div class="header-right">
         <div class="search-container">
           <span class="material-symbols-outlined search-icon">search</span>
-          <input class="search-input" placeholder="Search"/>
+          <input class="search-input" placeholder="Search" />
         </div>
         <button class="icon-button mobile-search-button">
           <span class="material-symbols-outlined">search</span>
@@ -32,27 +48,34 @@
           <span class="material-symbols-outlined">dark_mode</span>
         </button>
         <div class="user-avatar-container">
-          <div class="user-avatar" style='background-image: url("https://lh3.googleusercontent.com/a/ACg8ocJ_6i7a_2l3m-3E0x0v8z-3z0q-5yGg4A3d2D1J8c=s96-c");'
+          <div
+            class="user-avatar"
+            style="
+              background-image: url('https://lh3.googleusercontent.com/a/ACg8ocJ_6i7a_2l3m-3E0x0v8z-3z0q-5yGg4A3d2D1J8c=s96-c');
+            "
           ></div>
         </div>
       </div>
     </header>
 
-  <router-view></router-view>
- </div>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-
+import { ref } from "vue";
 </script>
 
 <style scoped>
+.tolink{
+ text-decoration: none;
+ color: black;
+}
 .title {
-  font-size: 1.45rem; 
-  font-weight: 700; 
-  letter-spacing: -0.025em; 
-  color: #1f2937; 
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #1f2937;
 }
 
 .header {
@@ -66,11 +89,13 @@ import { ref } from 'vue';
   white-space: nowrap;
   border-bottom: 1px solid #e5e7eb; /* border-gray-200 */
   background-color: rgba(255, 255, 255, 0.8); /* bg-white/80 */
-  padding:0px 0px 0px 2% ;
+  padding: 0px 0px 0px 2%;
   backdrop-filter: blur(4px);
 }
 
-.header-left, .header-right, .logo-container {
+.header-left,
+.header-right,
+.logo-container {
   display: flex;
   align-items: center;
   gap: 2rem; /* gap-8 */
@@ -128,12 +153,12 @@ import { ref } from 'vue';
   color: #1f2937; /* hover:text-gray-800 */
 }
 .material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
 }
 
 .search-container {
   position: relative;
- /* hidden by default */
+  /* hidden by default */
 }
 
 .search-icon {
@@ -164,9 +189,7 @@ import { ref } from 'vue';
   box-shadow: 0 0 0 1px #3b82f6; /* focus:ring-blue-500 */
 }
 
-
 .mobile-search-button {
   display: block; /* Shown by default */
 }
-
 </style>
