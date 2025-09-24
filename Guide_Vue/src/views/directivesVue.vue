@@ -156,11 +156,11 @@
       <div class="code-block">
         <h3 class="code-title">Código</h3>
         <article class="code">
-          <div>
+          <code>
             <p class="p-code">&lt;template&gt;</p>
             <p class="p-code pl-4">&lt;ul&gt;</p>
             <p class="p-code pl-8">&lt;li v-for="(tarea, index) in tareas" :key="index"&gt;</p>
-            <p class="p-code pl-12">{{ index + 1 }}. {{ tarea }}</p>
+         <p class="p-code pl-12">&#123;&#123; index + 1 &#125;&#125;. &#123;&#123; tarea &#125;&#125;</p>
             <p class="p-code pl-8">&lt;/li&gt;</p>
             <p class="p-code pl-4">&lt;/ul&gt;</p>
             <p class="p-code">&lt;/template&gt;</p>
@@ -173,7 +173,7 @@
             <p class="p-code pl-8">'Crear una aplicación'</p>
             <p class="p-code pl-4">]);</p>
             <p class="p-code">&lt;/script&gt;</p>
-          </div>
+          </code>
         </article>
       </div>
 
