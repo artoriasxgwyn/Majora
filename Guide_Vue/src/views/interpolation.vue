@@ -5,7 +5,7 @@
       <p class="p">
         La interpolación es la forma más sencilla y común de mostrar datos
         dinámicos en la interfaz de usuario de Vue. Usamos la sintaxis de
-        <strong>doble bigote</strong> (<code>&lbrace;&lbrace; &rbrace;&rbrace;</code>) para incrustar valores
+        <strong>doble bigote</strong> (<code>{{ }}</code>) para incrustar valores
         directamente en la plantilla HTML.
       </p>
 
@@ -40,18 +40,16 @@
         <p class="p">
           Así es como se vería el código en tu archivo `.vue`:
         </p>
-        <article class="code">
-          <div>
-            <p class="p-code">&lt;template&gt;</p>
-            <p class="p-code pl-4">&lt;p&gt;Mensaje: &lt;strong&gt;{{ mensaje }}&lt;/strong&gt;&lt;/p&gt;</p>
-            <p class="p-code">&lt;/template&gt;</p>
-            <p class="p-code"></p>
-            <p class="p-code">&lt;script setup&gt;</p>
-            <p class="p-code pl-4">import { ref } from 'vue';</p>
-            <p class="p-code pl-4">const mensaje = ref('Hola, soy un valor interpolado!');</p>
-            <p class="p-code">&lt;/script&gt;</p>
-          </div>
-        </article>
+        <pre class="code"><code>
+&lt;template&gt;
+  &lt;p&gt;Mensaje: &lt;strong&gt; &lbrace;&lbrace;mensaje&rbrace;&rbrace; &lt;/strong&gt;&lt;/p&gt;
+&lt;/template&gt;
+
+&lt;script setup&gt;
+import { ref } from 'vue';
+const mensaje = ref('Hola, soy un valor interpolado!');
+&lt;/script&gt;
+        </code></pre>
       </div>
     </section>
   </div>
@@ -70,64 +68,72 @@ const mensaje = ref('Hola, soy un valor interpolado!');
   min-height: 100vh;
 }
 .content {
-  width: 68%;
+  width: 80%;
+  max-width: 900px;
   padding-bottom: 2rem;
 }
 .title {
-  font-size: 500%;
+  font-size: 3rem;
   font-weight: 700;
   letter-spacing: -0.025em;
   color: #1f2937;
 }
 .subtitle {
-  font-size: 300%;
+  font-size: 2.25rem;
   font-weight: 700;
   letter-spacing: -0.025em;
   color: #1f2937;
+  margin-top: 2rem;
 }
 .p {
-  font-size: 120%;
-  font-weight: 550;
-  letter-spacing: -0.025em;
-  color: #1f2937;
-  line-height: 1.5;
+  font-size: 1.125rem;
+  font-weight: 400;
+  color: #374151;
+  line-height: 1.6;
 }
 strong {
   color: #42b883;
+  font-weight: 600;
+}
+hr {
+  border: 0;
+  height: 1px;
+  background-color: #e5e7eb;
+  margin: 2rem 0;
 }
 .code {
   background-color: #1f2937;
+  color: white;
   border-radius: 0.5rem;
   padding: 1rem;
   margin-top: 1rem;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.9rem;
+  overflow-x: auto;
 }
-.p-code {
-  color: white;
-  font-family: monospace;
-  font-size: 1rem;
-}
-.pl-4 {
-  padding-left: 1.5rem;
+pre.code code {
+  white-space: pre;
 }
 .code-block {
   margin-top: 2rem;
 }
 .code-title {
-  font-size: 200%;
+  font-size: 1.25rem;
   font-weight: 700;
   color: #1f2937;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 .example {
   background-color: #f3f4f6;
   border-left: 4px solid #42b883;
-  padding: 1rem;
+  padding: 1.5rem;
   border-radius: 0.25rem;
   margin-top: 1rem;
 }
 .example-title {
-  font-size: 150%;
+  font-size: 1.25rem;
   font-weight: 700;
   color: #1f2937;
+  margin-top: 0;
 }
 </style>

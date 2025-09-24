@@ -4,6 +4,10 @@ import requirements from "../views/requirements.vue"
 import createProject from "../views/createProject.vue"
 import interpolation from "../views/interpolation.vue"
 import directivesVue from "../views/directivesVue.vue"
+import optionsApi from "../views/optionsApi.vue"
+import compositionApi from "../views/compositionApi.vue"
+import cicleOfLife from "../views/cicleOfLife.vue"
+import importComponents from "../views/importComponents.vue"
 
 
 import { createRouter, createWebHashHistory } from "vue-router"
@@ -14,7 +18,11 @@ const routes = [
     { path: "/requirements", component: requirements },
     { path: "/createProject", component: createProject },
     { path: "/interpolation", component: interpolation },
-    { path: "/directivesVue", component: directivesVue }
+    { path: "/directivesVue", component: directivesVue },
+    { path: "/optionsApi", component: optionsApi },
+    { path: "/compositionApi", component: compositionApi },
+    { path: "/cicleOfLife", component: cicleOfLife },
+    { path: "/importComponents", component: importComponents },
 ]
 
 export const router = createRouter({
