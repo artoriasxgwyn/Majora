@@ -4,12 +4,7 @@
       <h3 style="margin: 0">Productos</h3>
       <hr />
     </div>
-    <q-form
-      v-if="isBooll"
-      @submit="onSubmit"
-      @reset="onReset"
-      class="q-gutter-md"
-    >
+    <q-form v-if="isBooll" @submit="onSubmit" @reset="onReset" class="q-gutter-md">
       <q-input
         filled
         v-model="nombre"
@@ -56,49 +51,43 @@
       <q-toggle v-model="accept" label="I accept the license and terms" />
 
       <div>
-        <q-btn
-          label="Submit"
-          type="button"
-          @click="update(idActualizar)"
-          color="primary"
-        />
-        <q-btn
-          label="Reset"
-          type="reset"
-          color="primary"
-          flat
-          class="q-ml-sm"
-        />
+        <q-btn label="Submit" type="button" @click="update(idActualizar)" color="primary" />
+        <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
       </div>
     </q-form>
     <div style="margin-bottom: 20px; display: flex; justify-content: end">
       <q-btn color="primary" @click="abrirModal()">Agregar producto</q-btn>
     </div>
-    <q-table title="Treats" :rows="rows" :columns="columns" row-key="name">
+    <q-table title="Treats" :rows="rows" :columns="columns" row-key="name" :loading="tablacarga">
       <template v-slot:body-cell-estado="props">
         <q-td :props="props">
           <span
             style="background-color: green; padding: 5px; color: white"
             v-if="props.row.estado == 1"
-            >Activo</span
-          >
-          <span v-else style="background-color: red; padding: 5px; color: white"
-            >Inactivo</span
-          >
+          >Activo</span>
+          <span v-else style="background-color: red; padding: 5px; color: white">Inactivo</span>
         </q-td>
       </template>
       <template v-slot:body-cell-opciones="props">
         <q-td :props="props" style="display: flex">
           <div>
-            <q-btn color="primary" @click="isUpdate(props.row)" label="Update"
-              >📝</q-btn
-            >
+            <q-btn color="primary" @click="isUpdate(props.row)" label="Update">📝</q-btn>
           </div>
           <div v-if="props.row.estado == 0" @click="activar(props.row._id)">
-            <q-btn>✅</q-btn>
+            <q-btn :loading="carga">
+              ✅
+              <template v-slot:loading>
+                <q-spinner-hearts color="primary" size="2em" />
+              </template>
+            </q-btn>
           </div>
           <div v-else @click="desactivar(props.row._id)">
-            <q-btn>❌</q-btn>
+            <q-btn :loading="carga0">
+              ❌
+              <template v-slot:loading>
+                <q-spinner-box color="primary" size="2em" />
+              </template>
+            </q-btn>
           </div>
         </q-td>
       </template>
@@ -189,13 +178,7 @@
 
           <q-card-actions align="right">
             <q-btn label="Guardar" color="primary" type="button" @click="guardar(idActualizar)" />
-            <q-btn
-              outline
-              label="Cancelar"
-              color="red"
-              type="reset"
-              v-close-popup
-            />
+            <q-btn outline label="Cancelar" color="red" type="reset" v-close-popup />
           </q-card-actions>
         </q-form>
       </q-card>
@@ -219,6 +202,7 @@ let stock = ref("");
 let precio = ref("");
 let descripcion = ref("");
 let isBooll = ref(false);
+let tablacarga = ref(false);
 function isUpdate(product) {
   isBooll.value = !isBooll.value;
   idActualizar.value = product._id;
@@ -228,55 +212,59 @@ const columns = ref([
     name: "nombre",
     label: "Nombre del producto",
     align: "left",
-    field: "nombre",
+    field: "nombre"
   },
   {
     name: "descripcion",
     label: "Descripcion",
     align: "left",
-    field: "descripcion",
+    field: "descripcion"
   },
   {
     name: "categoria",
     label: "Categoria",
     align: "left",
-    field: "categoría",
+    field: "categoría"
   },
   {
     name: "precio",
     label: "Precio (COP)",
     align: "left",
-    field: "precio",
+    field: "precio"
   },
   {
     name: "stock",
     label: "Cantidad",
     align: "left",
-    field: "stock",
+    field: "stock"
   },
 
   {
     name: "estado",
     label: "Estado",
     align: "left",
-    field: "estado",
+    field: "estado"
   },
   {
     name: "opciones",
     label: "Opciones",
-    align: "left",
-  },
+    align: "left"
+  }
 ]);
 
 const rows = ref([]);
-
+let carga = ref(false)
+let carga0 = ref(false)
 async function listarproductos() {
   try {
+    tablacarga.value=true
     let r = await getData("/productos/listar_producto");
     console.log(r);
     rows.value = r.buscar;
   } catch (error) {
     console.log(error);
+  }finally{
+    tablacarga.value=false
   }
 }
 async function update(id) {
@@ -286,7 +274,7 @@ async function update(id) {
       categoria: categoria.value,
       stock: Number(stock.value),
       precio: Number(precio.value),
-      descripcion: descripcion.value,
+      descripcion: descripcion.value
     });
     listarproductos();
     isBooll.value = false;
@@ -297,15 +285,16 @@ async function update(id) {
 }
 async function guardar() {
   try {
-    let r = await postData(`/productos/guardar_producto`, {
+     
+     let r = await postData(`/productos/guardar_producto`, {
       nombre: nombre.value,
       stock: Number(stock.value),
       precio: Number(precio.value),
-      descripcion: descripcion.value,
+      descripcion: descripcion.value
     });
     console.log(r);
     listarproductos();
-   isBooll.value = false;
+    isBooll.value = false;
     onReset();
   } catch (error) {
     console.log(error);
@@ -314,21 +303,27 @@ async function guardar() {
 async function activar(id) {
   console.log(id);
   try {
+     carga.value=true;
     let r = await putData(`/productos/activarProducto/${id}`);
     console.log(r);
     listarproductos();
   } catch (error) {
     console.log(error);
+  }finally{
+   carga.value=false
   }
 }
 
 async function desactivar(id) {
   try {
+    carga0.value=true;
     let r = await putData(`/productos/desactivarProducto/${id}`);
     console.log(r);
     listarproductos();
   } catch (error) {
     console.log(error);
+  }finally{
+    carga0.value=false;
   }
 }
 
