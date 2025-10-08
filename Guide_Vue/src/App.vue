@@ -34,13 +34,6 @@
         </nav>
       </div>
       <div class="header-right">
-        <div class="search-container">
-          <span class="material-symbols-outlined search-icon">search</span>
-          <input class="search-input" placeholder="Search" />
-        </div>
-        <button class="icon-button mobile-search-button">
-          <span class="material-symbols-outlined">search</span>
-        </button>
         <button class="icon-button">
           <span class="material-symbols-outlined">help</span>
         </button>
