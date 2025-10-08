@@ -1,55 +1,58 @@
 <template>
   <div class="father">
     <section class="content">
-      <h1 class="title">Interpolación</h1>
+      <h1 class="title">Crear un Proyecto en Vue 3</h1>
       <p class="p">
-        La interpolación es la forma más sencilla y común de mostrar datos
-        dinámicos en la interfaz de usuario de Vue. Usamos la sintaxis de
-        <strong>doble bigote</strong> (<code>{{ }}</code>) para incrustar valores
-        directamente en la plantilla HTML.
+        Para iniciar un nuevo proyecto en Vue 3, la forma más rápida y recomendada es usar <strong>Vite</strong>, una herramienta de compilación moderna que ofrece una experiencia de desarrollo ultrarrápida. Usaremos el comando <code>npm create vite@latest</code> para generar la estructura inicial del proyecto.
       </p>
 
       <hr />
 
       <h2 class="subtitle">¿Cómo funciona?</h2>
       <p class="p">
-        Cuando Vue procesa tu plantilla, reemplaza la expresión dentro de los
-        bigotes con el valor de la propiedad correspondiente. La clave de la
-        interpolación es su <strong>reactividad</strong>: si el valor de la
-        variable cambia en tu script, la vista se actualizará de forma
-        automática, sin que necesites hacer nada.
+        Al ejecutar este comando en tu terminal, se iniciará un asistente interactivo que te guiará paso a paso para configurar tu proyecto. Podrás elegir el <strong>nombre</strong> de tu proyecto, seleccionar <strong>Vue</strong> como framework y escoger una variante, como JavaScript o TypeScript.
       </p>
 
       <hr />
 
       <h2 class="subtitle">Ejemplo Práctico</h2>
       <p class="p">
-        A continuación, te mostramos cómo la variable `saludo` se inserta
-        directamente en la plantilla.
+        A continuación, te mostramos los comandos y los pasos que debes seguir en tu terminal para crear e iniciar tu nuevo proyecto Vue.
       </p>
 
       <div class="example">
-        <h3 class="example-title">Resultado</h3>
+        <h3 class="example-title">Proceso en la Terminal</h3>
         <p class="p">
-          Mensaje: <strong>{{ saludo }}</strong>
+          Sigue estos tres sencillos pasos para tener tu proyecto funcionando en minutos.
         </p>
       </div>
 
       <div class="code-block">
-        <h3 class="code-title">Código</h3>
+        <h3 class="code-title">Comandos</h3>
         <p class="p">
-          Así es como se vería el código en tu archivo `.vue`:
+          Estos son los comandos que necesitas ejecutar en orden.
         </p>
         <article class="code">
           <div>
-            <p class="p-code">&lt;template&gt;</p>
-            <p class="p-code pl-4">&lt;p&gt;Mensaje: &lt;strong&gt;{{ saludo }}&lt;/strong&gt;&lt;/p&gt;</p>
-            <p class="p-code">&lt;/template&gt;</p>
+            <p class="p-code">
+              <span style="color: #8b949e;"># 1. Ejecuta el comando de creación y sigue las instrucciones</span>
+            </p>
+            <p class="p-code">npm create vite@latest</p>
             <p class="p-code"></p>
-            <p class="p-code">&lt;script setup&gt;</p>
-            <p class="p-code pl-4">import { ref } from 'vue';</p>
-            <p class="p-code pl-4">const saludo = ref('Hola, soy un valor interpolado!');</p>
-            <p class="p-code">&lt;/script&gt;</p>
+            <p class="p-code">
+              <span style="color: #8b949e;"># 2. Navega al directorio de tu nuevo proyecto</span>
+            </p>
+            <p class="p-code">cd &lt;nombre-del-proyecto&gt;</p>
+            <p class="p-code"></p>
+            <p class="p-code">
+              <span style="color: #8b949e;"># 3. Instala las dependencias necesarias</span>
+            </p>
+            <p class="p-code">npm install</p>
+            <p class="p-code"></p>
+            <p class="p-code">
+              <span style="color: #8b949e;"># 4. Inicia el servidor de desarrollo</span>
+            </p>
+            <p class="p-code">npm run dev</p>
           </div>
         </article>
       </div>
@@ -58,8 +61,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-const saludo = ref('Hola, soy un valor interpolado!');
+// No se necesita lógica de script para esta vista estática.
 </script>
 
 <style scoped>
@@ -95,16 +97,24 @@ const saludo = ref('Hola, soy un valor interpolado!');
 strong {
   color: #42b883;
 }
+code {
+  background-color: #e5e7eb;
+  color: #ef4444;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-family: monospace;
+}
 .code {
   background-color: #1f2937;
   border-radius: 0.5rem;
-  padding: 1rem;
+  padding: 1.5rem;
   margin-top: 1rem;
 }
 .p-code {
   color: white;
   font-family: monospace;
   font-size: 1rem;
+  line-height: 1.75;
 }
 .pl-4 {
   padding-left: 1.5rem;
