@@ -61,7 +61,7 @@ const manualSections = ref([
   { title: 'Ciclo de vida de vue', description: 'See it in action.', icon: 'integration_instructions', colorClass: 'color-gray',tolink:"/cicleOfLife" },
   { title: 'Componentes importacion', description: 'Tools and libraries.', icon: 'group_work', colorClass: 'color-teal' ,tolink:"/importComponents"},
   { title: 'Componetizacion Props', description: 'From older versions.', icon: 'upgrade', colorClass: 'color-orange' ,tolink:"/props"},
-  { title: 'Creación de un proyecto template quasar', description: 'Write better code.', icon: 'thumb_up', colorClass: 'color-cyan' ,tolink:"/templateQuasar"},
+  { title: 'Creación de un proyecto template quasar', description: 'Write better code.', icon: 'thumb_up', colorClass: 'color-cyan' ,tolink:"/whatIs"},
   { title: 'Instalar Quasar en un proyecto ya creado', description: 'Solve common issues.', icon: 'build', colorClass: 'color-lime' ,tolink:"/whatIs"},
   { title: 'Vue router', description: 'Solve common issues.', icon: 'route', colorClass: 'color-red' ,tolink:"/whatIs"},
   { title: 'Pinia', description: 'Solve common issues.', icon: 'indeterminate_check_box', colorClass: 'color-teal' ,tolink:"/whatIs"},
