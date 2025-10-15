@@ -35,7 +35,7 @@ async function login() {
       password: pass.value,
     });
     console.log(r);
-    
+    console.log(useGeneral.nombre)
     useGeneral.token = r.token;
     Notify.create({
       message: "Bienvenido " + r.buscar.correo,

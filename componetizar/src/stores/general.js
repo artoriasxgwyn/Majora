@@ -27,4 +27,5 @@ export const useGeneralStore = defineStore("general", () => {
 },
     {
         persist: true,
-    },)
+    }
+)
