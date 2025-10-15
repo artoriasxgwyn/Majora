@@ -22,47 +22,64 @@
             <h4>Options API</h4>
             <p class="p">Lógica dispersa por tipo</p>
             <pre class="code-small"><code>
-data() {
-  return {
-    usuarios: [],
-    filtro: '',
-    cargando: false
-  }
-},
-computed: {
-  usuariosFiltrados() {
-    // Filtrado aquí
-  }
-},
-methods: {
-  cargarUsuarios() {
-    // Carga aquí
-  }
-},
-mounted() {
-  // Inicialización aquí
+export default {
+    data() {
+      return {
+        usuarios: [],
+        filtro: '',
+        cargando: false
+      }
+    },
+    computed: {
+      usuariosFiltrados() {
+        // Filtrado aquí
+      }
+    },
+    methods: {
+      cargarUsuarios() {
+        // Carga aquí
+      }
+    },
+    mounted() {
+      // Inicialización aquí
+    }
 }
+
             </code></pre>
           </div>
           <div class="approach">
             <h4>Composition API</h4>
             <p class="p">Lógica agrupada por funcionalidad</p>
             <pre class="code-small"><code>
-// Funcionalidad de usuarios
-const { usuarios, usuariosFiltrados, cargarUsuarios } = useUsuarios()
+&lt;script setup&gt;
+import { ref, reactive } from 'vue';
 
-// Funcionalidad de búsqueda
-const { filtro, buscar } = useBusqueda()
+// Ejemplo con `ref` para un valor primitivo
+const contador = ref(0);
 
-// Funcionalidad de estado
-const { cargando, iniciarCarga } = useEstado()
+// Ejemplo con `reactive` para un objeto
+const estado = reactive({
+  mensaje: '¡Hola, Vue!',
+  nombre: 'Usuario'
+});
+
+function incrementarContador() {
+  contador.value++;
+}
+
+function cambiarMensaje() {
+  estado.mensaje = '¡Mensaje actualizado!';
+}
+&lt;&sol;script&gt;
             </code></pre>
           </div>
         </div>
       </div>
 
       <hr />
-
+      <p class="p">
+la reactividad en vue ha pasado por varias fases en el ejemplo anterior veras que el options api es diferente al ejemplo que veras a continuacion, pero por que como ves la cantidad de cantidad de codigo que hay que escribir llegar a tomar un tiempo considerable entonces se ha tomado ciertas soluciones. El ejemplo que acabas de ver es de Vue2 y a continuacion la explicacion que ves de la funcion <code>setup()</code> es una solucion que implemento vue 3 como veras a continuacion:
+      </p>
       <h2 class="subtitle">setup() Function</h2>
       <p class="p">
         El corazón de la Composition API es la función <code>setup()</code>. Esta función se ejecuta antes de que el componente sea creado y es donde declaramos toda la reactividad y lógica del componente.

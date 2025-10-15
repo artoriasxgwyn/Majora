@@ -1,3 +1,5 @@
+import { createRouter, createWebHashHistory } from "vue-router"
+
 import Principal from "../views/topics.vue"
 import whatIs from "../views/whatIs.vue"
 import requirements from "../views/requirements.vue"
@@ -11,9 +13,9 @@ import importComponents from "../views/importComponents.vue"
 import props from "../views/props.vue"
 import templateQuasar from "../views/templateQuasar.vue"
 import templateQuasarInstall from "../views/templateQuasarInstallVue.vue"
-
-
-import { createRouter, createWebHashHistory } from "vue-router"
+import vueRouter from "../views/vueRouter.vue"
+import pinia from "../views/pinia.vue"
+import piniaplugin from "../views/piniaplugin.vue"
 
 const routes = [
     { path: "/", component: Principal },
@@ -29,6 +31,9 @@ const routes = [
     { path: "/props", component: props },
     { path: "/templateQuasar", component: templateQuasar },
     { path: "/templateQuasarInstall", component: templateQuasarInstall },
+    { path: "/vueRouter", component: vueRouter },
+    { path: "/pinia", component: pinia },
+    { path: "/piniaplugin", component: piniaplugin },
 ]
 
 export const router = createRouter({

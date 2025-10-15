@@ -63,9 +63,9 @@ const manualSections = ref([
   { title: 'Componetizacion Props', description: 'From older versions.', icon: 'upgrade', colorClass: 'color-orange' ,tolink:"/props"},
   { title: 'Creación de un proyecto template quasar', description: 'Write better code.', icon: 'thumb_up', colorClass: 'color-cyan' ,tolink:"/templateQuasar"},
   { title: 'Instalar Quasar en un proyecto ya creado', description: 'Solve common issues.', icon: 'build', colorClass: 'color-lime' ,tolink:"/templateQuasarInstall"},
-  { title: 'Vue router', description: 'Solve common issues.', icon: 'route', colorClass: 'color-red' ,tolink:"/whatIs"},
-  { title: 'Pinia', description: 'Solve common issues.', icon: 'indeterminate_check_box', colorClass: 'color-teal' ,tolink:"/whatIs"},
-  { title: 'Pinia-plugin-presistedstate', description: 'Solve common issues.', icon: 'extension', colorClass: 'color-indigo' ,tolink:"/whatIs"},
+  { title: 'Vue router', description: 'Solve common issues.', icon: 'route', colorClass: 'color-red' ,tolink:"/vueRouter"},
+  { title: 'Pinia', description: 'Solve common issues.', icon: 'indeterminate_check_box', colorClass: 'color-teal' ,tolink:"/pinia"},
+  { title: 'Pinia-plugin-presistedstate', description: 'Solve common issues.', icon: 'extension', colorClass: 'color-indigo' ,tolink:"/piniaplugin"},
 ]);
 </script>
 
