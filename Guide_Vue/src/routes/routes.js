@@ -10,6 +10,7 @@ import cicleOfLife from "../views/cicleOfLife.vue"
 import importComponents from "../views/importComponents.vue"
 import props from "../views/props.vue"
 import templateQuasar from "../views/templateQuasar.vue"
+import templateQuasarInstall from "../views/templateQuasarInstallVue.vue"
 
 
 import { createRouter, createWebHashHistory } from "vue-router"
@@ -25,8 +26,9 @@ const routes = [
     { path: "/compositionApi", component: compositionApi },
     { path: "/cicleOfLife", component: cicleOfLife },
     { path: "/importComponents", component: importComponents },
-     { path: "/props", component: props },
-      { path: "/templateQuasar", component: templateQuasar },
+    { path: "/props", component: props },
+    { path: "/templateQuasar", component: templateQuasar },
+    { path: "/templateQuasarInstall", component: templateQuasarInstall },
 ]
 
 export const router = createRouter({

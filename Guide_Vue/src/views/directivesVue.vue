@@ -1,26 +1,28 @@
-[file name]: directives.vue
-[file content begin]
 <template>
   <div class="father">
     <section class="content">
       <h1 class="title">Directivas de Vue</h1>
       <p class="p">
-        Las directivas son instrucciones especiales en el DOM que Vue.js utiliza para aplicar comportamientos reactivos a los elementos. Se reconocen por el prefijo <code>v-</code> y son una parte fundamental del poder de Vue.
+        Las directivas son instrucciones especiales en el DOM que Vue.js utiliza
+        para aplicar comportamientos reactivos a los elementos. Se reconocen por
+        el prefijo <code>v-</code> y son una parte fundamental del poder de Vue.
       </p>
 
       <hr />
 
       <h2 class="subtitle">Directivas Básicas</h2>
       <p class="p">
-        Vue incluye un conjunto de directivas integradas que cubren los casos de uso más comunes en el desarrollo de aplicaciones.
+        Vue incluye un conjunto de directivas integradas que cubren los casos de
+        uso más comunes en el desarrollo de aplicaciones.
       </p>
 
       <!-- v-text -->
       <h3 class="subtitle-sm">v-text</h3>
       <p class="p">
-        Actualiza el <code>textContent</code> del elemento. Similar a la interpolación pero reemplaza todo el contenido.
+        Actualiza el <code>textContent</code> del elemento. Similar a la
+        interpolación pero reemplaza todo el contenido.
       </p>
-      
+
       <div class="example">
         <h3 class="example-title">Resultado</h3>
         <p class="p" v-text="mensaje"></p>
@@ -29,25 +31,24 @@
       <div class="code-block">
         <h3 class="code-title">Código</h3>
         <article class="code">
-          <div>
-            <p class="p-code">&lt;template&gt;</p>
-            <p class="p-code pl-4">&lt;p v-text="mensaje"&gt;&lt;/p&gt;</p>
-            <p class="p-code">&lt;/template&gt;</p>
-            <p class="p-code"></p>
-            <p class="p-code">&lt;script setup&gt;</p>
-            <p class="p-code pl-4">import { ref } from 'vue';</p>
-            <p class="p-code pl-4">const mensaje = ref('¡Hola desde v-text!');</p>
-            <p class="p-code">&lt;/script&gt;</p>
-          </div>
+          <pre><code>&lt;template&gt;
+  &lt;p v-text="mensaje"&gt;&lt;/p&gt;
+&lt;/template&gt;
+
+&lt;script setup&gt;
+import { ref } from 'vue';
+const mensaje = ref('¡Hola desde v-text!');
+&lt;/script&gt;</code></pre>
         </article>
       </div>
 
       <!-- v-html -->
       <h3 class="subtitle-sm">v-html</h3>
       <p class="p">
-        Actualiza el <code>innerHTML</code> del elemento. Úsalo con precaución ya que puede exponerte a ataques XSS.
+        Actualiza el <code>innerHTML</code> del elemento. Úsalo con precaución
+        ya que puede exponerte a ataques XSS.
       </p>
-      
+
       <div class="example">
         <h3 class="example-title">Resultado</h3>
         <p class="p" v-html="htmlContent"></p>
@@ -56,29 +57,67 @@
       <div class="code-block">
         <h3 class="code-title">Código</h3>
         <article class="code">
-          <div>
-            <p class="p-code">&lt;template&gt;</p>
-            <p class="p-code pl-4">&lt;p v-html="htmlContent"&gt;&lt;/p&gt;</p>
-            <p class="p-code">&lt;/template&gt;</p>
-            <p class="p-code"></p>
-            <p class="p-code">&lt;script setup&gt;</p>
-            <p class="p-code pl-4">import { ref } from 'vue';</p>
-            <p class="p-code pl-4">const htmlContent = ref('&lt;strong&gt;Texto en negrita&lt;/strong&gt; con &lt;em&gt;énfasis&lt;/em&gt;');</p>
-            <p class="p-code">&lt;/script&gt;</p>
-          </div>
+          <pre><code>&lt;template&gt;
+  &lt;p v-html="htmlContent"&gt;&lt;/p&gt;
+&lt;/template&gt;
+
+&lt;script setup&gt;
+import { ref } from 'vue';
+const htmlContent = ref('&lt;strong&gt;Texto en negrita&lt;/strong&gt; con &lt;em&gt;énfasis&lt;/em&gt;');
+&lt;/script&gt;</code></pre>
+        </article>
+      </div>
+
+      <!-- v-on -->
+      <h3 class="subtitle-sm">v-on</h3>
+      <p class="p">
+        Escucha eventos del DOM y ejecuta algún código cuando son disparados. Se
+        puede usar la forma abreviada <code>@</code>.
+      </p>
+
+      <div class="example">
+        <h3 class="example-title">Resultado</h3>
+        <p class="p">
+          <button v-on:click="contador++" class="demo-button">
+            Incrementar (v-on:click)
+          </button>
+          <button @click="contador--" class="demo-button">
+            Decrementar (@click)
+          </button>
+        </p>
+        <p class="p">Contador: {{ contador }}</p>
+      </div>
+
+      <div class="code-block">
+        <h3 class="code-title">Código</h3>
+        <article class="code">
+          <pre><code>&lt;template&gt;
+  &lt;button v-on:click="contador++"&gt;Incrementar (v-on:click)&lt;/button&gt;
+  &lt;button @click="contador--"&gt;Decrementar (@click)&lt;/button&gt;
+  &lt;p&gt;Contador: {{ contador }}&lt;/p&gt;
+&lt;/template&gt;
+
+&lt;script setup&gt;
+import { ref } from 'vue';
+const contador = ref(0);
+&lt;/script&gt;</code></pre>
         </article>
       </div>
 
       <!-- v-show -->
       <h3 class="subtitle-sm">v-show</h3>
       <p class="p">
-        Alterna la visibilidad del elemento usando CSS (<code>display: none</code>). El elemento siempre se renderiza en el DOM.
+        Alterna la visibilidad del elemento usando CSS (<code
+          >display: none</code
+        >). El elemento siempre se renderiza en el DOM.
       </p>
-      
+
       <div class="example">
         <h3 class="example-title">Resultado</h3>
         <p class="p">
-          <button @click="mostrar = !mostrar" class="demo-button">Alternar visibilidad</button>
+          <button @click="mostrar = !mostrar" class="demo-button">
+            Alternar visibilidad
+          </button>
         </p>
         <p class="p" v-show="mostrar">¡Este elemento se muestra u oculta!</p>
       </div>
@@ -86,64 +125,68 @@
       <div class="code-block">
         <h3 class="code-title">Código</h3>
         <article class="code">
-          <div>
-            <p class="p-code">&lt;template&gt;</p>
-            <p class="p-code pl-4">&lt;button @click="mostrar = !mostrar"&gt;Alternar visibilidad&lt;/button&gt;</p>
-            <p class="p-code pl-4">&lt;p v-show="mostrar"&gt;¡Este elemento se muestra u oculta!&lt;/p&gt;</p>
-            <p class="p-code">&lt;/template&gt;</p>
-            <p class="p-code"></p>
-            <p class="p-code">&lt;script setup&gt;</p>
-            <p class="p-code pl-4">import { ref } from 'vue';</p>
-            <p class="p-code pl-4">const mostrar = ref(true);</p>
-            <p class="p-code">&lt;/script&gt;</p>
-          </div>
+          <pre><code>&lt;template&gt;
+  &lt;button @click="mostrar = !mostrar"&gt;Alternar visibilidad&lt;/button&gt;
+  &lt;p v-show="mostrar"&gt;¡Este elemento se muestra u oculta!&lt;/p&gt;
+&lt;/template&gt;
+
+&lt;script setup&gt;
+import { ref } from 'vue';
+const mostrar = ref(true);
+&lt;/script&gt;</code></pre>
         </article>
       </div>
 
       <!-- v-if, v-else-if, v-else -->
       <h3 class="subtitle-sm">v-if, v-else-if, v-else</h3>
       <p class="p">
-        Renderiza condicionalmente un elemento basado en la veracidad de una expresión. A diferencia de v-show, estos elementos no se renderizan en el DOM si la condición es falsa.
+        Renderiza condicionalmente un elemento basado en la veracidad de una
+        expresión. A diferencia de v-show, estos elementos no se renderizan en
+        el DOM si la condición es falsa.
       </p>
-      
+
       <div class="example">
         <h3 class="example-title">Resultado</h3>
         <p class="p">
-          <button @click="cambiarEstado" class="demo-button">Cambiar estado ({{ estado }})</button>
+          <button @click="cambiarEstado" class="demo-button">
+            Cambiar estado ({{ estado }})
+          </button>
         </p>
         <p class="p" v-if="estado === 'activo'">El sistema está ACTIVO</p>
-        <p class="p" v-else-if="estado === 'inactivo'">El sistema está INACTIVO</p>
+        <p class="p" v-else-if="estado === 'inactivo'">
+          El sistema está INACTIVO
+        </p>
         <p class="p" v-else>Estado desconocido</p>
       </div>
 
       <div class="code-block">
         <h3 class="code-title">Código</h3>
         <article class="code">
-          <div>
-            <p class="p-code">&lt;template&gt;</p>
-            <p class="p-code pl-4">&lt;button @click="cambiarEstado"&gt;Cambiar estado ({{ estado }})&lt;/button&gt;</p>
-            <p class="p-code pl-4">&lt;p v-if="estado === 'activo'"&gt;El sistema está ACTIVO&lt;/p&gt;</p>
-            <p class="p-code pl-4">&lt;p v-else-if="estado === 'inactivo'"&gt;El sistema está INACTIVO&lt;/p&gt;</p>
-            <p class="p-code pl-4">&lt;p v-else&gt;Estado desconocido&lt;/p&gt;</p>
-            <p class="p-code">&lt;/template&gt;</p>
-            <p class="p-code"></p>
-            <p class="p-code">&lt;script setup&gt;</p>
-            <p class="p-code pl-4">import { ref } from 'vue';</p>
-            <p class="p-code pl-4">const estado = ref('activo');</p>
-            <p class="p-code pl-4">function cambiarEstado() {</p>
-            <p class="p-code pl-8">estado.value = estado.value === 'activo' ? 'inactivo' : 'activo';</p>
-            <p class="p-code pl-4">}</p>
-            <p class="p-code">&lt;/script&gt;</p>
-          </div>
+          <pre><code>&lt;template&gt;
+  &lt;button @click="cambiarEstado"&gt;Cambiar estado ({{ estado }})&lt;/button&gt;
+  &lt;p v-if="estado === 'activo'"&gt;El sistema está ACTIVO&lt;/p&gt;
+  &lt;p v-else-if="estado === 'inactivo'"&gt;El sistema está INACTIVO&lt;/p&gt;
+  &lt;p v-else&gt;Estado desconocido&lt;/p&gt;
+&lt;/template&gt;
+
+&lt;script setup&gt;
+import { ref } from 'vue';
+const estado = ref('activo');
+
+function cambiarEstado() {
+  estado.value = estado.value === 'activo' ? 'inactivo' : 'activo';
+}
+&lt;/script&gt;</code></pre>
         </article>
       </div>
 
       <!-- v-for -->
       <h3 class="subtitle-sm">v-for</h3>
       <p class="p">
-        Renderiza una lista de elementos basados en un array u objeto. Es la forma de hacer bucles en las plantillas de Vue.
+        Renderiza una lista de elementos basados en un array u objeto. Es la
+        forma de hacer bucles en las plantillas de Vue.
       </p>
-      
+
       <div class="example">
         <h3 class="example-title">Resultado</h3>
         <ul>
@@ -156,77 +199,47 @@
       <div class="code-block">
         <h3 class="code-title">Código</h3>
         <article class="code">
-          <code>
-            <p class="p-code">&lt;template&gt;</p>
-            <p class="p-code pl-4">&lt;ul&gt;</p>
-            <p class="p-code pl-8">&lt;li v-for="(tarea, index) in tareas" :key="index"&gt;</p>
-         <p class="p-code pl-12">&#123;&#123; index + 1 &#125;&#125;. &#123;&#123; tarea &#125;&#125;</p>
-            <p class="p-code pl-8">&lt;/li&gt;</p>
-            <p class="p-code pl-4">&lt;/ul&gt;</p>
-            <p class="p-code">&lt;/template&gt;</p>
-            <p class="p-code"></p>
-            <p class="p-code">&lt;script setup&gt;</p>
-            <p class="p-code pl-4">import { ref } from 'vue';</p>
-            <p class="p-code pl-4">const tareas = ref([</p>
-            <p class="p-code pl-8">'Aprender Vue.js',</p>
-            <p class="p-code pl-8">'Practicar directivas',</p>
-            <p class="p-code pl-8">'Crear una aplicación'</p>
-            <p class="p-code pl-4">]);</p>
-            <p class="p-code">&lt;/script&gt;</p>
-          </code>
-        </article>
-      </div>
+          <pre><code>&lt;template&gt;
+  &lt;ul&gt;
+    &lt;li v-for="(tarea, index) in tareas" :key="index"&gt;
+      {{ index + 1 }}. {{ tarea }}
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/template&gt;
 
-      <!-- v-on -->
-      <h3 class="subtitle-sm">v-on</h3>
-      <p class="p">
-        Escucha eventos del DOM y ejecuta algún código cuando son disparados. Se puede usar la forma abreviada <code>@</code>.
-      </p>
-      
-      <div class="example">
-        <h3 class="example-title">Resultado</h3>
-        <p class="p">
-          <button v-on:click="contador++" class="demo-button">Incrementar (v-on:click)</button>
-          <button @click="contador--" class="demo-button">Decrementar (@click)</button>
-        </p>
-        <p class="p">Contador: {{ contador }}</p>
-      </div>
-
-      <div class="code-block">
-        <h3 class="code-title">Código</h3>
-        <article class="code">
-          <div>
-            <p class="p-code">&lt;template&gt;</p>
-            <p class="p-code pl-4">&lt;button v-on:click="contador++"&gt;Incrementar (v-on:click)&lt;/button&gt;</p>
-            <p class="p-code pl-4">&lt;button @click="contador--"&gt;Decrementar (@click)&lt;/button&gt;</p>
-            <p class="p-code pl-4">&lt;p&gt;Contador: {{ contador }}&lt;/p&gt;</p>
-            <p class="p-code">&lt;/template&gt;</p>
-            <p class="p-code"></p>
-            <p class="p-code">&lt;script setup&gt;</p>
-            <p class="p-code pl-4">import { ref } from 'vue';</p>
-            <p class="p-code pl-4">const contador = ref(0);</p>
-            <p class="p-code">&lt;/script&gt;</p>
-          </div>
+&lt;script setup&gt;
+import { ref } from 'vue';
+const tareas = ref([
+  'Aprender Vue.js',
+  'Practicar directivas',
+  'Crear una aplicación'
+]);
+&lt;/script&gt;</code></pre>
         </article>
       </div>
 
       <!-- v-bind -->
       <h3 class="subtitle-sm">v-bind</h3>
       <p class="p">
-        Enlaza dinámicamente uno o más atributos, o una prop de componente a una expresión. Se puede usar la forma abreviada <code>:</code>.
+        Enlaza dinámicamente uno o más atributos, o una prop de componente a una
+        expresión. Se puede usar la forma abreviada <code>:</code>.
       </p>
-      
+
       <div class="example">
         <h3 class="example-title">Resultado</h3>
         <p class="p">
-          <input type="text" v-model="colorFavorito" placeholder="Escribe un color">
+          <input
+            type="text"
+            v-model="colorFavorito"
+            placeholder="Escribe un color"
+          />
         </p>
         <p class="p" :style="{ color: colorTexto }">
           Este texto cambiará de color según tu entrada: {{ colorFavorito }}
         </p>
         <p class="p">
           <button :disabled="!colorFavorito" class="demo-button">
-            Botón {{ colorFavorito ? 'habilitado' : 'deshabilitado' }}
+            Botón {{ colorFavorito ? "habilitado" : "deshabilitado" }}
           </button>
         </p>
       </div>
@@ -234,101 +247,103 @@
       <div class="code-block">
         <h3 class="code-title">Código</h3>
         <article class="code">
-          <div>
-            <p class="p-code">&lt;template&gt;</p>
-            <p class="p-code pl-4">&lt;input type="text" v-model="colorFavorito" placeholder="Escribe un color"&gt;</p>
-            <p class="p-code pl-4">&lt;p :style="{ color: colorTexto }"&gt;</p>
-            <p class="p-code pl-8">Este texto cambiará de color según tu entrada: {{ colorFavorito }}</p>
-            <p class="p-code pl-4">&lt;/p&gt;</p>
-            <p class="p-code pl-4">&lt;button :disabled="!colorFavorito"&gt;</p>
-            <p class="p-code pl-8">Botón {{ colorFavorito ? 'habilitado' : 'deshabilitado' }}</p>
-            <p class="p-code pl-4">&lt;/button&gt;</p>
-            <p class="p-code">&lt;/template&gt;</p>
-            <p class="p-code"></p>
-            <p class="p-code">&lt;script setup&gt;</p>
-            <p class="p-code pl-4">import { ref, computed } from 'vue';</p>
-            <p class="p-code pl-4">const colorFavorito = ref('');</p>
-            <p class="p-code pl-4">const colorTexto = computed(() => {</p>
-            <p class="p-code pl-8">return colorFavorito.value || 'black';</p>
-            <p class="p-code pl-4">});</p>
-            <p class="p-code">&lt;/script&gt;</p>
-          </div>
+          <pre><code>&lt;template&gt;
+  &lt;input type="text" v-model="colorFavorito" placeholder="Escribe un color"&gt;
+  &lt;p :style="{ color: colorTexto }"&gt;
+    Este texto cambiará de color según tu entrada: {{ colorFavorito }}
+  &lt;/p&gt;
+  &lt;button :disabled="!colorFavorito"&gt;
+    Botón {{ colorFavorito ? 'habilitado' : 'deshabilitado' }}
+  &lt;/button&gt;
+&lt;/template&gt;
+
+&lt;script setup&gt;
+import { ref, computed } from 'vue';
+const colorFavorito = ref('');
+const colorTexto = computed(() => {
+  return colorFavorito.value || 'black';
+});
+&lt;/script&gt;</code></pre>
         </article>
       </div>
 
       <!-- v-model -->
       <h3 class="subtitle-sm">v-model</h3>
       <p class="p">
-        Crea un enlace bidireccional entre un elemento de formulario y el estado de la aplicación. Es la forma de implementar "two-way binding" en Vue.
+        Crea un enlace bidireccional entre un elemento de formulario y el estado
+        de la aplicación. Es la forma de implementar "two-way binding" en Vue.
       </p>
-      
+
       <div class="example">
         <h3 class="example-title">Resultado</h3>
         <p class="p">
-          <input type="text" v-model="nombre" placeholder="Escribe tu nombre">
+          <input type="text" v-model="nombre" placeholder="Escribe tu nombre" />
         </p>
-        <p class="p">Hola, {{ nombre || 'desconocido' }}!</p>
-        
+        <p class="p">Hola, {{ nombre || "desconocido" }}!</p>
+
         <p class="p">
-          <input type="checkbox" v-model="aceptado" id="aceptar">
+          <input type="checkbox" v-model="aceptado" id="aceptar" />
           <label for="aceptar">Acepto los términos</label>
         </p>
-        <p class="p">Estado: {{ aceptado ? 'Aceptado' : 'No aceptado' }}</p>
+        <p class="p">Estado: {{ aceptado ? "Aceptado" : "No aceptado" }}</p>
       </div>
 
       <div class="code-block">
         <h3 class="code-title">Código</h3>
         <article class="code">
-          <div>
-            <p class="p-code">&lt;template&gt;</p>
-            <p class="p-code pl-4">&lt;input type="text" v-model="nombre" placeholder="Escribe tu nombre"&gt;</p>
-            <p class="p-code pl-4">&lt;p&gt;Hola, {{ nombre || 'desconocido' }}!&lt;/p&gt;</p>
-            <p class="p-code pl-4">&lt;input type="checkbox" v-model="aceptado" id="aceptar"&gt;</p>
-            <p class="p-code pl-4">&lt;label for="aceptar"&gt;Acepto los términos&lt;/label&gt;</p>
-            <p class="p-code pl-4">&lt;p&gt;Estado: {{ aceptado ? 'Aceptado' : 'No aceptado' }}&lt;/p&gt;</p>
-            <p class="p-code">&lt;/template&gt;</p>
-            <p class="p-code"></p>
-            <p class="p-code">&lt;script setup&gt;</p>
-            <p class="p-code pl-4">import { ref } from 'vue';</p>
-            <p class="p-code pl-4">const nombre = ref('');</p>
-            <p class="p-code pl-4">const aceptado = ref(false);</p>
-            <p class="p-code">&lt;/script&gt;</p>
-          </div>
+          <pre><code>&lt;template&gt;
+  &lt;input type="text" v-model="nombre" placeholder="Escribe tu nombre"&gt;
+  &lt;p&gt;Hola, {{ nombre || 'desconocido' }}!&lt;/p&gt;
+  &lt;input type="checkbox" v-model="aceptado" id="aceptar"&gt;
+  &lt;label for="aceptar"&gt;Acepto los términos&lt;/label&gt;
+  &lt;p&gt;Estado: {{ aceptado ? 'Aceptado' : 'No aceptado' }}&lt;/p&gt;
+&lt;/template&gt;
+
+&lt;script setup&gt;
+import { ref } from 'vue';
+const nombre = ref('');
+const aceptado = ref(false);
+&lt;/script&gt;</code></pre>
         </article>
       </div>
 
       <!-- v-pre -->
       <h3 class="subtitle-sm">v-pre</h3>
       <p class="p">
-        Omite la compilación para este elemento y todos sus hijos. Útil para mostrar mustaches crudos.
+        Omite la compilación para este elemento y todos sus hijos. Útil para
+        mostrar mustaches crudos.
       </p>
-      
+
       <div class="example">
         <h3 class="example-title">Resultado</h3>
-        <p class="p" v-pre>Este contenido no será compilado: {{ estoNoSeRenderizará }}</p>
+        <p class="p" v-pre>
+          Este contenido no será compilado: {{ estoNoSeRenderizará }}
+        </p>
       </div>
 
       <div class="code-block">
         <h3 class="code-title">Código</h3>
         <article class="code">
-          <div>
-            <p class="p-code">&lt;template&gt;</p>
-            <p class="p-code pl-4">&lt;p v-pre&gt;Este contenido no será compilado: {{ estoNoSeRenderizará }}&lt;/p&gt;</p>
-            <p class="p-code">&lt;/template&gt;</p>
-          </div>
+          <pre><code>&lt;template&gt;
+  &lt;p v-pre&gt;Este contenido no será compilado: {{ estoNoSeRenderizará }}&lt;/p&gt;
+&lt;/template&gt;</code></pre>
         </article>
       </div>
 
       <!-- v-once -->
       <h3 class="subtitle-sm">v-once</h3>
       <p class="p">
-        Renderiza el elemento y el componente una sola vez. En las subsecuentes actualizaciones, el elemento/componente y todos sus hijos serán tratados como contenido estático.
+        Renderiza el elemento y el componente una sola vez. En las subsecuentes
+        actualizaciones, el elemento/componente y todos sus hijos serán tratados
+        como contenido estático.
       </p>
-      
+
       <div class="example">
         <h3 class="example-title">Resultado</h3>
         <p class="p">
-          <button @click="contadorOnce++" class="demo-button">Incrementar</button>
+          <button @click="contadorOnce++" class="demo-button">
+            Incrementar
+          </button>
         </p>
         <p class="p">Valor normal: {{ contadorOnce }}</p>
         <p class="p" v-once>Valor con v-once: {{ contadorOnce }}</p>
@@ -337,18 +352,16 @@
       <div class="code-block">
         <h3 class="code-title">Código</h3>
         <article class="code">
-          <div>
-            <p class="p-code">&lt;template&gt;</p>
-            <p class="p-code pl-4">&lt;button @click="contadorOnce++"&gt;Incrementar&lt;/button&gt;</p>
-            <p class="p-code pl-4">&lt;p&gt;Valor normal: {{ contadorOnce }}&lt;/p&gt;</p>
-            <p class="p-code pl-4">&lt;p v-once&gt;Valor con v-once: {{ contadorOnce }}&lt;/p&gt;</p>
-            <p class="p-code">&lt;/template&gt;</p>
-            <p class="p-code"></p>
-            <p class="p-code">&lt;script setup&gt;</p>
-            <p class="p-code pl-4">import { ref } from 'vue';</p>
-            <p class="p-code pl-4">const contadorOnce = ref(0);</p>
-            <p class="p-code">&lt;/script&gt;</p>
-          </div>
+          <pre><code>&lt;template&gt;
+  &lt;button @click="contadorOnce++"&gt;Incrementar&lt;/button&gt;
+  &lt;p&gt;Valor normal: {{ contadorOnce }}&lt;/p&gt;
+  &lt;p v-once&gt;Valor con v-once: {{ contadorOnce }}&lt;/p&gt;
+&lt;/template&gt;
+
+&lt;script setup&gt;
+import { ref } from 'vue';
+const contadorOnce = ref(0);
+&lt;/script&gt;</code></pre>
         </article>
       </div>
 
@@ -381,6 +394,11 @@
               <td>-</td>
             </tr>
             <tr>
+              <td><code>v-on</code></td>
+              <td>Escucha eventos en el elemento</td>
+              <td><code>@</code></td>
+            </tr>
+            <tr>
               <td><code>v-if</code></td>
               <td>Renderiza condicionalmente un elemento</td>
               <td>-</td>
@@ -399,11 +417,6 @@
               <td><code>v-for</code></td>
               <td>Renderiza una lista de elementos</td>
               <td>-</td>
-            </tr>
-            <tr>
-              <td><code>v-on</code></td>
-              <td>Escucha eventos en el elemento</td>
-              <td><code>@</code></td>
             </tr>
             <tr>
               <td><code>v-bind</code></td>
@@ -428,34 +441,35 @@
           </tbody>
         </table>
       </div>
-
     </section>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed } from "vue";
 
-const mensaje = ref('¡Hola desde v-text!');
-const htmlContent = ref('<strong>Texto en negrita</strong> con <em>énfasis</em>');
+const mensaje = ref("¡Hola desde v-text!");
+const htmlContent = ref(
+  "<strong>Texto en negrita</strong> con <em>énfasis</em>"
+);
 const mostrar = ref(true);
-const estado = ref('activo');
+const estado = ref("activo");
 const tareas = ref([
-  'Aprender Vue.js',
-  'Practicar directivas',
-  'Crear una aplicación'
+  "Aprender Vue.js",
+  "Practicar directivas",
+  "Crear una aplicación",
 ]);
 const contador = ref(0);
-const colorFavorito = ref('');
+const colorFavorito = ref("");
 const colorTexto = computed(() => {
-  return colorFavorito.value || 'black';
+  return colorFavorito.value || "black";
 });
-const nombre = ref('');
+const nombre = ref("");
 const aceptado = ref(false);
 const contadorOnce = ref(0);
 
 function cambiarEstado() {
-  estado.value = estado.value === 'activo' ? 'inactivo' : 'activo';
+  estado.value = estado.value === "activo" ? "inactivo" : "activo";
 }
 </script>
 
@@ -506,19 +520,12 @@ strong {
   padding: 1rem;
   margin-top: 1rem;
 }
-.p-code {
+pre {
+  margin: 0;
   color: white;
   font-family: monospace;
   font-size: 1rem;
-}
-.pl-4 {
-  padding-left: 1.5rem;
-}
-.pl-8 {
-  padding-left: 3rem;
-}
-.pl-12 {
-  padding-left: 4.5rem;
+  line-height: 1.5;
 }
 .code-block {
   margin-top: 2rem;
@@ -584,4 +591,3 @@ strong {
   font-family: monospace;
 }
 </style>
-[file content end]

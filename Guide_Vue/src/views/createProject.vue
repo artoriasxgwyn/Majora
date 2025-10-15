@@ -13,6 +13,94 @@
         Al ejecutar este comando en tu terminal, se iniciará un asistente interactivo que te guiará paso a paso para configurar tu proyecto. Podrás elegir el <strong>nombre</strong> de tu proyecto, seleccionar <strong>Vue</strong> como framework y escoger una variante, como JavaScript o TypeScript.
       </p>
 
+      <div class="code-block">
+        <h3 class="code-title">Opciones de Configuración</h3>
+        <p class="p">
+          Durante la configuración, el asistente te mostrará una lista completa de frameworks. Puedes elegir el que prefieras a tu gusto, aunque para este tutorial nos enfocaremos en <strong>Vue</strong> con <strong>JavaScript</strong>.
+        </p>
+        <article class="code">
+            <div>
+                <p class="p-code">
+                    <span style="color: #8b949e;"># Elige tu framework preferido...</span>
+                </p>
+                <p class="p-code">
+                    <span style="color: #22c55e;">✔</span>
+                    <span style="color: #e5e7eb;"> Select a framework: </span>
+                    <span style="color: #8b949e;">… Vue</span>
+                </p>
+                <div class="pl-4">
+                    <p class="p-code" style="color: #8b949e;">Vanilla</p>
+                    <p class="p-code" style="color: #42b883;">❯ Vue</p>
+                    <p class="p-code" style="color: #8b949e;">React</p>
+                    <p class="p-code" style="color: #8b949e;">Preact</p>
+                    <p class="p-code" style="color: #8b949e;">Lit</p>
+                    <p class="p-code" style="color: #8b949e;">Svelte</p>
+                    <p class="p-code" style="color: #8b949e;">Solid</p>
+                    <p class="p-code" style="color: #8b949e;">Qwik</p>
+                    <p class="p-code" style="color: #8b949e;">Others</p>
+                </div>
+                <p class="p-code"></p>
+                <p class="p-code">
+                    <span style="color: #8b949e;"># ...y después una variante (JavaScript o TypeScript).</span>
+                </p>
+                <p class="p-code">
+                    <span style="color: #22c55e;">✔</span>
+                    <span style="color: #e5e7eb;"> Select a variant: </span>
+                    <span style="color: #8b949e;">… JavaScript</span>
+                </p>
+                <div class="pl-4">
+                    <p class="p-code" style="color: #42b883;">❯ JavaScript</p>
+                    <p class="p-code" style="color: #8b949e;">TypeScript</p>
+                </div>
+            </div>
+        </article>
+      </div>
+
+      <hr />
+
+      <h2 class="subtitle">Proceso Completo de Creación</h2>
+      <p class="p">
+        Cuando ejecutes el comando, verás un proceso interactivo completo con todas las opciones disponibles. Aquí te mostramos cómo se ve típicamente el flujo completo:
+      </p>
+
+      <div class="code-block">
+        <h3 class="code-title">Flujo Completo en Terminal</h3>
+        <article class="code">
+          <div>
+            <p class="p-code"><span style="color: #8b949e;">> proyecto@1.0.0 npx</span></p>
+            <p class="p-code"><span style="color: #8b949e;">> create-vite</span></p>
+            <p class="p-code"></p>
+            <p class="p-code"><span style="color: #8b949e;">Project name:</span></p>
+            <p class="p-code"><span style="color: #e5e7eb;">mi-proyecto-vue</span></p>
+            <p class="p-code"></p>
+            <p class="p-code"><span style="color: #8b949e;">Select a framework:</span></p>
+            <p class="p-code"><span style="color: #e5e7eb;">Vue</span></p>
+            <p class="p-code"></p>
+            <p class="p-code"><span style="color: #8b949e;">Select a variant:</span></p>
+            <p class="p-code"><span style="color: #e5e7eb;">JavaScript</span></p>
+            <p class="p-code"></p>
+            <p class="p-code"><span style="color: #8b949e;">Use rolldown-vite (Experimental):</span></p>
+            <p class="p-code"><span style="color: #e5e7eb;">No</span></p>
+            <p class="p-code"></p>
+            <p class="p-code"><span style="color: #8b949e;">Install with npm and start now?</span></p>
+            <p class="p-code"><span style="color: #e5e7eb;">Yes</span></p>
+            <p class="p-code"></p>
+            <p class="p-code"><span style="color: #8b949e;">Scaffolding project in /ruta/de/tu/proyecto/mi-proyecto-vue...</span></p>
+            <p class="p-code"><span style="color: #8b949e;">Installing dependencies with npm...</span></p>
+            <p class="p-code"><span style="color: #8b949e;">done.</span></p>
+            <p class="p-code"></p>
+            <p class="p-code"><span style="color: #8b949e;">¡Proyecto creado exitosamente! 🎉</span></p>
+          </div>
+        </article>
+      </div>
+
+      <div class="example">
+        <h3 class="example-title">💡 Nota Importante</h3>
+        <p class="p">
+          El asistente te preguntará si quieres instalar las dependencias inmediatamente. Si seleccionas "Yes", Vite automáticamente ejecutará <code>npm install</code> por ti. Si seleccionas "No", deberás instalar las dependencias manualmente después.
+        </p>
+      </div>
+
       <hr />
 
       <h2 class="subtitle">Ejemplo Práctico</h2>
@@ -42,10 +130,10 @@
             <p class="p-code">
               <span style="color: #8b949e;"># 2. Navega al directorio de tu nuevo proyecto</span>
             </p>
-            <p class="p-code">cd &lt;nombre-del-proyecto&gt;</p>
+            <p class="p-code">cd mi-proyecto-vue</p>
             <p class="p-code"></p>
             <p class="p-code">
-              <span style="color: #8b949e;"># 3. Instala las dependencias necesarias</span>
+              <span style="color: #8b949e;"># 3. Instala las dependencias necesarias (si no lo hiciste automáticamente)</span>
             </p>
             <p class="p-code">npm install</p>
             <p class="p-code"></p>
@@ -53,8 +141,20 @@
               <span style="color: #8b949e;"># 4. Inicia el servidor de desarrollo</span>
             </p>
             <p class="p-code">npm run dev</p>
+            <p class="p-code"></p>
+            <p class="p-code">
+              <span style="color: #8b949e;"># 5. Abre tu navegador en la URL que aparece en la terminal</span>
+            </p>
+            <p class="p-code"><span style="color: #8b949e;"># Normalmente: http://localhost:5173</span></p>
           </div>
         </article>
+      </div>
+
+      <div class="example">
+        <h3 class="example-title">✅ Listo para Empezar</h3>
+        <p class="p">
+          Una vez que completes estos pasos, tendrás un proyecto Vue 3 completamente funcional con hot-reload, build optimizado y todas las características modernas de Vite. ¡Ahora puedes comenzar a desarrollar tu aplicación!
+        </p>
       </div>
     </section>
   </div>

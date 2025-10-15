@@ -1,5 +1,3 @@
-[file name]: lifecycle.vue
-[file content begin]
 <template>
   <div class="father">
     <section class="content">
@@ -21,6 +19,8 @@
           <div class="phase creation">
             <h4>Fase de Creación</h4>
             <div class="hooks">
+              <span class="hook setup">setup</span>
+              <span class="arrow">→</span>
               <span class="hook before-create">beforeCreate</span>
               <span class="arrow">→</span>
               <span class="hook created">created</span>
@@ -50,6 +50,14 @@
               <span class="hook unmounted">unmounted</span>
             </div>
           </div>
+          <div class="phase activation">
+            <h4>Fase de Activación (KeepAlive)</h4>
+            <div class="hooks">
+              <span class="hook activated">activated</span>
+              <span class="arrow">→</span>
+              <span class="hook deactivated">deactivated</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -57,55 +65,44 @@
 
       <h2 class="subtitle">Hooks Principales</h2>
 
-      <h3 class="subtitle-sm">1. beforeCreate y created</h3>
+      <h3 class="subtitle-sm">1. setup (Composition API)</h3>
+      <p class="p">
+        El hook <code>setup</code> es el punto de entrada para la Composition API en Vue 3.
+      </p>
+
+      <div class="code-block">
+        <h3 class="code-title">Composition API</h3>
+        <pre class="code"><code>&lt;script setup&gt;
+import { ref, reactive } from &amp;apos;vue&amp;apos;
+
+const count = ref(0)
+const state = reactive({ message: &amp;apos;Hola&amp;apos; })
+
+console.log(&amp;apos;Setup ejecutado&amp;apos;)
+&lt;/script&gt;</code></pre>
+      </div>
+
+      <h3 class="subtitle-sm">2. beforeCreate y created</h3>
       <p class="p">
         Estos hooks se ejecutan durante la <strong>fase de inicialización</strong> del componente.
       </p>
 
       <div class="code-block">
         <h3 class="code-title">Options API</h3>
-        <pre class="code"><code>
-export default {
+        <pre class="code"><code>export default {
   beforeCreate() {
-    // El componente se está inicializando
-    // NO hay acceso a data, computed, methods, etc.
-    console.log('beforeCreate - Componente inicializándose')
+    console.log(&amp;apos;beforeCreate - Componente inicializ&amp;aacute;ndose&amp;apos;)
   },
   created() {
-    // El componente está creado
-    // YA hay acceso a data, computed, methods
-    // PERO el DOM aún no está montado
-    console.log('created - Componente creado')
-    console.log('Mensaje:', this.mensaje) // ✅ Acceso a data
+    console.log(&amp;apos;created - Componente creado&amp;apos;)
+    console.log(&amp;apos;Mensaje:&amp;apos;, this.mensaje)
   },
   data() {
     return {
-      mensaje: 'Hola Vue!'
+      mensaje: &amp;apos;Hola Vue!&amp;apos;
     }
   }
-}
-        </code></pre>
-      </div>
-
-      <div class="code-block">
-        <h3 class="code-title">Composition API</h3>
-        <pre class="code"><code>
-&lt;script setup&gt;
-import { ref, onBeforeCreate, onCreated } from 'vue'
-
-// En Composition API, created() se simula con setup()
-const mensaje = ref('Hola Vue!')
-
-// beforeCreate equivalente
-onBeforeCreate(() => {
-  console.log('Antes de la creación')
-})
-
-// created equivalente (el código en setup se ejecuta en esta fase)
-console.log('created - Componente creado')
-console.log('Mensaje:', mensaje.value)
-&lt;/script&gt;
-        </code></pre>
+}</code></pre>
       </div>
 
       <div class="example">
@@ -121,72 +118,22 @@ console.log('Mensaje:', mensaje.value)
         </div>
       </div>
 
-      <h3 class="subtitle-sm">2. beforeMount y mounted</h3>
+      <h3 class="subtitle-sm">3. beforeMount y mounted</h3>
       <p class="p">
         Estos hooks se ejecutan durante la <strong>fase de montaje en el DOM</strong>.
       </p>
 
       <div class="code-block">
         <h3 class="code-title">Options API</h3>
-        <pre class="code"><code>
-export default {
+        <pre class="code"><code>export default {
   beforeMount() {
-    // El componente está a punto de ser montado en el DOM
-    // El template está compilado pero NO insertado en el DOM
-    console.log('beforeMount - Antes del montaje')
-    console.log('Elemento:', this.$el) // ❌ undefined
+    console.log(&amp;apos;beforeMount - Antes del montaje&amp;apos;)
   },
   mounted() {
-    // El componente está montado en el DOM
-    // YA se puede acceder a los elementos del DOM
-    console.log('mounted - Componente montado')
-    console.log('Elemento:', this.$el) // ✅ Elemento DOM
-    
-    // Ideal para: llamadas API, inicializar librerías, eventos DOM
+    console.log(&amp;apos;mounted - Componente montado&amp;apos;)
     this.cargarDatos()
-  },
-  methods: {
-    cargarDatos() {
-      // Cargar datos iniciales
-    }
   }
-}
-        </code></pre>
-      </div>
-
-      <div class="code-block">
-        <h3 class="code-title">Composition API</h3>
-        <pre class="code"><code>
-&lt;script setup&gt;
-import { ref, onBeforeMount, onMounted } from 'vue'
-import { cargarUsuarios } from '@/api/usuarioService'
-
-const usuarios = ref([])
-const elemento = ref(null)
-
-onBeforeMount(() => {
-  console.log('Antes del montaje en el DOM')
-})
-
-onMounted(() => {
-  console.log('Componente montado en el DOM')
-  console.log('Elemento:', elemento.value) // ✅ Referencia DOM
-  
-  // Cargar datos después del montaje
-  cargarDatosIniciales()
-})
-
-const cargarDatosIniciales = async () => {
-  usuarios.value = await cargarUsuarios()
-}
-&lt;/script&gt;
-
-&lt;template&gt;
-  &lt;div ref="elemento"&gt;
-    &lt;!-- Contenido del componente --&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-        </code></pre>
+}</code></pre>
       </div>
 
       <div class="example">
@@ -200,15 +147,14 @@ const cargarDatosIniciales = async () => {
         </div>
       </div>
 
-      <h3 class="subtitle-sm">3. beforeUpdate y updated</h3>
+      <h3 class="subtitle-sm">4. beforeUpdate y updated</h3>
       <p class="p">
-        Estos hooks se ejecutan cuando el componente <strong>se actualiza</strong> debido a cambios en datos reactivos.
+        Estos hooks se ejecutan cuando el componente <strong>se actualiza</strong>.
       </p>
 
       <div class="code-block">
         <h3 class="code-title">Options API</h3>
-        <pre class="code"><code>
-export default {
+        <pre class="code"><code>export default {
   data() {
     return {
       contador: 0,
@@ -216,52 +162,12 @@ export default {
     }
   },
   beforeUpdate() {
-    // Se ejecuta ANTES de que el DOM se actualice
-    // Los datos han cambiado, pero el DOM no se ha actualizado
-    console.log('beforeUpdate - Antes de actualizar DOM')
     this.anterior = this.contador
   },
   updated() {
-    // Se ejecuta DESPUÉS de que el DOM se actualice
-    // Tanto los datos como el DOM están actualizados
-    console.log('updated - DOM actualizado')
-    console.log('Cambio:', this.anterior, '→', this.contador)
-    
-    // Cuidado: puede causar bucles infinitos si modificas datos aquí
-  },
-  methods: {
-    incrementar() {
-      this.contador++
-    }
+    console.log(&amp;apos;Cambio:&amp;apos;, this.anterior, &amp;apos;&amp;rarr;&amp;apos;, this.contador)
   }
-}
-        </code></pre>
-      </div>
-
-      <div class="code-block">
-        <h3 class="code-title">Composition API</h3>
-        <pre class="code"><code>
-&lt;script setup&gt;
-import { ref, onBeforeUpdate, onUpdated } from 'vue'
-
-const contador = ref(0)
-const anterior = ref(0)
-
-onBeforeUpdate(() => {
-  console.log('Antes de la actualización del DOM')
-  anterior.value = contador.value
-})
-
-onUpdated(() => {
-  console.log('DOM actualizado')
-  console.log('Cambio:', anterior.value, '→', contador.value)
-})
-
-const incrementar = () => {
-  contador.value++
-}
-&lt;/script&gt;
-        </code></pre>
+}</code></pre>
       </div>
 
       <div class="example">
@@ -275,67 +181,28 @@ const incrementar = () => {
         </div>
       </div>
 
-      <h3 class="subtitle-sm">4. beforeUnmount y unmounted</h3>
+      <h3 class="subtitle-sm">5. beforeUnmount y unmounted</h3>
       <p class="p">
-        Estos hooks se ejecutan cuando el componente <strong>se destruye</strong> y se elimina del DOM.
+        Estos hooks se ejecutan cuando el componente <strong>se destruye</strong>.
       </p>
 
       <div class="code-block">
         <h3 class="code-title">Options API</h3>
-        <pre class="code"><code>
-export default {
+        <pre class="code"><code>export default {
   data() {
     return {
       intervalo: null
     }
   },
   mounted() {
-    // Iniciar un intervalo cuando el componente se monta
-    this.intervalo = setInterval(() => {
-      console.log('Tick...')
+    this.intervalo = setInterval(() =&amp;gt; {
+      console.log(&amp;apos;Tick...&amp;apos;)
     }, 1000)
   },
-  beforeUnmount() {
-    // Se ejecuta ANTES de que el componente se destruya
-    // El componente aún está completamente funcional
-    console.log('beforeUnmount - Preparándose para destruir')
-  },
   unmounted() {
-    // Se ejecuta DESPUÉS de que el componente se destruya
-    // Ideal para limpieza: intervals, event listeners, etc.
-    console.log('unmounted - Componente destruido')
-    clearInterval(this.intervalo) // ✅ Limpiar recursos
+    clearInterval(this.intervalo)
   }
-}
-        </code></pre>
-      </div>
-
-      <div class="code-block">
-        <h3 class="code-title">Composition API</h3>
-        <pre class="code"><code>
-&lt;script setup&gt;
-import { ref, onBeforeUnmount, onUnmounted } from 'vue'
-
-const intervalo = ref(null)
-
-// Montaje
-onMounted(() => {
-  intervalo.value = setInterval(() => {
-    console.log('Tick...')
-  }, 1000)
-})
-
-// Desmontaje
-onBeforeUnmount(() => {
-  console.log('Preparándose para destruir el componente')
-})
-
-onUnmounted(() => {
-  console.log('Componente destruido')
-  clearInterval(intervalo.value)
-})
-&lt;/script&gt;
-        </code></pre>
+}</code></pre>
       </div>
 
       <div class="example">
@@ -354,61 +221,83 @@ onUnmounted(() => {
 
       <hr />
 
-      <h2 class="subtitle">Hooks Adicionales</h2>
+      <h2 class="subtitle">Hooks de Keep-Alive</h2>
 
-      <h3 class="subtitle-sm">errorCaptured</h3>
+      <h3 class="subtitle-sm">6. activated y deactivated</h3>
       <p class="p">
-        Captura errores de componentes hijos. Útil para manejo global de errores.
+        Estos hooks son específicos para componentes envueltos en <code>&lt;KeepAlive&gt;</code>.
       </p>
 
       <div class="code-block">
-        <h3 class="code-title">Implementación</h3>
-        <pre class="code"><code>
-export default {
-  errorCaptured(err, instance, info) {
-    // Captura errores de componentes hijos
-    console.error('Error capturado:', err)
-    console.log('Componente:', instance)
-    console.log('Información:', info)
-    
-    // Puedes mostrar un mensaje de error al usuario
-    this.error = err.message
-    
-    // Return false para evitar que el error se propague
-    return false
+        <h3 class="code-title">Options API</h3>
+        <pre class="code"><code>export default {
+  activated() {
+    console.log(&amp;apos;activated - Componente activado&amp;apos;)
+    this.reanudarActividad()
   },
-  data() {
-    return {
-      error: null
-    }
+  deactivated() {
+    console.log(&amp;apos;deactivated - Componente desactivado&amp;apos;)
+    this.pausarActividad()
   }
-}
-        </code></pre>
+}</code></pre>
       </div>
 
-      <h3 class="subtitle-sm">renderTracked y renderTriggered (Solo Desarrollo)</h3>
+      <div class="example">
+        <h3 class="example-title">Ejemplo: KeepAlive en Acción</h3>
+        <div class="p">
+          <p><strong>Componente actual:</strong> {{ componenteActual }}</p>
+          <p><strong>Activaciones:</strong> {{ activaciones }}</p>
+          <p><strong>Desactivaciones:</strong> {{ desactivaciones }}</p>
+          <button @click="cambiarComponente" class="demo-button">
+            Cambiar a {{ componenteActual === 'A' ? 'B' : 'A' }}
+          </button>
+        </div>
+      </div>
+
+      <hr />
+
+      <h2 class="subtitle">Hooks de Manejo de Errores</h2>
+
+      <h3 class="subtitle-sm">7. errorCaptured</h3>
       <p class="p">
-        Hooks de depuración que rastrean qué dependencias causan re-renderizados.
+        Captura errores de componentes hijos.
+      </p>
+
+      <div class="code-block">
+        <h3 class="code-title">Options API</h3>
+        <pre class="code"><code>export default {
+  errorCaptured(err, instance, info) {
+    console.error(&amp;apos;Error capturado:&amp;apos;, err)
+    this.error = err.message
+    return false
+  }
+}</code></pre>
+      </div>
+
+      <hr />
+
+      <h2 class="subtitle">Hooks de Depuración</h2>
+
+      <h3 class="subtitle-sm">8. renderTracked y renderTriggered</h3>
+      <p class="p">
+        Hooks de depuración que rastrean re-renderizados.
       </p>
 
       <div class="code-block">
         <h3 class="code-title">Composition API</h3>
-        <pre class="code"><code>
-&lt;script setup&gt;
-import { ref, onRenderTracked, onRenderTriggered } from 'vue'
+        <pre class="code"><code>&lt;script setup&gt;
+import { ref, onRenderTracked, onRenderTriggered } from &amp;apos;vue&amp;apos;
 
 const contador = ref(0)
-const mensaje = ref('Hola')
 
-onRenderTracked((event) => {
-  console.log('Dependencia rastreada:', event)
+onRenderTracked((event) =&amp;gt; {
+  console.log(&amp;apos;Dependencia rastreada:&amp;apos;, event)
 })
 
-onRenderTriggered((event) => {
-  console.log('Re-render provocado por:', event)
+onRenderTriggered((event) =&amp;gt; {
+  console.log(&amp;apos;Re-render provocado por:&amp;apos;, event)
 })
-&lt;/script&gt;
-        </code></pre>
+&lt;/script&gt;</code></pre>
       </div>
 
       <hr />
@@ -419,8 +308,8 @@ onRenderTriggered((event) => {
         <div class="flow-step">
           <div class="step-number">1</div>
           <div class="step-content">
-            <h4>Inicialización</h4>
-            <p><code>beforeCreate</code> → <code>created</code></p>
+            <h4>Inicialización (Setup)</h4>
+            <p><code>setup</code> → <code>beforeCreate</code> → <code>created</code></p>
           </div>
         </div>
         <div class="flow-step">
@@ -442,7 +331,6 @@ onRenderTriggered((event) => {
           <div class="step-content">
             <h4>Actualizaciones (Reactividad)</h4>
             <p><code>beforeUpdate</code> → <code>updated</code></p>
-            <p><em>Se repite cuando los datos cambian</em></p>
           </div>
         </div>
         <div class="flow-step">
@@ -459,47 +347,17 @@ onRenderTriggered((event) => {
       <h2 class="subtitle">Mejores Prácticas</h2>
       <ul>
         <li class="p"><strong>created/mounted:</strong> Usar para llamadas API e inicialización</li>
-        <li class="p"><strong>updated:</strong> Evitar modificar datos reactivos aquí (riesgo de bucles infinitos)</li>
-        <li class="p"><strong>unmounted:</strong> Siempre limpiar intervals, event listeners y recursos</li>
-        <li class="p"><strong>errorCaptured:</strong> Implementar para manejo elegante de errores</li>
-        <li class="p"><strong>Composition API:</strong> Preferir onMounted/onUnmounted para mejor organización</li>
+        <li class="p"><strong>updated:</strong> Evitar modificar datos reactivos aquí</li>
+        <li class="p"><strong>unmounted:</strong> Siempre limpiar intervals y event listeners</li>
+        <li class="p"><strong>errorCaptured:</strong> Implementar para manejo de errores</li>
       </ul>
 
     </section>
-
-    <!-- Componente demostrativo para unmount -->
-    <ComponenteHijo 
-      v-if="componenteVisible" 
-      @tick="actualizarTick"
-    />
   </div>
 </template>
 
-<script>
-// Componente hijo para demostrar unmount
-const ComponenteHijo = {
-  template: `
-    <div class="componente-hijo">
-      <p>🔧 Componente Hijo Activo</p>
-    </div>
-  `,
-  mounted() {
-    this.intervalo = setInterval(() => {
-      this.$emit('tick')
-    }, 1000)
-  },
-  beforeUnmount() {
-    console.log('Componente hijo se va a destruir')
-  },
-  unmounted() {
-    console.log('Componente hijo destruido')
-    clearInterval(this.intervalo)
-  }
-}
-</script>
-
 <script setup>
-import { ref, onBeforeMount, onMounted, onBeforeUpdate, onUpdated, onBeforeUnmount, onUnmounted } from 'vue'
+import { ref, onBeforeMount, onMounted, onBeforeUpdate, onUpdated, onBeforeUnmount, onUnmounted, onActivated, onDeactivated } from 'vue'
 
 // Estado para ejemplos
 const faseActual = ref('created')
@@ -511,6 +369,9 @@ const anterior = ref(0)
 const actualizaciones = ref(0)
 const componenteVisible = ref(true)
 const ticks = ref(0)
+const componenteActual = ref('A')
+const activaciones = ref(0)
+const desactivaciones = ref(0)
 
 // Logging function
 const agregarLog = (mensaje) => {
@@ -526,7 +387,6 @@ onBeforeMount(() => {
 onMounted(() => {
   faseActual.value = 'mounted'
   agregarLog('mounted ejecutado')
-  agregarLog('Componente montado en el DOM')
 })
 
 onBeforeUpdate(() => {
@@ -545,6 +405,17 @@ onBeforeUnmount(() => {
 
 onUnmounted(() => {
   agregarLog('unmounted: componente destruido')
+})
+
+// Hooks de KeepAlive
+onActivated(() => {
+  activaciones.value++
+  agregarLog('activated: componente activado desde cache')
+})
+
+onDeactivated(() => {
+  desactivaciones.value++
+  agregarLog('deactivated: componente desactivado a cache')
 })
 
 // Métodos
@@ -570,8 +441,8 @@ const toggleComponente = () => {
   agregarLog(`Componente ${componenteVisible.value ? 'montado' : 'destruido'}`)
 }
 
-const actualizarTick = () => {
-  ticks.value++
+const cambiarComponente = () => {
+  componenteActual.value = componenteActual.value === 'A' ? 'B' : 'A'
 }
 
 // Simular created
@@ -683,6 +554,7 @@ pre.code code {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  flex-wrap: wrap;
 }
 .hook {
   padding: 0.5rem 1rem;
@@ -691,6 +563,7 @@ pre.code code {
   font-size: 0.9rem;
   font-weight: 600;
 }
+.setup { background: #fef3c7; color: #d97706; }
 .before-create { background: #fee2e2; color: #dc2626; }
 .created { background: #dcfce7; color: #16a34a; }
 .before-mount { background: #fef3c7; color: #d97706; }
@@ -699,6 +572,8 @@ pre.code code {
 .updated { background: #fce7f3; color: #db2777; }
 .before-unmount { background: #f3e8ff; color: #9333ea; }
 .unmounted { background: #ffedd5; color: #ea580c; }
+.activated { background: #dcfce7; color: #16a34a; }
+.deactivated { background: #fef3c7; color: #d97706; }
 .arrow {
   font-weight: bold;
   color: #6b7280;
@@ -778,15 +653,6 @@ pre.code code {
   color: #6b7280;
 }
 
-/* Componente Hijo */
-.componente-hijo {
-  background: #e0f2fe;
-  padding: 1rem;
-  margin: 1rem 0;
-  border-radius: 0.5rem;
-  border-left: 4px solid #0284c7;
-}
-
 @media (max-width: 768px) {
   .content {
     width: 95%;
@@ -801,4 +667,3 @@ pre.code code {
   }
 }
 </style>
-[file content end]
