@@ -10,6 +10,7 @@ let props = defineProps({
   }
 });
 </script>
+
 <template>
   <div>
     <q-card class="my-card color" flat bordered>
