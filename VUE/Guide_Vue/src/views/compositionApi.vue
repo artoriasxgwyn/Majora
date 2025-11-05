@@ -5,7 +5,7 @@
     <section class="content">
       <h1 class="title">Composition API</h1>
       <p class="p">
-        La <strong>Composition API</strong> es una nueva forma de organizar la lógica en componentes Vue. Introducida en Vue 3, permite agrupar código por funcionalidad en lugar de por opciones, haciendo que los componentes complejos sean más fáciles de entender y mantener.
+        La <strong>Composition API</strong> es una nueva forma de organizar la lógica en componentes Vue. Introducida en Vue 3, permite agrupar código por funcionalidad en lugar de por opciones, haciendo que los componentes complejos sean más fáciles de entender y mantener, hay que tener en cuenta vue 3 trae la funcion setup() y los ejemplos que veremos son hechos con vue 3.2 los cuales añadiendo el atributo setup dentro de la etiqueta script, vue por debajo, hara la configuracion facilitando la escritura de codigo para nosotros.
       </p>
 
       <hr />
@@ -78,11 +78,11 @@ function cambiarMensaje() {
 
       <hr />
       <p class="p">
-la reactividad en vue ha pasado por varias fases en el ejemplo anterior veras que el options api es diferente al ejemplo que veras a continuacion, pero por que como ves la cantidad de cantidad de codigo que hay que escribir llegar a tomar un tiempo considerable entonces se ha tomado ciertas soluciones. El ejemplo que acabas de ver es de Vue2 y a continuacion la explicacion que ves de la funcion <code>setup()</code> es una solucion que implemento vue 3 como veras a continuacion:
+La reactividad en vue ha pasado por varias fases en el ejemplo anterior veras que el options api es diferente al ejemplo que veras a continuacion, pero por que como ves la cantidad de cantidad de codigo que hay que escribir llegar a tomar un tiempo considerable entonces se ha tomado ciertas soluciones. El ejemplo que acabas de ver es de Vue2 y a continuacion la explicacion que ves de la funcion <code>setup()</code> es una solucion que implemento vue 3 como veras a continuacion:
       </p>
       <h2 class="subtitle">setup() Function</h2>
       <p class="p">
-        El corazón de la Composition API es la función <code>setup()</code>. Esta función se ejecuta antes de que el componente sea creado y es donde declaramos toda la reactividad y lógica del componente.
+        El corazón de la Composition API es la función <code>setup()</code>. Esta función se ejecuta antes de que el componente sea creado y es donde declaramos toda la reactividad y lógica del componente, el ejemplo a continuacion esta hecho con vue 3 por eso la sintaxis es levemente diferente sin embargo ya volveremos a los ejemplos con vue3.2 es solo que es impoertante que veas como funciona por debajo las funciones que escribes y es que a diferencia de vue2 en donde organizas todo en objetos aca solo declararas dentro de setup lo que vayas a usar y solo lo retornara en vez de asignar las variabeles y funciones al objeto global con <code>.this</code>.
       </p>
 
       <div class="code-block">
