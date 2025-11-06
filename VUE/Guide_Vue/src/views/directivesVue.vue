@@ -19,8 +19,9 @@
       <!-- v-text -->
       <h3 class="subtitle-sm">v-text</h3>
       <p class="p">
-        Actualiza el <code>textContent</code> del elemento. Similar a la
-        interpolación pero reemplaza todo el contenido.
+        Actualiza el <code>textContent</code> del elemento. A diferencia de
+        v-model este reeemplaza el contenido unidireccionalmente, es decir de la
+        variable al DOM pero no del DOM a la variable.
       </p>
 
       <div class="example">
