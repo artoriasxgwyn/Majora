@@ -83,7 +83,7 @@ export default {
 
       <h2 class="subtitle">Ejemplo</h2>
       <p class="p">Aquí tienes el ejemplo de codigo anterior:</p>
-      <div>
+      <div class="example">
         <button class="button" @click="incrementar">Incrementar</button>
         <p class="p">Contador: {{contador}}</p>
         <p class="p">Doble: {{dobleContador}}</p>
@@ -174,7 +174,6 @@ export default {
   background: #56dfa3;
 }
  .button:hover{
-  padding: 0.5rem;
   background: #1f2937;
 }
 .subtitle-sm {
@@ -185,9 +184,9 @@ export default {
   margin-top: 1.5rem;
 }
 .p {
-  font-size: 1.125rem; /* 18px */
-  font-weight: 400; /* 550 no es un valor estándar */
-  color: #374151; /* Ligeramente más suave para el texto */
+  font-size: 1.125rem; /*18px */
+  font-weight: 400; /*550 no es un valor estándar */
+  color: #374151; /*Ligeramente más suave para el texto */
   line-height: 1.6;
   margin: 0;
 }
@@ -237,6 +236,13 @@ pre.code code {
   font-weight: 700;
   color: #1f2937;
   margin-top: 0;
+}
+.example {
+  background-color: #f3f4f6;
+  border-left: 4px solid #42b883;
+  padding: 1.5rem;
+  border-radius: 0.25rem;
+  margin-top: 1rem;
 }
 .demo-input {
   padding: 0.5rem;

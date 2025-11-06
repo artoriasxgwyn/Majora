@@ -144,6 +144,18 @@ export default {
       <div class="code-block">
         <h3 class="code-title">Código ref()</h3>
         <pre class="code"><code>
+&lt;template&gt;
+  &lt;div class="example"&gt;
+    &lt;h3 class="example-title"&gt;Ejemplo Interactivo con ref()&lt;/h3&gt;
+    &lt;div class="example"&gt;
+      &lt;input v-model="nombre" placeholder="Escribe tu nombre" class="demo-input"&gt;
+      &lt;p&gt;Hola, &lt;strong&gt;&lcub;{ nombre }&rcub;&lt;/strong&gt;!&lt;/p&gt;
+      &lt;p&gt;Contador:&lt;strong&gt;&lcub;{ contador }&rcub;&lt;/strong&gt;&lt;/p&gt;
+      &lt;button @click="incrementar" class="demo-button"&gt;Incrementar&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
 &lt;script setup&gt;
 import { ref } from 'vue'
 
@@ -176,6 +188,17 @@ const incrementar = () => {
       <div class="code-block">
         <h3 class="code-title">Código reactive()</h3>
         <pre class="code"><code>
+&lt;template&gt;
+&lt;div class=&quot;example&quot;&gt;
+    &lt;h3 class=&quot;example-title&quot;&gt;Ejemplo Interactivo con reactive()&lt;/h3&gt;
+    &lt;div class=&quot;p&quot;&gt;
+        &lt;input v-model=&quot;usuario.nombre&quot; placeholder=&quot;Nombre&quot; class=&quot;demo-input&quot;&gt;
+        &lt;input v-model=&quot;usuario.edad&quot; type=&quot;number&quot; placeholder=&quot;Edad&quot; class=&quot;demo-input&quot;&gt;
+        &lt;p&gt;Usuario: &lt;strong&gt;&lcub;{ usuario.nombre }&rcub;&lt;/strong&gt;, Edad: &lt;strong&gt;&lcub;{ usuario.edad }&rcub;&lt;/strong&gt;&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/template&gt;
+
 &lt;script setup&gt;
 import { reactive } from 'vue'
 
@@ -209,6 +232,20 @@ const usuario = reactive({
       <div class="code-block">
         <h3 class="code-title">Código computed()</h3>
         <pre class="code"><code>
+
+&lt;template&gt;
+  &lt;div class=&quot;example&quot;&gt;
+        &lt;h3 class=&quot;example-title&quot;&gt;Ejemplo Computed&lt;/h3&gt;
+        &lt;div class=&quot;p&quot;&gt;
+          &lt;input v-model=&quot;precio&quot; type=&quot;number&quot; placeholder=&quot;Precio&quot; class=&quot;demo-input&quot;&gt;
+          &lt;input v-model=&quot;cantidad&quot; type=&quot;number&quot; placeholder=&quot;Cantidad&quot; class=&quot;demo-input&quot;&gt;
+          &lt;p&gt;Precio unitario: $&lt;strong&gt;&lcub;{ precio }&rcub;&lt;/strong&gt;&lt;/p&gt;
+          &lt;p&gt;Cantidad: &lt;strong&gt;&lcub;{ cantidad }&rcub;&lt;/strong&gt;&lt;/p&gt;
+          &lt;p&gt;Total: $&lt;strong&gt;&lcub;{ total }&rcub;&lt;/strong&gt;&lt;/p&gt;
+        &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
 &lt;script setup&gt;
 import { ref, computed } from 'vue'
 
@@ -242,6 +279,17 @@ const total = computed(() => {
       <div class="code-block">
         <h3 class="code-title">Código watch()</h3>
         <pre class="code"><code>
+&lt;template&gt;
+  &lt;div class=&quot;example&quot;&gt;
+        &lt;h3 class=&quot;example-title&quot;&gt;Ejemplo Watch&lt;/h3&gt;
+        &lt;div class=&quot;p&quot;&gt;
+          &lt;input v-model=&quot;busqueda&quot; placeholder=&quot;Buscar...&quot; class=&quot;demo-input&quot;&gt;
+          &lt;p v-if=&quot;cargando&quot;&gt;Buscando... ⏳&lt;/p&gt;
+          &lt;p v-else&gt;Resultados para: &lt;strong&gt;&quot;&lcub;{ busqueda }&rcub;&quot;&lt;/strong&gt;&lt;/p&gt;
+        &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
 &lt;script setup&gt;
 import { ref, watch } from 'vue'
 
@@ -299,96 +347,8 @@ onUnmounted(() => {
         Vue 3.2 introdujo <code>&lt;script setup&gt;</code>, una sintaxis más concisa que elimina la necesidad de usar <code>setup()</code> y <code>return</code>.
       </p>
 
-      <div class="example">
-        <h3 class="example-title">Ejemplo Completo con &lt;script setup&gt;</h3>
-        <div class="p">
-          <input v-model="nuevaTarea" @keyup.enter="agregarTarea" placeholder="Nueva tarea" class="demo-input">
-          <button @click="agregarTarea" class="demo-button">Agregar</button>
-          
-          <ul class="tareas-lista">
-            <li v-for="(tarea, index) in tareasFiltradas" :key="tarea.id" class="tarea-item">
-              <input type="checkbox" v-model="tarea.completada">
-              <span :class="{ completada: tarea.completada }">{{ tarea.texto }}</span>
-              <button @click="eliminarTarea(index)" class="demo-button small">Eliminar</button>
-            </li>
-          </ul>
-          
-          <div class="filtros">
-            <button @click="filtro = 'todas'" class="demo-button small">Todas ({{ totalTareas }})</button>
-            <button @click="filtro = 'pendientes'" class="demo-button small">Pendientes ({{ tareasPendientes }})</button>
-            <button @click="filtro = 'completadas'" class="demo-button small">Completadas ({{ tareasCompletadas }})</button>
-          </div>
-        </div>
-      </div>
+     
 
-      <div class="code-block">
-        <h3 class="code-title">Código Completo</h3>
-        <pre class="code"><code>
-&lt;template&gt;
-  &lt;div&gt;
-    &lt;input v-model="nuevaTarea" @keyup.enter="agregarTarea" placeholder="Nueva tarea"&gt;
-    &lt;button @click="agregarTarea"&gt;Agregar&lt;/button&gt;
-    
-    &lt;ul&gt;
-      &lt;li v-for="(tarea, index) in tareasFiltradas" :key="tarea.id"&gt;
-        &lt;input type="checkbox" v-model="tarea.completada"&gt;
-        &lt;span :class="{ completada: tarea.completada }"&gt;&lbrace;&lbrace; tarea.texto &rbrace;&rbrace;&lt;/span&gt;
-        &lt;button @click="eliminarTarea(index)"&gt;Eliminar&lt;/button&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-    
-    &lt;div&gt;
-      &lt;button @click="filtro = 'todas'"&gt;Todas (&lbrace;&lbrace; totalTareas &rbrace;&rbrace;)&lt;/button&gt;
-      &lt;button @click="filtro = 'pendientes'"&gt;Pendientes (&lbrace;&lbrace; tareasPendientes &rbrace;&rbrace;)&lt;/button&gt;
-      &lt;button @click="filtro = 'completadas'"&gt;Completadas (&lbrace;&lbrace; tareasCompletadas &rbrace;&rbrace;)&lt;/button&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script setup&gt;
-import { ref, computed, onMounted } from 'vue'
-
-// Estado reactivo
-const nuevaTarea = ref('')
-const tareas = ref([])
-const filtro = ref('todas')
-
-// Propiedades computadas
-const tareasFiltradas = computed(() => {
-  switch(filtro.value) {
-    case 'pendientes': return tareas.value.filter(t => !t.completada)
-    case 'completadas': return tareas.value.filter(t => t.completada)
-    default: return tareas.value
-  }
-})
-
-const totalTareas = computed(() => tareas.value.length)
-const tareasPendientes = computed(() => tareas.value.filter(t => !t.completada).length)
-const tareasCompletadas = computed(() => tareas.value.filter(t => t.completada).length)
-
-// Métodos
-const agregarTarea = () => {
-  if (nuevaTarea.value.trim()) {
-    tareas.value.push({
-      id: Date.now(),
-      texto: nuevaTarea.value.trim(),
-      completada: false
-    })
-    nuevaTarea.value = ''
-  }
-}
-
-const eliminarTarea = (index) => {
-  tareas.value.splice(index, 1)
-}
-
-// Lifecycle hook
-onMounted(() => {
-  console.log('Componente de tareas montado')
-})
-&lt;/script&gt;
-        </code></pre>
-      </div>
 
       <hr />
 
