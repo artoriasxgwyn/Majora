@@ -67,6 +67,38 @@
       <p class="p">
         En Composition API, el código dentro de <code>&lt;script setup&gt;</code> se ejecuta durante la fase de creación. Esto reemplaza los hooks <code>beforeCreate</code> y <code>created</code> de Options API.
       </p>
+      <pre>
+<p class="p">1. beforeCreate()
+Es lo primero que se ejecuta al instanciar el componente.
+
+Qué <strong>NO</strong> existe aún:
+data (los datos reactivos).
+methods (las funciones).
+computed (propiedades calculadas).
+watchers (observadores).
+El DOM (el HTML).
+
+<strong>En resumen:</strong>No puedes acceder a this.miVariable ni a this.miMetodo().
+Tampoco puedes ver el HTML con this.$refs o document.querySelector().
+<strong>Para qué se usa:</strong> Principalmente para lógica muy temprana que no dependa de nada del componente,
+como comprobar variables globales.
+
+2. created()
+Se ejecuta inmediatamente después de beforeCreate().
+
+Qué <strong>SÍ</strong> existe ya:
+data (puedes usar this.miVariable).
+methods (puedes usar this.miMetodo()).
+computed (propiedades calculadas).
+watchers (observadores).
+
+Qué <strong>NO</strong> existe todavía:
+El DOM. El componente no se ha dibujado en la página.
+
+<strong>En resumen:</strong> Es el lugar ideal para llamadas a APIs (peticiones HTTP) para cargar datos iniciales,
+ya que tienes data para guardar la respuesta.
+No puedes manipular el HTML (ni this.$refs ni document.querySelector()).</p></pre>
+      
 
       <div class="code-block">
         <h3 class="code-title">Código para probar</h3>
@@ -107,6 +139,38 @@ onMounted(() => {
       <p class="p">
         <code>onBeforeMount</code> se ejecuta justo antes de que el componente se monte en el DOM. <code>onMounted</code> se ejecuta después de que el componente haya sido montado, cuando ya podemos acceder a los elementos del DOM.
       </p>
+      <pre><p class="p">
+3. beforeMount()
+Se ejecuta justo después de created() y antes de que el componente se dibuje en el DOM.
+
+Qué <strong>SÍ</strong> existe ya:
+data (puedes usar this.miVariable).
+methods (puedes usar this.miMetodo()).
+computed y watchers.
+La plantilla (template) ya está compilada en memoria, lista para ser insertada.
+
+Qué <strong>NO</strong> existe todavía:
+El DOM. El componente aún no es visible en la página.
+No puedes usar this.$refs ni document.querySelector() para encontrar elementos de este componente.
+
+<strong>En resumen:</strong> Tienes todo tu "cerebro" (lógica de Vue), pero aún no tienes "cuerpo" (el HTML en la página).
+<strong>Para qué se usa:</strong> Casi nunca se usa. La lógica de preparación se hace en created()
+y la manipulación del DOM se hace en mounted().
+
+4. mounted()
+Se ejecuta después de que el componente ha sido dibujado e insertado en el DOM.
+
+Qué <strong>SÍ</strong> existe ya:
+Todo, data, methods, computed.
+El DOM. El HTML del componente ya está en la página y es visible.
+this.$refs ya están disponibles.
+
+<strong>En resumen:</strong> Es el primer hook donde puedes manipular el DOM de forma segura.
+<strong ref="i">Para qué se usa:</strong> Esencial para:
+Usar this.$refs (ej. this.$refs.miInput.focus()).
+Inicializar librerías externas (como gráficas, mapas, sliders) que necesitan "ver" un elemento HTML para funcionar.
+Medir el tamaño o la posición de elementos del DOM.
+</p></pre>
 
       <div class="code-block">
         <h3 class="code-title">Código para probar</h3>
@@ -153,6 +217,35 @@ onMounted(() => {
       <p class="p">
         Estos hooks se ejecutan cuando el componente se actualiza debido a cambios en los datos reactivos. <code>onBeforeUpdate</code> se llama antes de que el DOM se vuelva a renderizar, y <code>onUpdated</code> se llama después de que el DOM se haya actualizado.
       </p>
+      <pre>
+        <p class="p">
+5. beforeUpdate()
+Se ejecuta cuando un dato ha cambiado, pero antes de que el DOM se actualice para reflejar ese cambio.
+
+Qué <strong>SÍ</strong> existe ya:
+Los nuevos valores de data (ya puedes ver el dato actualizado en this).
+El DOM antiguo (la página todavía muestra la versión antes del cambio).
+
+Qué <strong>NO</strong> existe todavía:
+El DOM actualizado.
+
+<strong>En resumen:</strong> Te permite ver el estado del DOM justo antes de que cambie.
+<strong>Para qué se usa:</strong> Para leer el estado actual del DOM (ej. guardar la posición del scroll) 
+antes de que sea modificado por la actualización. No debes cambiar datos aquí, o causarás un bucle infinito.
+
+6. updated()
+Se ejecuta después de que un dato cambió y el DOM se ha actualizado para reflejarlo.
+
+Qué <strong>SÍ</strong> existe ya:
+Los nuevos datos.
+El DOM nuevo (la página ya muestra el cambio).
+
+<strong>En resumen:</strong> El HTML en la página ya está sincronizado con tus datos.
+<strong>Para qué se usa:</strong> Para ejecutar lógica que dependa del DOM después de que se haya actualizado
+(ej. mover el scroll a un nuevo mensaje en un chat).
+Cuidado: Si cambias datos aquí, debes usar un if para evitar un bucle infinito de actualizaciones.
+        </p>
+      </pre>
 
       <div class="code-block">
         <h3 class="code-title">Código para probar</h3>
@@ -194,14 +287,45 @@ onUpdated(() => {
         </div>
       </div>
        <p class="p">
-       Datazo el ejemplo se hizo con un <code>watch()</code> esto en la vida real con un <code>onUpdate()</code> hubiera hecho un bucle, por que si efectuamos un cambio en el dom,  <code>onUpdate()</code> lo reconoce y suma a la variable actualizar y con este cambio al dom, <code>onUpdate()</code> lo vuelve a actualizar y se vuelve monda.
+       Dataso el ejemplo se hizo con un <code>watch()</code> esto en la vida real con un <code>onUpdate()</code> hubiera hecho un bucle, por que si efectuamos un cambio en el dom,  <code>onUpdate()</code> lo reconoce y suma a la variable actualizar y con este cambio al dom, <code>onUpdate()</code> lo vuelve a actualizar y se vuelve un bucle infinito.
       </p>
 
       <h3 class="subtitle-sm">4. onBeforeUnmount y onUnmounted</h3>
       <p class="p">
         Estos hooks se ejecutan cuando el componente se destruye. Son ideales para limpiar recursos como intervals, event listeners o conexiones a APIs.
       </p>
+<pre><p class="p">
+7. beforeUnmount()
+(En Vue 2 se llamaba beforeDestroy)
+Se ejecuta justo antes de que el componente sea destruido y eliminado del DOM.
 
+Qué <strong>SÍ</strong> existe ya:
+Todo. El componente está 100% funcional.
+data, methods, this.$refs y el DOM.
+
+<strong>En resumen:</strong> Es la última oportunidad para interactuar con el componente y su DOM.
+Es el lugar ideal para limpiar.
+<strong>Para qué se usa:</strong>Para "limpiar" todo lo que el componente haya creado y que no se elimine solo:
+Eliminar EventListeners manuales (window.removeEventListener(...)).
+Cancelar temporizadores (clearInterval, clearTimeout).
+Desuscribirse de WebSockets o Event Buses.
+
+8. unmounted()
+(En Vue 2 se llamaba destroyed)
+Se ejecuta después de que el componente ha sido destruido y eliminado del DOM.
+
+Qué <strong>SÍ</strong> existe ya:
+La instancia (this) técnicamente aún existe, pero está "desconectada" de todo.
+
+Qué <strong>NO</strong> existe ya:
+El DOM (el HTML ha sido eliminado de la página).
+this.$refs.
+Todos los watchers, computed, y eventos internos de Vue han sido eliminados.
+
+<strong>En resumen:</strong> El componente ya no existe.
+Para qué se usa: Para hacer una limpieza final,
+aunque la mayoría de la limpieza se prefiere hacer en beforeUnmount porque todavía tienes acceso a todo. 
+  </p></pre>
       <div class="code-block">
         <h3 class="code-title">Código para probar</h3>
         <pre class="code"><code>&lt;script setup&gt;
@@ -245,7 +369,8 @@ onUnmounted(() => {
           </button>
         </div>
       </div>
-
+<p class="p">Aclaro que la funcion que ves no desmonta nada, esos son conceptos de vue</p>
+<p class="p">debes tener claro que las funciones del ciclo de vida de vue escuchan al componente de vue en el cual son declaradas y ya sabes que lo mismo con las vistas de vue es decir que para demontar el componente solo sucede cuando tu lo dejas de usar al pasar a otra vista solo ahi se desmonta mientras el ejemplo, es solo intuitivo dado que eso <strong>NO</strong> es un componente</p>
       <hr />
 
       <h2 class="subtitle">Hooks de Keep-Alive</h2>
@@ -254,7 +379,43 @@ onUnmounted(() => {
       <p class="p">
         Estos hooks son específicos para componentes envueltos en <code>&lt;KeepAlive&gt;</code>. Se ejecutan cuando el componente se activa o desactiva sin ser destruido.
       </p>
+<pre>
+  <p class="p">
+onActivated()
+Se ejecuta cada vez que un componente previamente inactivo (cacheado) se convierte en visible y activo de nuevo.
 
+Qué <strong>SÍ</strong> existe ya:
+Todo, ref, reactive, methods.
+El DOM, que fue conservado y nunca fue destruido.
+El estado del componente (ref y reactive) es exactamente el mismo que 
+cuando se desactivó.
+
+Qué <strong>NO</strong> se ejecuta:
+El hook onMounted() no se ejecuta, ya que el componente no se está montando por primera vez (solo se está activando).
+
+<strong>En resumen:</strong> Es el lugar ideal para "retomar" la actividad de un componente que estaba en pausa.
+<strong>Para qué se usa:</strong>
+Reanudar temporizadores (setInterval) o suscripciones a eventos que se pausaron.
+Refrescar datos que podrían haber cambiado mientras el componente estuvo inactivo 
+(ej. hacer un fetch si la información es sensible al tiempo).
+Restablecer la posición del scroll guardada.
+
+onDeactivated()
+Se ejecuta cada vez que el componente se oculta, pero sin destruirse, al ser cacheado por KeepAlive.
+
+Qué <strong>SÍ</strong> existe ya:
+Todo. El estado interno (ref, reactive) y el DOM aún existen en la memoria (aunque ya no se ven).
+
+Qué <strong>NO</strong> se ejecuta:
+Los hooks de desmontaje (onBeforeUnmount y onUnmounted) no se ejecutan, ya que el componente no se está destruyendo.
+
+<strong>En resumen:</strong> Es el lugar ideal para "pausar" la actividad de un componente antes de que salga de la vista.
+<strong>Para qué se usa:</strong>
+Guardar el estado actual (ej. la posición del scroll en un listado).
+Pausar animaciones, detener temporizadores (clearInterval) o
+deshabilitar suscripciones a eventos de alto consumo para ahorrar recursos.
+  </p>
+</pre>
       <div class="code-block">
         <h3 class="code-title">Código para probar</h3>
         <pre class="code"><code>&lt;script setup&gt;
@@ -453,7 +614,7 @@ onRenderTriggered((event) => {
 
 <script setup>
 import { ref, onBeforeMount, onMounted, onBeforeUpdate, onUpdated, onBeforeUnmount, onUnmounted, onActivated, onDeactivated, watch } from 'vue'
-
+//this.$refs.i.focus()
 // Estado para ejemplos
 const faseActual = ref('created')
 const altura = ref(0)
@@ -482,7 +643,7 @@ onMounted(() => {
   // Iniciar intervalo cuando el componente se monta
   if (componenteVisible.value) {
     intervalo = setInterval(() => {
-      ticks.value++
+      console.log(ticks.value++)
     }, 1000)
   }
 })
