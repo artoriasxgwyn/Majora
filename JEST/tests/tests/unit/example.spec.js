@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import App from '@/App.vue'
 
+<<<<<<< HEAD
 describe('render toggle button and change the state of H1 tag', () => {
   it('render button ', async () => {
     const wrapper = mount(App)
@@ -99,3 +100,13 @@ describe("To Do List", () => {
 })
 
 
+=======
+describe('HelloWorld.vue', () =>
+  it('renders props.msg when passed', async () => {
+    const wrapper = mount(App)
+    expect(wrapper.find("button").exists())
+    expect(wrapper.find("h1").text()).toContain("inactivo")
+    await wrapper.get('[data-test="button"]').trigger('click')
+    expect(wrapper.find("h1").text()).toContain("activo")
+  }))
+>>>>>>> b86e71ba94c67911bc21b359513b954989441a63

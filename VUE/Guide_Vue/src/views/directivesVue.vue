@@ -203,7 +203,7 @@ function cambiarEstado() {
           <pre><code>&lt;template&gt;
   &lt;ul&gt;
     &lt;li v-for="(tarea, index) in tareas" :key="index"&gt;
-      {{ index + 1 }}. {{ tarea }}
+      {&#123; index + 1 &#125;}. {&#123; tarea &#125;}
     &lt;/li&gt;
   &lt;/ul&gt;
 &lt;/template&gt;
@@ -235,7 +235,7 @@ const tareas = ref([
             placeholder="Escribe un color"
           />
         </p>
-        <p class="p" :style="{ color: colorTexto }">
+        <p class="p" v-bind="style={ color: colorTexto }" >
           Este texto cambiará de color según tu entrada: {{ colorFavorito }}
         </p>
         <p class="p">
@@ -251,10 +251,10 @@ const tareas = ref([
           <pre><code>&lt;template&gt;
   &lt;input type="text" v-model="colorFavorito" placeholder="Escribe un color"&gt;
   &lt;p :style="{ color: colorTexto }"&gt;
-    Este texto cambiará de color según tu entrada: {{ colorFavorito }}
+    Este texto cambiará de color según tu entrada: &#123;{ colorFavorito }&#125;
   &lt;/p&gt;
   &lt;button :disabled="!colorFavorito"&gt;
-    Botón {{ colorFavorito ? 'habilitado' : 'deshabilitado' }}
+    Botón {&#123; colorFavorito ? 'habilitado' : 'deshabilitado' &#125;}
   &lt;/button&gt;
 &lt;/template&gt;
 
@@ -294,10 +294,10 @@ const colorTexto = computed(() => {
         <article class="code">
           <pre><code>&lt;template&gt;
   &lt;input type="text" v-model="nombre" placeholder="Escribe tu nombre"&gt;
-  &lt;p&gt;Hola, {{ nombre || 'desconocido' }}!&lt;/p&gt;
+  &lt;p&gt;Hola, {&#123; nombre || 'desconocido' &#125;}!&lt;/p&gt;
   &lt;input type="checkbox" v-model="aceptado" id="aceptar"&gt;
   &lt;label for="aceptar"&gt;Acepto los términos&lt;/label&gt;
-  &lt;p&gt;Estado: {{ aceptado ? 'Aceptado' : 'No aceptado' }}&lt;/p&gt;
+  &lt;p&gt;Estado: {&#123; aceptado ? 'Aceptado' : 'No aceptado' &#125;}&lt;/p&gt;
 &lt;/template&gt;
 
 &lt;script setup&gt;
@@ -326,7 +326,7 @@ const aceptado = ref(false);
         <h3 class="code-title">Código</h3>
         <article class="code">
           <pre><code>&lt;template&gt;
-  &lt;p v-pre&gt;Este contenido no será compilado: {{ estoNoSeRenderizará }}&lt;/p&gt;
+  &lt;p v-pre&gt;Este contenido no será compilado: {&#123; estoNoSeRenderizará &#125;}&lt;/p&gt;
 &lt;/template&gt;</code></pre>
         </article>
       </div>
@@ -355,8 +355,8 @@ const aceptado = ref(false);
         <article class="code">
           <pre><code>&lt;template&gt;
   &lt;button @click="contadorOnce++"&gt;Incrementar&lt;/button&gt;
-  &lt;p&gt;Valor normal: {{ contadorOnce }}&lt;/p&gt;
-  &lt;p v-once&gt;Valor con v-once: {{ contadorOnce }}&lt;/p&gt;
+  &lt;p&gt;Valor normal: {&#123; contadorOnce &#125;}&lt;/p&gt;
+  &lt;p v-once&gt;Valor con v-once: {&#123; contadorOnce &#125;}&lt;/p&gt;
 &lt;/template&gt;
 
 &lt;script setup&gt;
