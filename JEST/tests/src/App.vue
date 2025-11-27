@@ -5,9 +5,10 @@ const count = ref(0);
 
 const texto = ref("");
 const estado = ref("inactivo");
+
 function limite() {
   if (texto.value.length > 10) {
-    texto.value = "";
+    texto.value = texto.value.slice(0, 10);
   }
 }
 function estados() {
@@ -17,43 +18,117 @@ function estados() {
     estado.value = "inactivo";
   }
 }
+
+/* TO DO LIST */
+const nuevaTarea = ref("");
+const tareas = ref([]);
+
+function agregarTarea() {
+  if (nuevaTarea.value.trim() === "") return;
+
+  tareas.value.push({
+    id: Date.now(),
+    texto: nuevaTarea.value,
+    hecha: false
+  });
+
+  nuevaTarea.value = "";
+}
+
+function toggleTarea(tarea) {
+  tarea.hecha = !tarea.hecha;
+}
+
+function eliminarTarea(id) {
+  tareas.value = tareas.value.filter(t => t.id !== id);
+}
 </script>
 
 <template>
   <div>
-    <h1>{{estado}}</h1>
+    <h1 data-test="estadoTexto">{{ estado }}</h1>
+
     <div class="card">
-      <button type="button" @click="count++">count is {{ count }}</button>
-      <button type="button" @click="count--">count is {{ count }}</button>
-      <button data-test="button" :style="{ background: estado === 'inactivo' ? 'red' : 'green' }" type="button" @click="estados">{{estado}}</button>
-      <button :style="estado =='inactivo'?'background:red':'background:green'" type="button" @click="estados">{{estado}}</button>
-      <input type="text" v-if="texto.length >= 10" value="hola" />
+      <!-- Contador -->
+      <button
+        data-test="buttonCount"
+        type="button"
+        @click="count++"
+      >
+        count is {{ count }}
+      </button>
+
+      <!-- Toggle -->
+      <button
+        data-test="buttonToggle"
+        :style="{ background: estado === 'inactivo' ? 'red' : 'green' }"
+        type="button"
+        @click="estados"
+      >
+        {{ estado }}
+      </button>
+
+      <!-- Input con límite -->
       <input
+        data-test="inputText"
         type="text"
         name="textorro"
         placeholder="inserte su nombre"
         v-model="texto"
         @input="limite()"
       />
-      <p>{{texto}}</p>
-      <p>
-        Edit
-        <code>components/HelloWorld.vue</code> to test HMR
-      </p>
+
+      <p>{{ texto }}</p>
     </div>
 
-    <p>
-      Check out
-      <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank">create-vue</a>, the official Vue + Vite starter
-    </p>
-    <p>
-      Learn more about IDE Support for Vue in the
-      <a
-        href="https://vuejs.org/guide/scaling-up/tooling.html#ide-support"
-        target="_blank"
-      >Vue Docs Scaling up Guide</a>.
-    </p>
-    <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
+    <!-- TO DO LIST -->
+    <div class="todo">
+      <h2>To Do List</h2>
+
+      <!-- Input nueva tarea -->
+      <input
+        data-test="todoInput"
+        type="text"
+        placeholder="Nueva tarea"
+        v-model="nuevaTarea"
+        @keyup.enter="agregarTarea"
+      />
+
+      <!-- Botón agregar -->
+      <button
+        data-test="todoAdd"
+        @click="agregarTarea"
+      >
+        Agregar
+      </button>
+
+      <!-- Lista -->
+      <ul>
+        <li
+          v-for="tarea in tareas"
+          :key="tarea.id"
+          data-test="todoItem"
+          :style="{ textDecoration: tarea.hecha ? 'line-through' : 'none' }"
+        >
+          <!-- Toggle tarea -->
+          <span
+            data-test="todoToggle"
+            @click="toggleTarea(tarea)"
+            style="cursor: pointer;"
+          >
+            {{ tarea.texto }}
+          </span>
+
+          <!-- Eliminar -->
+          <button
+            data-test="todoDelete"
+            @click="eliminarTarea(tarea.id)"
+          >
+            Eliminar
+          </button>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
